@@ -7,6 +7,8 @@
 # syntax: clean (clean install)
 # syntax: update (update current source)
 # syntax: quit (end script)
+# Script does still need alot of work but,
+# it will install download a clean copy of mangos
 
 import os
 
@@ -18,10 +20,15 @@ db_user=''
 db_pass=''
 
 git_mangos='git://github.com/mangos/server.git'
+git_mangos_wotlk='git://github.com/cmangos/mangos-wotlk.git'
+git_mangos_tbc='https://github.com/cmangos/mangos-tbc.git'
+git_mangos_classic='git://github.com/cmangos/mangos-classic.git'
+
 git_scriptdev2='git://github.com/mangos/scripts.git'
-git_acid='https://github.com/scriptdev2/acid.git'
-git_database='http://github.com/mangos/database.git'
-git_mangchat='git@isengard.dk:mangos.git'
+git_acid='git://github.com/scriptdev2/acid.git'
+git_database='git://github.com/mangos/database.git'
+
+git_mangchat='git://github.com/gimli/server.git mangchat'
 
 svn_ytdb='http://subversion.assembla.com/svn/ytdbase/'
 svn_ude='https://unifieddb.svn.sourceforge.net/svnroot/unifieddb'
@@ -44,6 +51,20 @@ def clean_MaNGOS():
        print ""
     elif install_dep=='no':
        print ""
+    print "What version would you like to install?"
+    print "Syntax: cataclysm/wotlk/tbc/classic\n"
+    version=raw_input('Selection: ')
+    if version=='cataclysm':
+       mangos=git_mangos
+    elif version=='wotlk':
+       mangos=git_mangos_wotlk
+    elif version=='tbc':
+       mangos=git_mangos_tbc
+    elif version=='classic'
+       mangos=git_mangos_classic
+    else:
+       print "I wasnt able to read you input!"
+       restart_script()
     print "Select where to install. default: "+work_dir
     new_work_dir=raw_input('Place: ')
     if new_work_dir=='default':

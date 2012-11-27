@@ -20,10 +20,15 @@ db_user=''
 db_pass=''
 
 git_mangos='git://github.com/mangos/server.git'
+git_mangos_wotlk='git://github.com/cmangos/mangos-wotlk.git'
+git_mangos_tbc='https://github.com/cmangos/mangos-tbc.git'
+git_mangos_classic='git://github.com/cmangos/mangos-classic.git'
+
 git_scriptdev2='git://github.com/mangos/scripts.git'
-git_acid='https://github.com/scriptdev2/acid.git'
-git_database='http://github.com/mangos/database.git'
-git_mangchat='git@isengard.dk:mangos.git'
+git_acid='git://github.com/scriptdev2/acid.git'
+git_database='git://github.com/mangos/database.git'
+
+git_mangchat='git://github.com/gimli/server.git mangchat'
 
 svn_ytdb='http://subversion.assembla.com/svn/ytdbase/'
 svn_ude='https://unifieddb.svn.sourceforge.net/svnroot/unifieddb'
@@ -46,6 +51,20 @@ def clean_MaNGOS():
        print ""
     elif install_dep=='no':
        print ""
+    print "What version would you like to install?"
+    print "Syntax: cataclysm/wotlk/tbc/classic\n"
+    version=raw_input('Selection: ')
+    if version=='cataclysm':
+       mangos=git_mangos
+    elif version=='wotlk':
+       mangos=git_mangos_wotlk
+    elif version=='tbc':
+       mangos=git_mangos_tbc
+    elif version=='classic'
+       mangos=git_mangos_classic
+    else:
+       print "I wasnt able to read you input!"
+       restart_script()
     print "Select where to install. default: "+work_dir
     new_work_dir=raw_input('Place: ')
     if new_work_dir=='default':
@@ -90,8 +109,8 @@ def clean_MaNGOS():
     print ""
     print "Script will now do its tricks, sit back relaxe and grab a beer.. :)\n"
     os.system('mkdir '+new_work_dir)
-    print "Fetching MaNGOS source files... ("+git_mangos+")"
-    for line in os.popen('cd '+new_work_dir+ ';git clone '+git_mangos+'').readlines():
+    print "Fetching MaNGOS source files... ("+mangos+")"
+    for line in os.popen('cd '+new_work_dir+ ';git clone '+mangos+'').readlines():
            print line
     print "Fetching ScriptDev2 source files... ("+git_scriptdev2+")"
     for line in os.popen('cd '+new_work_dir+'/server/;git clone '+git_scriptdev2+' src/bindings/ScriptDev2').readlines():
