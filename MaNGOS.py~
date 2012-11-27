@@ -60,11 +60,12 @@ def clean_MaNGOS():
        mangos=git_mangos_wotlk
     elif version=='tbc':
        mangos=git_mangos_tbc
-    elif version=='classic'
+    elif version=='classic':
        mangos=git_mangos_classic
     else:
        print "I wasnt able to read you input!"
        restart_script()
+    print ""
     print "Select where to install. default: "+work_dir
     new_work_dir=raw_input('Place: ')
     if new_work_dir=='default':
@@ -109,8 +110,8 @@ def clean_MaNGOS():
     print ""
     print "Script will now do its tricks, sit back relaxe and grab a beer.. :)\n"
     os.system('mkdir '+new_work_dir)
-    print "Fetching MaNGOS source files... ("+git_mangos+")"
-    for line in os.popen('cd '+new_work_dir+ ';git clone '+git_mangos+'').readlines():
+    print "Fetching MaNGOS source files... ("+mangos+")"
+    for line in os.popen('cd '+new_work_dir+ ';git clone '+mangos+'').readlines():
            print line
     print "Fetching ScriptDev2 source files... ("+git_scriptdev2+")"
     for line in os.popen('cd '+new_work_dir+'/server/;git clone '+git_scriptdev2+' src/bindings/ScriptDev2').readlines():

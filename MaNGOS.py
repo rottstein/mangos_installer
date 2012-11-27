@@ -60,11 +60,12 @@ def clean_MaNGOS():
        mangos=git_mangos_wotlk
     elif version=='tbc':
        mangos=git_mangos_tbc
-    elif version=='classic'
+    elif version=='classic':
        mangos=git_mangos_classic
     else:
        print "I wasnt able to read you input!"
        restart_script()
+    print ""
     print "Select where to install. default: "+work_dir
     new_work_dir=raw_input('Place: ')
     if new_work_dir=='default':
@@ -87,6 +88,7 @@ def clean_MaNGOS():
           print ""
           exit()
     if os.path.exists(new_install_dir):
+       print ""
        print "Delete Current server "+new_install_dir+"? yes/no"
        delete=raw_input('Selection: ')
        if delete=='yes':
