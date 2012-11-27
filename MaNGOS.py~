@@ -7,8 +7,6 @@
 # syntax: clean (clean install)
 # syntax: update (update current source)
 # syntax: quit (end script)
-# Script does still need alot of work but,
-# it will install download a clean copy of mangos
 
 import os
 
