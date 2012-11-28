@@ -199,7 +199,7 @@ def database_install():
     os.system('mysql -h '+db_host+' -u '+db_user+' -p'+db_pass+' scriptdev2 < '+new_work_dir+'/src/bindings/ScriptDev2/sql/scriptdev2_script_full.sql')
     print "Createing full alpha database.."
     os.system('cd '+new_install_dir+'/database/database;sh make_full_db.sh')
-    os.system('mysql -h '+db_host+' -u '+db_user+' -p'+db_pass+' mangos < '+new_install_dir+'/database/database/full_db.sql')
+    os.system('mysql -h '+db_host+' -u '+db_user+' -p'+db_pass+' mangos < '+new_install_dir+'/database/database/mangos.sql')
     print "Done, All you need now is to set your current ip/realm name.. the easyste way is to use phpmyadmin and edit your realm database enjoy!"
 
 def install_log(msg):
