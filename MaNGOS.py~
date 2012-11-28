@@ -191,7 +191,7 @@ def database_install(db_host,db_user,db_pass,new_work_dir,new_install_dir,server
     #ScriptDev2  Setup
     os.system('mysql -h '+db_host+' -u '+db_user+' -p'+db_pass+' < '+new_work_dir+'/'+server+'/src/bindings/ScriptDev2/sql/scriptdev2_create_database.sql')
     os.system('mysql -h '+db_host+' -u '+db_user+' -p'+db_pass+' scriptdev2 < '+new_work_dir+'/'+server+'/src/bindings/ScriptDev2/sql/scriptdev2_create_structure_mysql.sql')
-    os.system('mysql -h '+db_host+' -u '+db_user+' -p'+db_pass+' scriptdev2 < '+new_work_dir+'/'+server+'/src/bindings/ScriptDev2/sql/scriptdev2_script_full.sql')
+    os.system('mysql -h '+db_host+' -u '+db_user+' -p'+db_pass+' scriptdev2 < '+new_work_dir+'/'+server+'src/bindings/ScriptDev2/sql/scriptdev2_script_full.sql')
     print "Createing full alpha database.."
     os.system('cd '+new_install_dir+'/database/database;sh make_full_db.sh')
     os.system('mysql -h '+db_host+' -u '+db_user+' -p'+db_pass+' mangos < '+new_install_dir+'/database/database/full_db.sql')
