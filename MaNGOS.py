@@ -165,7 +165,7 @@ def clean_MaNGOS():
               print "Copying MaNGOS default sql files to "+new_install_dir+"/sql/"
               print "This is only as a back if you choosed a default install."
               print ""
-              os.system('cp -r '+new_work_dir+'/sql '+new_install_dir+'/')
+              os.system('cp -r '+new_work_dir+'/'+server+'/sql '+new_install_dir+'/')
               if mangchat=='yes':
                  print ""
                  print "Injecting Mangchat sql files into the world db (mangos)."
