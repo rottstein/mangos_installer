@@ -195,7 +195,8 @@ def database_install():
     print "Createing full alpha database.."
     os.system('cd '+new_install_dir+'/database/database;sh make_full_db.sh')
     os.system('mysql -h '+db_host+' -u '+db_user+' -p'+db_pass+' mangos < '+new_install_dir+'/database/database/mangos.sql')
-    print "Done, All you need now is to set your current ip/realm name.. the easyste way is to use phpmyadmin and edit your realm database enjoy!"
+    
+    
 
 def install_log(msg):
     timeStamp=strftime("%Y-%m-%d %H:%M:%S ", localtime())
