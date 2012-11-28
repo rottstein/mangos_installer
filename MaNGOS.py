@@ -1,7 +1,8 @@
 #!/usr/bin/env python
 # Ubuntu Script tested on 12.04
 # MaNGOS python installer for newbies
-# working whit lastest rev. (4.3.4)
+# working whit lastest rev. (4.3.4) 
+# should work for wotlk/tbc/classic to
 # syntax: python MaNGOS.py
 # first options:
 # syntax: clean (clean install)
@@ -33,7 +34,8 @@ git_mangchat='git://github.com/gimli/server.git mangchat'
 svn_ytdb='http://subversion.assembla.com/svn/ytdbase/'
 svn_ude='https://unifieddb.svn.sourceforge.net/svnroot/unifieddb'
 
-cores=2
+#CPU 2 (dual core) 4 (quadcore)
+cores=4
 
 install_dir='/mnt/mangos'
 work_dir='/tmp/mangos'
@@ -56,12 +58,16 @@ def clean_MaNGOS():
     version=raw_input('Selection: ')
     if version=='cataclysm':
        mangos=git_mangos
+       server='server'
     elif version=='wotlk':
        mangos=git_mangos_wotlk
+       server='mangos-wotlk'
     elif version=='tbc':
        mangos=git_mangos_tbc
+       server='mangos-tbc'
     elif version=='classic':
        mangos=git_mangos_classic
+       server='mangos-classic'
     else:
        print "I wasnt able to read you input!"
        restart_script()
@@ -115,22 +121,22 @@ def clean_MaNGOS():
     for line in os.popen('cd '+new_work_dir+ ';git clone '+mangos+'').readlines():
            print line
     print "Fetching ScriptDev2 source files... ("+git_scriptdev2+")"
-    for line in os.popen('cd '+new_work_dir+'/server/;git clone '+git_scriptdev2+' src/bindings/ScriptDev2').readlines():
+    for line in os.popen('cd '+new_work_dir+'/'+server+'/;git clone '+git_scriptdev2+' src/bindings/ScriptDev2').readlines():
            print line
     print ""
     print "Patching MaNGOS..."
-    os.system('cd  '+new_work_dir+'/server;git apply src/bindings/ScriptDev2/patches/MaNGOS-*-ScriptDev2.patch')
-    if os.path.exists(new_work_dir+'/server') and os.path.exists(new_work_dir+'/server/src/bindings/ScriptDev2'):
+    os.system('cd  '+new_work_dir+'/'+server+';git apply src/bindings/ScriptDev2/patches/MaNGOS-*-ScriptDev2.patch')
+    if os.path.exists(new_work_dir+'/'+server+'') and os.path.exists(new_work_dir+'/'+server+'/src/bindings/ScriptDev2'):
        print "MaNGOS Succesfully Downloaded and patched! Continuing."
     else:
        print "Something went wrong.. Please check you have permission to create: "+new_work_dir
        exit()
     if mangchat=='yes':
        print "\n Fetching Manchat_rewrite source files... ("+git_mangchat+")\n"
-       print os.system("cd "+new_work_dir+"/server;git add .;git commit -a -m 'Commiting current work before fetching mangchat.'")
-       print os.system('cd '+new_work_dir+'/server;git pull '+git_mangchat)
+       print os.system("cd "+new_work_dir+"/"+server+";git add .;git commit -a -m 'Commiting current work before fetching mangchat.'")
+       print os.system('cd '+new_work_dir+'/'+server+';git pull '+git_mangchat)
        print ""
-    print os.system('cd '+new_work_dir+'/server;mkdir '+new_work_dir+'/server/objdir;cd '+new_work_dir+'/server/objdir;cmake .. -DPREFIX='+str(new_install_dir)+';make -j'+str(cores)+';make install')
+    print os.system('cd '+new_work_dir+'/'+server+';mkdir '+new_work_dir+'/'+server+'/objdir;cd '+new_work_dir+'/'+server+'/objdir;cmake .. -DPREFIX='+str(new_install_dir)+';make -j'+str(cores)+';make install')
     if os.path.exists(new_install_dir):
        print "MaNGOS Successfully compile and installed into: "+new_install_dir
     else:
@@ -163,17 +169,6 @@ def clean_MaNGOS():
     print ""
     print "Enjoy! ;)"
 
-def scriptdev2():
-    print "Preparing ScriptDev2 setup..."    
-
-def database():
-    print "Preparing database setup..."
-    #pass
-
-def mangchat():
-    print "Preparing Mangchat_rewrite setup..."
-    #pass
-
 def install_log(msg):
     os.system('echo '+msg+' >> '+log+'')
 
@@ -191,7 +186,7 @@ def welcome():
 
 try:
     print welcome()
-    print "\n Syntax: new (clean install) / update (update your current work to latest rev.\n"
+    print "\n Syntax: new (clean install) / update (update your current work to latest rev.)\n"
     selection=raw_input('Please enter your choise: \n')
 except:
     print "Script ended! \n"

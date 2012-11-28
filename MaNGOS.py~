@@ -1,7 +1,8 @@
 #!/usr/bin/env python
 # Ubuntu Script tested on 12.04
 # MaNGOS python installer for newbies
-# working whit lastest rev. (4.3.4)
+# working whit lastest rev. (4.3.4) 
+# should work for wotlk/tbc/classic to
 # syntax: python MaNGOS.py
 # first options:
 # syntax: clean (clean install)
@@ -33,7 +34,8 @@ git_mangchat='git://github.com/gimli/server.git mangchat'
 svn_ytdb='http://subversion.assembla.com/svn/ytdbase/'
 svn_ude='https://unifieddb.svn.sourceforge.net/svnroot/unifieddb'
 
-cores=2
+#CPU 2 (dual core) 4 (quadcore)
+cores=4
 
 install_dir='/mnt/mangos'
 work_dir='/tmp/mangos'
@@ -56,12 +58,16 @@ def clean_MaNGOS():
     version=raw_input('Selection: ')
     if version=='cataclysm':
        mangos=git_mangos
+       server='server'
     elif version=='wotlk':
        mangos=git_mangos_wotlk
+       server='mangos-wotlk'
     elif version=='tbc':
        mangos=git_mangos_tbc
+       server='mangos-tbc'
     elif version=='classic':
        mangos=git_mangos_classic
+       server='mangos-classic'
     else:
        print "I wasnt able to read you input!"
        restart_script()
@@ -88,6 +94,7 @@ def clean_MaNGOS():
           print ""
           exit()
     if os.path.exists(new_install_dir):
+       print ""
        print "Delete Current server "+new_install_dir+"? yes/no"
        delete=raw_input('Selection: ')
        if delete=='yes':
@@ -162,17 +169,6 @@ def clean_MaNGOS():
     print ""
     print "Enjoy! ;)"
 
-def scriptdev2():
-    print "Preparing ScriptDev2 setup..."    
-
-def database():
-    print "Preparing database setup..."
-    #pass
-
-def mangchat():
-    print "Preparing Mangchat_rewrite setup..."
-    #pass
-
 def install_log(msg):
     os.system('echo '+msg+' >> '+log+'')
 
@@ -190,7 +186,7 @@ def welcome():
 
 try:
     print welcome()
-    print "\n Syntax: new (clean install) / update (update your current work to latest rev.\n"
+    print "\n Syntax: new (clean install) / update (update your current work to latest rev.)\n"
     selection=raw_input('Please enter your choise: \n')
 except:
     print "Script ended! \n"
