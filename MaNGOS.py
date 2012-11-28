@@ -163,16 +163,21 @@ def clean_MaNGOS():
               database_install(db_host,db_user,db_pass,new_work_dir,new_install_dir,server)
               print ""
               print "Copying MaNGOS default sql files to "+new_install_dir+"/sql/"
-              print "This is only as a back if you choosed a default install."
+              print "This is only as a backup if you choosed a default install."
               print ""
               os.system('cp -r '+new_work_dir+'/'+server+'/sql '+new_install_dir+'/')
               if mangchat=='yes':
                  print ""
                  print "Injecting Mangchat sql files into the world db (mangos)."
                  print "Remember to edit mangchat in your world db."
-                 print db_host+'/phpmyadmin'
+                 print 'http://'+db_host+'/phpmyadmin'
                  print ""
                  os.system('mysql -h '+db_host+' -u '+db_user+' -p'+db_pass+' mangos < '+new_work_dir+'/'+server+'/sql/custom/mangchat_world.sql')
+              print "remember to edit files in "+new_install_dir+"/etc/
+              print os.system('ls -la '+new_install_dir+'/etc/')
+              print ""
+              print "Install Finish. Enjoy!"
+              print ""
               exit()
     elif database=='ytdb':
        print "Fetching MaNGOS YTDB database... ("+svn_ytdb+")"
@@ -195,6 +200,7 @@ def clean_MaNGOS():
     print "Enjoy! ;)"
 
 def database_install(db_host,db_user,db_pass,new_work_dir,new_install_dir,server):
+    print ""
     print "Preparing Databases..."
     os.system('mysql -h '+db_host+' -u '+db_user+' -p'+db_pass+' < '+new_work_dir+'/'+server+'/sql/create_mysql.sql')
     os.system('mysql -h '+db_host+' -u '+db_user+' -p'+db_pass+' characters < '+new_work_dir+'/'+server+'/sql/characters.sql')
@@ -207,7 +213,8 @@ def database_install(db_host,db_user,db_pass,new_work_dir,new_install_dir,server
     print "Createing full alpha database.."
     os.system('cd '+new_install_dir+'/database/database;sh make_full_db.sh')
     os.system('mysql -h '+db_host+' -u '+db_user+' -p'+db_pass+' mangos < '+new_install_dir+'/database/database/full_db.sql')
-    print "Done, All you need now is to set your current ip/realm name.. the easyste way is to use phpmyadmin and edit your realm database enjoy!"
+    print "Database setup done."
+    print ""
 
 def install_log(msg):
     timeStamp=strftime("%Y-%m-%d %H:%M:%S ", localtime())
