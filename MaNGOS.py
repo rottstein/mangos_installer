@@ -11,7 +11,8 @@
 # Script does still need alot of work but,
 # it will install download a clean copy of mangos
 
-import os
+import os, re
+from time import localtime, strftime
 
 #############################################
 # MaNGOS Install Config - (4.3.4)           #
@@ -112,9 +113,10 @@ def clean_MaNGOS():
     print "Install ScriptDev2? yes/no"
     scriptdev2=raw_input('Selection: ')
     print ""
-    print "Install Mangchat_rewrite eng. ? yes/no"
-    mangchat=raw_input('Selection: ')
-    print ""
+    if version=='cataclysm':
+       print "Install Mangchat_rewrite eng. ? yes/no"
+       mangchat=raw_input('Selection: ')
+       print ""
     print "Select database: default/ytdb/udb"
     database=raw_input('Selection: ')
     print ""
@@ -129,7 +131,7 @@ def clean_MaNGOS():
     print ""
     print "Patching MaNGOS..."
     os.system('cd  '+new_work_dir+'/'+server+';git apply src/bindings/ScriptDev2/patches/MaNGOS-*-ScriptDev2.patch')
-    if os.path.exists(new_work_dir+'/'+server+'') and os.path.exists(new_work_dir+'/'+server+'/src/bindings/ScriptDev2'):
+    if os.path.exists(new_work_dir+'/'+server) and os.path.exists(new_work_dir+'/'+server+'/src/bindings/ScriptDev2'):
        print "MaNGOS Succesfully Downloaded and patched! Continuing."
     else:
        print "Something went wrong.. Please check you have permission to create: "+new_work_dir
@@ -173,7 +175,10 @@ def clean_MaNGOS():
     print "Enjoy! ;)"
 
 def install_log(msg):
-    os.system('echo '+msg+' >> '+log+'')
+    timeStamp=strftime("%Y-%m-%d %H:%M:%S ", localtime())
+    f = open(log,'a')
+    f.write('Time: ['+str(now)+'] - MSG: '+msg+'\n')
+    f.close()
 
 def update_current():
     print "Work in progress! - This should be working soon."
