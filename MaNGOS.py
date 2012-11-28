@@ -161,6 +161,13 @@ def clean_MaNGOS():
            if os.path.exists(new_install_dir+'/database/database'):
               print "Done fecthing default alpha (cataclysm) database."
               database_install(db_host,db_user,db_pass,new_work_dir,new_install_dir,server)
+              if mangchat=='yes':
+                 print ""
+                 print "Injecting Mangchat sql files into the world db (mangos)."
+                 print "Remember to edit mangchat in your world db."
+                 print db_host+'/phpmyadmin'
+                 print ""
+                 os.system('mysql -h '+db_host+' -u '+db_user+' -p'+db_pass+' mangos < '+new_work_dir+'/'+server+'/sql/custom/mangchat_world.sql')
               exit()
     elif database=='ytdb':
        print "Fetching MaNGOS YTDB database... ("+svn_ytdb+")"
