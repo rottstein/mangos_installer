@@ -161,6 +161,11 @@ def clean_MaNGOS():
            if os.path.exists(new_install_dir+'/database/database'):
               print "Done fecthing default alpha (cataclysm) database."
               database_install(db_host,db_user,db_pass,new_work_dir,new_install_dir,server)
+              print ""
+              print "Copying MaNGOS default sql files to "+new_install_dir+"/sql/"
+              print "This is only as a back if you choosed a default install."
+              print ""
+              os.system('cp -r '+new_work_dir+'/sql '+new_install_dir+'/')
               if mangchat=='yes':
                  print ""
                  print "Injecting Mangchat sql files into the world db (mangos)."
