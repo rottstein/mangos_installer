@@ -73,11 +73,14 @@ def clean_MaNGOS():
        restart_script()
     print ""
     print "Select where to install. default: "+work_dir
+    print "Syntax: default or /path/to/new/location"
     new_work_dir=raw_input('Place: ')
     if new_work_dir=='default':
        new_work_dir=work_dir
        print ""
+    print ""
     print "Select where to install. default: "+install_dir
+    print "Syntax: default or /path/to/new/location"
     new_install_dir=raw_input('Place: ')
     if new_install_dir=='default':
        new_install_dir=install_dir
@@ -179,14 +182,14 @@ def restart_script():
     clean_MaNGOS()
 
 def welcome():
-    greet="\n Welcome to my install script, yet another lazy mans work ;)\n This has been tested and works whit the latest rev of MaNGOS and Ubuntu 12.04\n so fare its setup for latest client: 4.3.4 \n Please dont blame me if anything goes wrong its just a help i will try to keep it updated but i still leaves irl to ;) \n anyways sit back grab a beer and relaxe and let it work!\n Enjoy! ;)"
+    greet="\n Welcome to my install script, yet another lazy mans work ;)\n This has been tested and works whit the latest rev of MaNGOS and Ubuntu 12.04\n so fare its setup for latest client: 4.3.4 \n Please dont blame me if anything goes wrong its just a help i will try to keep it updated but i still lifes irl to ;) \n anyways sit back grab a beer and relaxe and let it work!\n Enjoy! ;)"
     return greet
 
 ####################################################
 
 try:
     print welcome()
-    print "\n Syntax: new (clean install) / update (update your current work to latest rev.)\n"
+    print "\n Syntax: clean (clean install) / update (update your current work to latest rev.) / quit\n"
     selection=raw_input('Please enter your choise: \n')
 except:
     print "Script ended! \n"
