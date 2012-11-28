@@ -17,10 +17,6 @@ from time import localtime, strftime
 #############################################
 # MaNGOS Install Config - (4.3.4)           #
 #############################################
-db_host=''
-db_user=''
-db_pass=''
-
 git_mangos='git://github.com/mangos/server.git'
 git_mangos_wotlk='git://github.com/cmangos/mangos-wotlk.git'
 git_mangos_tbc='https://github.com/cmangos/mangos-tbc.git'
@@ -34,9 +30,6 @@ git_mangchat='git://github.com/gimli/server.git mangchat'
 
 svn_ytdb='http://subversion.assembla.com/svn/ytdbase/'
 svn_ude='https://unifieddb.svn.sourceforge.net/svnroot/unifieddb'
-
-#CPU 2 (dual core) 4 (quadcore)
-cores=4
 
 install_dir='/mnt/mangos'
 work_dir='/tmp/mangos'
@@ -87,6 +80,7 @@ def clean_MaNGOS():
        new_install_dir=install_dir
        print ""
     if os.path.exists(work_dir):
+       print ""
        print "Delete Current work in "+new_work_dir+"? yes/no"
        delete=raw_input('Selection: ')
        if delete=='yes':
@@ -122,11 +116,11 @@ def clean_MaNGOS():
     print ""
     print "Database info: "
     db_host=raw_input('Host: ')
-    print ""
     db_user=raw_input('User: ')
-    print ""
     db_pass=raw_input('Password: ')
     print ""
+    print "CPU info. Nr. of cpu's?"
+    cores=int(raw_input('Cores: '))
     print "Script will now do its tricks, sit back relaxe and grab a beer.. :)\n"
     os.system('mkdir '+new_work_dir)
     print "Fetching MaNGOS source files... ("+mangos+")"
