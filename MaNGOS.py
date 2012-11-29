@@ -40,10 +40,10 @@ svn_acid_tbc='https://sd2-acid.svn.sourceforge.net/svnroot/sd2-acid/trunk/tbc/'
 
 # Classic
 git_mangos_classic='git://github.com/mangos-zero/server.git'
-git_scriptdev2_classic='https://github.com/mangos-zero/scriptdev0.git'
-git_database_classic='https://github.com/mangos-zero/database'
+git_scriptdev2_classic='git://github.com/mangos-zero/scriptdev0.git'
+git_database_classic='git://github.com/mangos-zero/database.git'
 svn_acid_classic='https://sd2-acid.svn.sourceforge.net/svnroot/sd2-acid/trunk/classic/'
-git_php_read_classic='https://github.com/mangos-zero/php-dbc.git'
+git_php_read_classic='git://github.com/mangos-zero/php-dbc.git'
 
 # Custom Databases
 svn_ytdb='http://subversion.assembla.com/svn/ytdbase/'
@@ -74,15 +74,27 @@ def clean_MaNGOS():
     if version=='cataclysm':
        mangos=git_mangos
        server='server'
+       scriptdev2=git_scriptdev2
+       acid=git_acid
+       database=git_database
     elif version=='wotlk':
        mangos=git_mangos_wotlk
        server='mangos-wotlk'
+       scriptdev2=git_scriptdev2_wotlk
+       acid=svn_acid_wotlk
+       database=svn_ytdb_wotlk
     elif version=='tbc':
        mangos=git_mangos_tbc
-       server='mangos-tbc'
+       server='mangos-one'
+       scriptdev2=git_scriptdev2_tbc
+       acid=svn_acid_tbc
+       database=svn_acid_tbc
     elif version=='classic':
        mangos=git_mangos_classic
-       server='mangos-classic'
+       server='mangos-zero'
+       scriptdev2=git_scriptdev2_classic
+       acid=svn_acid_classic
+       database=git_database_classic
     else:
        print "I wasnt able to read you input!"
        restart_script()
@@ -136,6 +148,7 @@ def clean_MaNGOS():
     else:
        mangchat='no'
        global mangchat
+    print ""
     print "Select database: default/ytdb/udb"
     database=raw_input('Selection: ')
     print ""
@@ -152,23 +165,23 @@ def clean_MaNGOS():
     print "Fetching MaNGOS source files... ("+mangos+")"
     for line in os.popen('cd '+new_work_dir+ ';git clone '+mangos+'').readlines():
            print line
-    print "Fetching ScriptDev2 source files... ("+git_scriptdev2+")"
-    for line in os.popen('cd '+new_work_dir+'/'+server+'/;git clone '+git_scriptdev2+' src/bindings/ScriptDev2').readlines():
+    print "Fetching ScriptDev2 source files... ("+scriptdev2+")"
+    for line in os.popen('cd '+new_work_dir+'/server/;git clone '+scriptdev2+' src/bindings/ScriptDev2').readlines():
            print line
     print ""
     print "Patching MaNGOS..."
-    os.system('cd  '+new_work_dir+'/'+server+';git apply src/bindings/ScriptDev2/patches/MaNGOS-*-ScriptDev2.patch')
-    if os.path.exists(new_work_dir+'/'+server) and os.path.exists(new_work_dir+'/'+server+'/src/bindings/ScriptDev2'):
+    os.system('cd  '+new_work_dir+'/server;git apply src/bindings/ScriptDev2/patches/MaNGOS-*-ScriptDev2.patch')
+    if os.path.exists(new_work_dir+'/server') and os.path.exists(new_work_dir+'/server/src/bindings/ScriptDev2'):
        print "MaNGOS Succesfully Downloaded and patched! Continuing."
     else:
        print "Something went wrong.. Please check you have permission to create: "+new_work_dir
        exit()
     if mangchat=='yes' and version=='cataclysm':
        print "\n Fetching Manchat_rewrite source files... ("+git_mangchat+")\n"
-       print os.system("cd "+new_work_dir+"/"+server+";git add .;git commit -a -m 'Commiting current work before fetching mangchat.'")
-       print os.system('cd '+new_work_dir+'/'+server+';git pull '+git_mangchat)
+       print os.system("cd "+new_work_dir+"/server;git add .;git commit -a -m 'Commiting current work before fetching mangchat.'")
+       print os.system('cd '+new_work_dir+'/server;git pull '+git_mangchat)
        print ""
-    print os.system('cd '+new_work_dir+'/'+server+';mkdir '+new_work_dir+'/'+server+'/objdir;cd '+new_work_dir+'/'+server+'/objdir;cmake .. -DPREFIX='+str(new_install_dir)+';make -j'+str(cores)+';make install')
+    print os.system('cd '+new_work_dir+'/server;mkdir '+new_work_dir+'/server/objdir;cd '+new_work_dir+'/server/objdir;cmake .. -DPREFIX='+str(new_install_dir)+';make -j'+str(cores)+';make install')
     if os.path.exists(new_install_dir):
        print "MaNGOS Successfully compile and installed into: "+new_install_dir
     else:
@@ -180,24 +193,24 @@ def clean_MaNGOS():
     print os.system('ls -la '+new_install_dir+'/etc/')
     print ""
     if database=='default':
-       print "Fetching MaNGOS Default database... ("+git_database+")"
+       print "Fetching MaNGOS Default database... ("+database+")"
        os.system('mkdir '+new_install_dir+'/database;cd '+new_install_dir+'/database')
-       for line in os.popen('cd '+new_install_dir+'/database/;git clone '+git_database):
+       for line in os.popen('cd '+new_install_dir+'/database/;git clone '+database):
            if os.path.exists(new_install_dir+'/database/database'):
               print "Done fecthing default alpha (cataclysm) database."
-              database_install(db_host,db_user,db_pass,new_work_dir,new_install_dir,server)
+              database_install(db_host,db_user,db_pass,new_work_dir,new_install_dir,'server')
               print ""
               print "Copying MaNGOS default sql files to "+new_install_dir+"/sql/"
               print "This is only as a backup if you choosed a default install."
               print ""
-              os.system('cp -r '+new_work_dir+'/'+server+'/sql '+new_install_dir+'/')
+              os.system('cp -r '+new_work_dir+'/server/sql '+new_install_dir+'/')
               if mangchat=='yes':
                  print ""
                  print "Injecting Mangchat sql files into the world db (mangos)."
                  print "Remember to edit mangchat in your world db."
                  print 'http://'+db_host+'/phpmyadmin'
                  print ""
-                 os.system('mysql -h '+db_host+' -u '+db_user+' -p'+db_pass+' mangos < '+new_work_dir+'/'+server+'/sql/custom/mangchat_world.sql')
+                 os.system('mysql -h '+db_host+' -u '+db_user+' -p'+db_pass+' mangos < '+new_work_dir+'/server/sql/custom/mangchat_world.sql')
               print "remember to edit files in "+new_install_dir+"/etc/"
               print os.system('ls -la '+new_install_dir+'/etc/')
               print ""
