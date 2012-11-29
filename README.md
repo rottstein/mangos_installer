@@ -1,6 +1,8 @@
 mangos_installer
 ================
 
+NOTE: Correctly rewriting for new updated link. as for now is does only work for Cataclysm users..
+
 Just another lazy mand script, for a automated install. ;)
 
 Just run script syntax: python MaNGOS.py
