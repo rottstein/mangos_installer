@@ -65,13 +65,13 @@ def clean_MaNGOS():
     else:
        print "I wasnt able to read you input!"
        restart_script()
+    #print ""
+    #print "Select where to install. default: "+work_dir
+    #print "Syntax: default or /path/to/new/location"
+    #new_work_dir=raw_input('Place: ')
+    #if new_work_dir=='default':
+    new_work_dir=work_dir
     print ""
-    print "Select where to install. default: "+work_dir
-    print "Syntax: default or /path/to/new/location"
-    new_work_dir=raw_input('Place: ')
-    if new_work_dir=='default':
-       new_work_dir=work_dir
-       print ""
     print ""
     print "Select where to install. default: "+install_dir
     print "Syntax: default or /path/to/new/location"
@@ -110,7 +110,11 @@ def clean_MaNGOS():
     if version=='cataclysm':
        print "Install Mangchat_rewrite eng. ? yes/no"
        mangchat=raw_input('Selection: ')
+       global mangchat
        print ""
+    else:
+       mangchat='no'
+       global mangchat
     print "Select database: default/ytdb/udb"
     database=raw_input('Selection: ')
     print ""
@@ -138,7 +142,7 @@ def clean_MaNGOS():
     else:
        print "Something went wrong.. Please check you have permission to create: "+new_work_dir
        exit()
-    if mangchat=='yes':
+    if mangchat=='yes' and version=='cataclysm':
        print "\n Fetching Manchat_rewrite source files... ("+git_mangchat+")\n"
        print os.system("cd "+new_work_dir+"/"+server+";git add .;git commit -a -m 'Commiting current work before fetching mangchat.'")
        print os.system('cd '+new_work_dir+'/'+server+';git pull '+git_mangchat)
