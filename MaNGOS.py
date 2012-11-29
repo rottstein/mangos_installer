@@ -15,21 +15,42 @@ import os, re
 from time import localtime, strftime
 
 #############################################
-# MaNGOS Install Config - (4.3.4)           #
+# MaNGOS Install Config -                   #
 #############################################
-git_mangos='git://github.com/mangos/server.git'
-git_mangos_wotlk='git://github.com/cmangos/mangos-wotlk.git'
-git_mangos_tbc='https://github.com/cmangos/mangos-tbc.git'
-git_mangos_classic='git://github.com/cmangos/mangos-classic.git'
 
+# Cataclysm
+git_mangos='git://github.com/mangos/server.git'
 git_scriptdev2='git://github.com/mangos/scripts.git'
 git_acid='git://github.com/scriptdev2/acid.git'
 git_database='git://github.com/mangos/database.git'
 
-git_mangchat='git://github.com/gimli/server.git mangchat'
+# Wotlk
+git_mangos_wotlk='git://github.com/mangos-wotlk/server.git'
+git_scriptdev2_wotlk='git://github.com/scriptdev2/scriptdev2.git'
+svn_udb_wotlk='http://unifieddb.svn.sourceforge.net/'
+svn_ytdb_wotlk='http://subversion.assembla.com/svn/ytdbase/'
+svn_psmd_wotlk='http://subversion.assembla.com/svn/psmdb_wotlk/'
+svn_acid_wotlk='https://sd2-acid.svn.sourceforge.net/svnroot/sd2-acid/trunk/wotlk/'
 
+# TBC
+git_mangos_tbc='git://github.com/mangos-one/server.git'
+git_scriptdev2_tbc='git://github.com/mangos-one/scripts.git'
+git_database_tbc='git://github.com/mangos-one/database.git'
+svn_acid_tbc='https://sd2-acid.svn.sourceforge.net/svnroot/sd2-acid/trunk/tbc/'
+
+# Classic
+git_mangos_classic='git://github.com/mangos-zero/server.git'
+git_scriptdev2_classic='https://github.com/mangos-zero/scriptdev0.git'
+git_database_classic='https://github.com/mangos-zero/database'
+svn_acid_classic='https://sd2-acid.svn.sourceforge.net/svnroot/sd2-acid/trunk/classic/'
+git_php_read_classic='https://github.com/mangos-zero/php-dbc.git'
+
+# Custom Databases
 svn_ytdb='http://subversion.assembla.com/svn/ytdbase/'
-svn_ude='https://unifieddb.svn.sourceforge.net/svnroot/unifieddb'
+svn_udb='https://unifieddb.svn.sourceforge.net/svnroot/unifieddb'
+
+# Custom Repo
+git_mangchat='git://github.com/gimli/server.git mangchat'
 
 install_dir='/mnt/mangos'
 work_dir='/tmp/mangos'
