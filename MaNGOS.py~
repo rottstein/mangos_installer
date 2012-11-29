@@ -173,7 +173,7 @@ def clean_MaNGOS():
                  print 'http://'+db_host+'/phpmyadmin'
                  print ""
                  os.system('mysql -h '+db_host+' -u '+db_user+' -p'+db_pass+' mangos < '+new_work_dir+'/'+server+'/sql/custom/mangchat_world.sql')
-              print "remember to edit files in "+new_install_dir+"/etc/"
+              print "remember to edit files in "+new_install_dir+"/etc/
               print os.system('ls -la '+new_install_dir+'/etc/')
               print ""
               print "Install Finish. Enjoy!"
