@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 
-import os, re
+import os, re, MySQLdb
 from time import localtime, strftime
 
 #############################################
@@ -320,6 +320,13 @@ def MaNGOS_Database(host,user,password,work_dir,install_dir,version):
     print "\nCreateing full alpha database.."
     os.system('cd '+install_dir+'/database/database;sh make_full_db.sh')
     os.system('mysql -h '+host+' -u '+user+' -p'+password+' mangos < '+install_dir+'/database/database/full_db.sql')
+    realm_name=Quest(0)
+    ip_addr=Quest(0)
+    db = MySQLdb.connect(host,user,password,'realmd')
+    cursor = db.cursor()
+    cursor.execute("UPDATE realmlist SET name = '"+realm_name+"' WHERE id = 1")
+    cursor.execute("UPDATE realmlist SET address = '"+ip_addr+"' WHERE id = 1")
+    result = cursor.fetchall()
     print "\nDatabase setup done."
 
 def Quest(question):
