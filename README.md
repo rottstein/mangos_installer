@@ -7,9 +7,8 @@ Just run script syntax: python MaNGOS.py
 
 Features:
 Download and compile MaNGOS and Scriptdev2
-automated database setup for MaNGOS and ScriptDev2
 
- Cataclysm:
+           Cataclysm:
            Core: MangChat 1.7.8
                  TeleNPC Core Patch
                  Max Level & Stackable Core
@@ -20,7 +19,7 @@ automated database setup for MaNGOS and ScriptDev2
                  LevelNPC
                  ProfessionNPC
 
- TBC:
+          TBC:
           Database:
                  ACID auto setup
 
@@ -28,27 +27,27 @@ This script will install the following packages
 
 ##################################################
 
-*build-essential 
-*gcc 
-*g++ 
-*automake 
-*git-core 
-*autoconf 
-*make 
-*patch 
-*libmysql++-dev 
-*mysql-server 
-*libtool 
-*libssl-dev 
-*grep 
-*binutils 
-*zlibc 
-*libc6 
-*libbz2-dev 
-*cmake 
-*subversion 
-*phpmyadmin
-*screen
+          *build-essential 
+          *gcc 
+          *g++ 
+          *automake 
+          *git-core 
+          *autoconf 
+          *make 
+          *patch 
+          *libmysql++-dev 
+          *mysql-server 
+          *libtool 
+          *libssl-dev 
+          *grep 
+          *binutils 
+          *zlibc 
+          *libc6 
+          *libbz2-dev 
+          *cmake 
+          *subversion 
+          *phpmyadmin
+          *screen
 
 ##########################################
 
