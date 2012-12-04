@@ -50,37 +50,23 @@ This script will install the following packages
           *screen
 
 ##########################################
+Changelog: 
+            version 1.0
+            Script simplyfied
+            fixed alot of typo's
+            removed log function
+            add svn for acid/ytdb/udb
+            new option for AuctionHouseBot since its precompiled into the core
+            new option fireup server when done
+            show all needed info at the end of the install
+            new function Quest(0) helps make the script abit more clean
 
-  Changelog: 
-  version 1.0
-  Script simplyfied
-  fixed alot of typo's
-  removed log function
-  add svn for acid/ytdb/udb
-  new option for AuctionHouseBot since its precompiled into the core
-  new option fireup server when done
-  show all needed info at the end of the install
-  new function Quest(0) helps make the script abit more clean
-
-  TODO:
-      Fixing Mangos-zero scriptdevzero patch (note. it will download and compile mangos-zero just whitout the sdz part..)
-      Finde correct version sd2 for wotlk
-      Update MaNGOS_Database() to setup udb and ytdb for wotlk 
+            TODO:
+            Fixing Mangos-zero scriptdevzero patch (note. it will download and compile mangos-zero just whitout the sdz part..)
+            Finde correct version sd2 for wotlk
+            Update MaNGOS_Database() to setup udb and ytdb for wotlk 
 
 ##########################################################
-  old logs
-  version 0.2
-
-  *fix some typo's
-  *rewrite log function
-  *add automated Database setup (so far only for Cataclysm not sure if this works whit wotlk,tbc,classic and only default database)
-  *all input moved to raw_input() (no need to edit MaNGOS.py)
-
-  needs fixing:
-
-  *log function
-  *update section
-  *database function
 
 
 
