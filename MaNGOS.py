@@ -39,7 +39,7 @@ svn_ytdb='http://subversion.assembla.com/svn/ytdbase/'
 svn_udb='https://unifieddb.svn.sourceforge.net/svnroot/unifieddb'
 
 # Custom Repo
-git_mangchat='git@isengard.dk:mangchat.git'
+git_mangchat='git://github.com/gimli/server.git'
 git_custom_scriptdev2='git@isengard.dk:scriptdev2.git'
 
 # Paths
@@ -158,6 +158,14 @@ def MaNGOS_Install(custom,scriptdev2,version):
        cursor.execute("UPDATE realmlist SET name = '"+str(realm_name)+"' WHERE id = 1")
        cursor.execute("UPDATE realmlist SET address = '"+str(ip_addr)+"' WHERE id = 1")
        result = cursor.fetchall()
+       if version=='TBC':
+          print "\nFetching ACID "+version
+          fetch_svn(install_dir,svn_acid_tbc,version)
+          print "\nRunning ACID sql's.."
+          os.system('mysql -h '+host+' -u '+user+' -p'+password+' mangos < '+install_dir+'/database/tbc/2.0.7/2.0.7_acid.sql')
+          os.system('mysql -h '+host+' -u '+user+' -p'+password+' mangos < '+work_dir+'/server/src/bindings/ScriptDev2/sql/mangos_scriptname_full.sql')
+       else:
+          pass
        print "\nCopying/renaming MaNGOS *.conf files, place: "+install_dir+"/etc\n"
        os.system('cd '+str(install_dir)+'/etc/;cp mangosd.conf.dist mangosd.conf;cp realmd.conf.dist realmd.conf;cp scriptdev2.conf.dist scriptdev2.conf;rm -rf *.dist')
        print "\nActivate AuctionHouseBot?"
@@ -199,8 +207,8 @@ def fetch_mangchat(work_dir,link):
     print os.system("cd "+work_dir+"/server;git add .;git commit -a -m 'Commiting current work before fetching mangchat.'")
     print os.system('cd '+work_dir+'/server;git pull '+link)
 
-def fetch_svn(link):
-    pass
+def fetch_svn(install_dir,link,version):
+    os.system('cd '+install_dir+'/database/;svn co '+link+'')
 
 def syntax_error(syntax):
     print "[ERROR] : Syntax error! ("+str(syntax)+")"
