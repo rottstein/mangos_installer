@@ -160,7 +160,12 @@ def MaNGOS_Install(custom,scriptdev2,version):
        result = cursor.fetchall()
        print "\nCopying/renaming MaNGOS *.conf files, place: "+install_dir+"/etc\n"
        os.system('cd '+str(install_dir)+'/etc/;cp mangosd.conf.dist mangosd.conf;cp realmd.conf.dist realmd.conf;cp scriptdev2.conf.dist scriptdev2.conf')
-       print os.system('ls -la '+str(install_dir)+'/etc/')+"\n"
+       print "\nActivate AuctionHouseBot?"
+       ahbot=Quest(0)
+       if ahbot=='yes' or ahbot=='Yes':
+          os.system('cd '+work_dir+'/src/game/AuctionHouseBot/; cp ahbot.conf.dist.in '+install_dir+'/etc/ahbot.conf')
+       print os.system('ls -la '+str(install_dir)+'/etc/')
+       print "\nFire up the server?"
        start_server=Quest(0)
        if start_server=='yes' or start_server=='Yes':
           os.system('cd '+str(install_dir)+'/bin/;screen -A -m -d -S mangosworld ./mangosd;screen -A -m -d -S mangosrealm ./realmd')
@@ -209,12 +214,6 @@ def Install_dep(version):
     else:
        pass
 
-def folder(dir):
-    if os.path.exists(dir):
-       return 0
-    else:
-       return 1
-
 def del_folder(dir):
     if os.path.exists(dir):
        print "\nTheres already a folder by that name, you want me to delete it? yes/no ("+dir+")"
@@ -262,12 +261,6 @@ def Quest(question):
        question=question
     answer=raw_input(question)
     return answer
-
-def Log(msg):
-    timeStamp=strftime("%Y-%m-%d %H:%M:%S ", localtime())
-    f = open(log,'a')
-    f.write('Time: ['+str(now)+'] - MSG: '+msg+'\n')
-    f.close()
 
 def restart_script():
     Menu()
