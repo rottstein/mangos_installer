@@ -39,7 +39,7 @@ svn_ytdb='http://subversion.assembla.com/svn/ytdbase/'
 svn_udb='https://unifieddb.svn.sourceforge.net/svnroot/unifieddb'
 
 # Custom Repo
-git_mangchat='git://github.com/gimli/server.git'
+git_mangchat='git://github.com/gimli/server.git mangchat'
 git_custom_scriptdev2='git://github.com/gimli/scriptdev2.git'
 
 # Paths
@@ -95,7 +95,7 @@ def MaNGOS_Install(custom,scriptdev2,version):
           print "\nFetch Custom repo containing: LevelNPC, ProfessionNPC, TeleNPC2, Summon Item Scripts"
           custom=Quest(0)
           if version=='Cataclysm' and custom=='yes' or custom=='yes':
-             os.system('cd '+work_dir+'/server/src/bindings/ScriptDev2/;git pull git@isengard.dk:scriptdev2.git')
+             os.system('cd '+work_dir+'/server/src/bindings/ScriptDev2/;git pull '+git_custom_scriptdev2)
           else:
              pass
        elif os.path.exists(work_dir+'/server/src/bindings/scripts') and version=='TBC':
