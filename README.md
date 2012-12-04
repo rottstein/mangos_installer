@@ -50,7 +50,10 @@ This script will install the following packages
           *screen
 
 ##########################################
-Changelog: 
+Current ChangeLog
+
+            Changelog:
+ 
             version 1.0
             Script simplyfied
             fixed alot of typo's
