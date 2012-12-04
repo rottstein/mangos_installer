@@ -40,7 +40,7 @@ svn_udb='https://unifieddb.svn.sourceforge.net/svnroot/unifieddb'
 
 # Custom Repo
 git_mangchat='git://github.com/gimli/server.git'
-git_custom_scriptdev2='git@isengard.dk:scriptdev2.git'
+git_custom_scriptdev2='git://github.com/gimli/scriptdev2.git'
 
 # Paths
 work_dir='/tmp/mangos'
