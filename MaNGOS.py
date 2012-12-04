@@ -273,7 +273,7 @@ def welcome():
 def Complete(version,install_dir,realmdname,realmdip):
     end="""
         Script is now done installing. you are now ready to run your server! ("""+version+""")
-        Set your client realmlist to: localhost
+        Set your client realmlist to: """+realmip+"""
         Login:
               username: administrator
               password: administrator
