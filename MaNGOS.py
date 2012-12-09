@@ -238,7 +238,7 @@ def Install_dep(version):
     print "Installing necessary packages to compile and run MaNGOS? yes/no"
     install_dep=raw_input('Selection: ')
     if install_dep=='yes':
-       os.system('sudo apt-get install build-essential gcc g++ automake git-core autoconf make patch libmysql++-dev mysql-server libtool libssl-dev grep binutils zlibc libc6 libbz2-dev cmake subversion phpmyadmin screen')
+       os.system('sudo apt-get install build-essential gcc g++ automake git-core autoconf make patch libmysql++-dev mysql-server libtool libssl-dev grep binutils zlibc libc6 libbz2-dev cmake subversion phpmyadmin screen libace-6.0.1 libace-dev')
     else:
        pass
 
