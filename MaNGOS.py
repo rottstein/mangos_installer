@@ -163,7 +163,7 @@ def MaNGOS_Install(custom,scriptdev2,version):
           elif version=='Classic':
              MaNGOS_Database(host,user,password,work_dir,install_dir,'classic')
           else:
-             print "Error: Version didnt get parsed right - Version: "+version+"
+             print "Error: Version didnt get parsed right - Version: "+version
              exit()
        print "\nPlease enter your realm name?"
        realm_name=Quest(0)
