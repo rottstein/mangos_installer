@@ -321,7 +321,7 @@ def MaNGOS_Database(host,user,password,work_dir,install_dir,version):
           cursor = db.cursor()
           cursor.execute('ALTER TABLE db_version CHANGE COLUMN required_12195_02_mangos_mangos_string required_s1718_12113_01_mangos_spell_template bit')
        print "\nDatabase setup done."
-     else:
+    else:
        print "\nSkipping, Reason: Using current installed databases!"
 
 def Quest(question):
