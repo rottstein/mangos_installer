@@ -261,6 +261,42 @@ def Fetch_Database(install_dir,link,version):
               print "\nDone fecthing default database."
 
 def MaNGOS_Database(host,user,password,work_dir,install_dir,version):
+    print "\nChecking if databases already exists..."
+    db = MySQLdb.connect(host,user,password)
+    world = db.cursor()
+    world.execute("SHOW DATABASES LIKE 'mangos'")
+    realm = db.cursor()
+    realm.execute("SHOW DATABASES LIKE 'realmd'")
+    char = db.cursor()
+    char.execute("SHOW DATABASES LIKE 'characters'")
+    script = db.cursor()
+    script.execute("SHOW DATABASES LIKE 'scriptdev2'")
+    world_db = world.fetchall()
+    char_db = char.fetchall()
+    realm_db = realm.fetchall()
+    script_db = script.fetchall()
+    if not world_db:
+       print "\nWorld db doesnt exists, Continuing!"
+    if not realm_db:
+       print "\nRealm db doesnt exists, Continuing!"
+    if not char_db:
+       print "\nCharacter db doesnt exists, Continuing!"
+    if not script_db:
+       print "\nScriptDev2 db doesnt exists, Continuing!"
+    else:
+       for record in world_db:
+        print "\nDatabases already exists!"
+        print "\nDelete Current databases?"
+        del_db=Quest(0)
+        if del_db=='yes' or 'Yes':
+            world.execute('DROP database `mangos`')
+            realm.execute('DROP database `realmd`')
+            char.execute('DROP database `characters`')
+            script.execute('DROP database `scriptdev2`')
+            world.execute("DROP USER 'mangos'@'localhost'")
+        else:
+            print "\nInstaller is shuttingdown! Please Check the log file for more information!"
+            exit()
     print "\nPreparing Databases..."
     os.system('mysql -h '+host+' -u '+user+' -p'+password+' < '+work_dir+'/server/sql/create_mysql.sql')
     os.system('mysql -h '+host+' -u '+user+' -p'+password+' characters < '+work_dir+'/server/sql/characters.sql')
@@ -280,6 +316,10 @@ def MaNGOS_Database(host,user,password,work_dir,install_dir,version):
     print "\nCreateing full database.."
     os.system('cd '+install_dir+'/database/database;sh make_full_db.sh')
     os.system('mysql -h '+host+' -u '+user+' -p'+password+' mangos < '+install_dir+'/database/database/full_db.sql')
+    if version=='tbc':
+       # Minor fix for TBC this is only temperary!
+       cursor = db.cursor()
+       cursor.execute('ALTER TABLE db_version CHANGE COLUMN required_12195_02_mangos_mangos_string required_s1718_12113_01_mangos_spell_template bit')
     print "\nDatabase setup done."
 
 def Quest(question):
@@ -300,7 +340,7 @@ def welcome():
 def Complete(version,install_dir,realmdname,realmdip):
     end="""
         Script is now done installing. you are now ready to run your server! ("""+version+""")
-        Set your client realmlist to: """+realmip+"""
+        Set your client realmlist to: """+realmdip+"""
         Login:
               username: administrator
               password: administrator
@@ -345,6 +385,6 @@ def Menu():
        exit()
     else:
        syntax_error('Cataclysm/Wotlk/TBC/Classic/quit')
-       #restart_script()
+       restart_script()
 
 Menu()
