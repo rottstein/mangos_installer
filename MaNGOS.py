@@ -40,6 +40,10 @@ svn_udb='https://unifieddb.svn.sourceforge.net/svnroot/unifieddb'
 
 # Custom Repo
 git_mangchat='git://github.com/gimli/server.git mangchat'
+git_gethostbyname='git://github.com/gimli/server.git gethostbyname'
+git_Maxlevelstackablecore='git://github.com/gimli/server.git Max_level_stackable_core'
+git_Telenpc='git://github.com/gimli/server.git TeleNPC2'
+git_announce_kick='git://github.com/gimli/server.git announce_kick'
 git_custom_scriptdev2='git://github.com/gimli/scriptdev2.git'
 
 # Paths
@@ -127,6 +131,18 @@ def MaNGOS_Install(custom,scriptdev2,version):
              exit()
     else:
           pass
+    print "\nFetch Custom scripts like: GetHostByName (use hostname in realm), MaxLevel & Stackable Core, TeleNPC2 Core, Announce Kicks?"
+    if version=='Cataclysm': 
+       Custom=Quest(0)
+       if Custom=='Yes' or Custom=='yes' and version=='Cataclysm':
+          git_mangchat(work_dir,git_gethostbyname)
+          git_mangchat(work_dir,git_Maxlevelstackablecore)
+          git_mangchat(work_dir,git_TeleNPC)
+          git_mangchat(work_dir,git_announce_kick)
+       else:
+          pass
+    else:
+         pass
     print os.system('cd '+work_dir+'/server;mkdir '+work_dir+'/server/objdir;cd '+work_dir+'/server/objdir;cmake .. -DPREFIX='+str(install_dir)+';make -j'+str(cores)+';make install')
     if os.path.exists(install_dir):
        print "\nMaNGOS Succesfully installed!"
@@ -147,7 +163,7 @@ def MaNGOS_Install(custom,scriptdev2,version):
           elif version=='Classic':
              MaNGOS_Database(host,user,password,work_dir,install_dir,'classic')
           else:
-             print "Error: Version didnt get parsed right - Version: "+version
+             print "Error: Version didnt get parsed right - Version: "+version+"
              exit()
        print "\nPlease enter your realm name?"
        realm_name=Quest(0)
@@ -163,7 +179,7 @@ def MaNGOS_Install(custom,scriptdev2,version):
           fetch_svn(install_dir,svn_acid_tbc,version)
           print "\nRunning ACID sql's.."
           os.system('mysql -h '+host+' -u '+user+' -p'+password+' mangos < '+install_dir+'/database/tbc/2.0.7/2.0.7_acid.sql')
-          os.system('mysql -h '+host+' -u '+user+' -p'+password+' mangos < '+work_dir+'/server/src/bindings/ScriptDev2/sql/mangos_scriptname_full.sql')
+          os.system('mysql -h '+host+' -u '+user+' -p'+password+' mangos < '+work_dir+'/server/src/bindings/scripts/sql/mangos_scriptname_full.sql')
        else:
           pass
        print "\nCopying/renaming MaNGOS *.conf files, place: "+install_dir+"/etc\n"
@@ -190,6 +206,9 @@ def fetch_git(work_dir,link):
     for line in os.popen('cd '+work_dir+ ';git clone '+link+'').readlines():
            print line
 
+def fetch_custom_git():
+     pass
+
 def fetch_scriptdev2(work_dir,link,version):
     if version=='tbc':
        folder='scripts'
@@ -204,8 +223,8 @@ def fetch_scriptdev2(work_dir,link,version):
            print line
 
 def fetch_mangchat(work_dir,link):
-    print os.system("cd "+work_dir+"/server;git add .;git commit -a -m 'Commiting current work before fetching mangchat.'")
-    print os.system('cd '+work_dir+'/server;git pull '+link)
+    print os.system("cd "+work_dir+"/server;git add .;git commit -a -m 'Commiting current work before fetching.'")
+    print os.system('cd '+work_dir+'/server;git pull '+str(link))
 
 def fetch_svn(install_dir,link,version):
     os.system('cd '+install_dir+'/database/;svn co '+link+'')
@@ -299,6 +318,7 @@ def Complete(version,install_dir,realmdname,realmdip):
               name: """+realmdname+"""
               ip: """+realmdip+"""
         """
+    return end
 
 def Menu():
     try:
@@ -324,7 +344,7 @@ def Menu():
     elif selection=='quit':
        exit()
     else:
-       syntax_error('Cataclysm/Wotlk/TBC/Classic')
-       restart_script()
+       syntax_error('Cataclysm/Wotlk/TBC/Classic/quit')
+       #restart_script()
 
 Menu()
