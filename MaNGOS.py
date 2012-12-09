@@ -199,8 +199,8 @@ def MaNGOS_Install(custom,scriptdev2,version):
           os.system('echo screen -A -m -d -S mangosworld ./mangosd >> start_world.sh')
           os.system('echo screen -A -m -d -S mangosrealm ./realmd >> start_realm.sh') 
           print os.system('ps ax | grep SCREEN')
-       Complete(version,str(install_dir),realm_name,ip_addr)
-       exit()
+          Complete(version,install_dir,realm_name,ip_addr)
+          exit()
 
 def fetch_git(work_dir,link):
     for line in os.popen('cd '+work_dir+ ';git clone '+link+'').readlines():
@@ -318,6 +318,7 @@ def MaNGOS_Database(host,user,password,work_dir,install_dir,version):
        os.system('mysql -h '+host+' -u '+user+' -p'+password+' mangos < '+install_dir+'/database/database/full_db.sql')
        if version=='tbc':
           # Minor fix for TBC this is only temperary!
+          db = MySQLdb.connect(host,user,password,'mangos')
           cursor = db.cursor()
           cursor.execute('ALTER TABLE db_version CHANGE COLUMN required_12195_02_mangos_mangos_string required_s1718_12113_01_mangos_spell_template bit')
        print "\nDatabase setup done."
