@@ -269,7 +269,7 @@ def Fetch_Database(install_dir,link,version):
            if os.path.exists(install_dir+'/database/database'):
               print "\nDone fecthing default database."
 
-def MaNGOS_Database(host,user,password,work_dir,install_dir,version):
+def check_Database(host,user,password):
     print "\nChecking if databases already exists..."
     db = MySQLdb.connect(host,user,password)
     world = db.cursor()
@@ -295,7 +295,7 @@ def MaNGOS_Database(host,user,password,work_dir,install_dir,version):
     else:
        for record in world_db:
         print "\nDatabases already exists!"
-        print "\nDelete Current databases or use Current databases?"
+        print "\nDelete Current databases?"
         del_db=Quest(0)
         if del_db=='yes' or 'Yes':
             world.execute('DROP database `mangos`')
@@ -303,18 +303,24 @@ def MaNGOS_Database(host,user,password,work_dir,install_dir,version):
             char.execute('DROP database `characters`')
             script.execute('DROP database `scriptdev2`')
             world.execute("DROP USER 'mangos'@'localhost'")
+            #return 'new'
         else:
             print "\nInstaller is shuttingdown! Please Check the log file for more information!"
-    #print "\nSetup new databases?"
-    #del_db=Quest(0)  
-    print "\nPreparing Databases..."
-    os.system('mysql -h '+host+' -u '+user+' -p'+password+' < '+work_dir+'/server/sql/create_mysql.sql')
-    os.system('mysql -h '+host+' -u '+user+' -p'+password+' characters < '+work_dir+'/server/sql/characters.sql')
-    os.system('mysql -h '+host+' -u '+user+' -p'+password+' mangos < '+work_dir+'/server/sql/mangos.sql')
-    os.system('mysql -h '+host+' -u '+user+' -p'+password+' realmd < '+work_dir+'/server/sql/realmd.sql')
-    if version=='tbc':
-       folder='scripts'
-    elif version=='classic':
+            exit()
+            #return 'no'
+
+def MaNGOS_Database(host,user,password,work_dir,install_dir,version):  
+       #if check_Database(host,user,password)=='new':  
+        #print "\n ********"+str(check_Database(host,user,password))+"*********"
+        check_Database(host,user,password)
+        print "\nPreparing Databases..."
+        os.system('mysql -h '+host+' -u '+user+' -p'+password+' < '+work_dir+'/server/sql/create_mysql.sql')
+        os.system('mysql -h '+host+' -u '+user+' -p'+password+' characters < '+work_dir+'/server/sql/characters.sql')
+        os.system('mysql -h '+host+' -u '+user+' -p'+password+' mangos < '+work_dir+'/server/sql/mangos.sql')
+        os.system('mysql -h '+host+' -u '+user+' -p'+password+' realmd < '+work_dir+'/server/sql/realmd.sql')
+        if version=='tbc':
+          folder='scripts'
+        elif version=='classic':
           folder='ScriptDevZero'
         elif version=='cata':
           folder='ScriptDev2'
@@ -332,9 +338,8 @@ def MaNGOS_Database(host,user,password,work_dir,install_dir,version):
           cursor = db.cursor()
           cursor.execute('ALTER TABLE db_version CHANGE COLUMN required_12195_02_mangos_mangos_string required_s1718_12113_01_mangos_spell_template bit')
         print "\nDatabase setup done."
-    else:
-       print "\nSkipping, Reason: Using current installed databases!"
-
+       #else:
+        #print "\nUsing Old Databases."
 def Quest(question):
     if question==0:
        question='Select: '
@@ -391,6 +396,7 @@ def Menu():
     elif selection=='tbc' or selection=='TBC':
        Install_dep('tbc')
        MaNGOS_Install('custom','scripts','TBC')
+       
     elif selection=='classic' or selection=='Classic':
        Install_dep('Classic')
        MaNGOS_Install('custom','ScriptDevZero','Classic')
