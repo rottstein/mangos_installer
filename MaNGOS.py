@@ -330,7 +330,7 @@ def Quest(question):
     return answer
 
 def Edit_Configs(old,new,config):
-    os.system('sed -i ‘s/'+old+'\ '+new+'/’ '+config+'')
+    os.system("sed -i `s/"+old+"\ "+new+"/` "+config+"")
 
 def Extract_GameData():
     pass
