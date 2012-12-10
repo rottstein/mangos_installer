@@ -62,12 +62,11 @@ log='install.log'
 ###################################################
 
 def MaNGOS_Install(custom,scriptdev2,version):
-    print "\nPreparing MaNGOS "+version+".. "
-    print "\nWhere to install "+version+"? syntax: /path/to/install"
+    print """\nPreparing MaNGOS """+version+"""..\nWhere to install """+version+"""? syntax: /path/to/install"""
     install_dir=Quest(0)
     del_folder(install_dir)
-    print "\nInstalling into: "+install_dir
     del_folder(work_dir)
+    print "\nInstalling into: "+install_dir
     print "\nInstall ScriptDev2?"
     q_scriptdev2=Quest(0)
     if version=='Cataclysm':
@@ -154,7 +153,6 @@ def MaNGOS_Install(custom,scriptdev2,version):
          pass
     print os.system('cd '+work_dir+'/server;mkdir '+work_dir+'/server/objdir;cd '+work_dir+'/server/objdir;cmake .. -DPREFIX='+str(install_dir)+';make -j'+str(cores)+';make install')
     if os.path.exists(install_dir):
-       print "\nMaNGOS Succesfully installed!"
        Fetch_Database(install_dir,git_database,version)
        print "\nDo you want me to setup your databases?"
        do_db=Quest(0)
@@ -176,7 +174,7 @@ def MaNGOS_Install(custom,scriptdev2,version):
              exit()
        print "\nPlease enter your realm name?"
        realm_name=Quest(0)
-       print "\nPlease enter your realm ip?"
+       print "Please enter your realm ip?"
        ip_addr=Quest(0)
        db = MySQLdb.connect(host,user,password,'realmd')
        cursor = db.cursor()
@@ -191,7 +189,6 @@ def MaNGOS_Install(custom,scriptdev2,version):
           os.system('mysql -h '+host+' -u '+user+' -p'+password+' mangos < '+work_dir+'/server/src/bindings/scripts/sql/mangos_scriptname_full.sql')
        else:
           pass
-       print "\nCopying/renaming MaNGOS *.conf files, place: "+install_dir+"/etc\n"
        os.system('cd '+str(install_dir)+'/etc/;cp mangosd.conf.dist mangosd.conf;cp realmd.conf.dist realmd.conf;cp scriptdev2.conf.dist scriptdev2.conf;rm -rf *.dist')
        print "\nActivate AuctionHouseBot?"
        ahbot=Quest(0)
@@ -208,7 +205,7 @@ def MaNGOS_Install(custom,scriptdev2,version):
           os.system('echo screen -A -m -d -S mangosworld ./mangosd >> start_world.sh')
           os.system('echo screen -A -m -d -S mangosrealm ./realmd >> start_realm.sh') 
           print os.system('ps ax | grep SCREEN')
-          Complete(version,install_dir,realm_name,ip_addr)
+          print Complete(version,install_dir,realm_name,ip_addr)
           exit()
 
 def fetch_git(work_dir,link):
@@ -227,7 +224,6 @@ def fetch_scriptdev2(work_dir,link,version):
        folder='ScriptDev2'
     elif version=='wotlk':
        folder='ScriptDev2'
-    print "\nCloning into "+work_dir+"/server/src/bindings/"+folder+"\n"
     for line in os.popen('cd '+work_dir+ '/server;git clone '+link+' src/bindings/'+folder).readlines():
            print line
 
@@ -242,12 +238,16 @@ def syntax_error(syntax):
     print "[ERROR] : Syntax error! ("+str(syntax)+")"
 
 def Install_dep(version):
-    print ""
-    print "Preparing MaNGOS "+version+" setup...\n"
-    print "Installing necessary packages to compile and run MaNGOS? yes/no"
-    install_dep=raw_input('Selection: ')
+    print """\nPreparing MaNGOS """+version+""" setup...\nInstalling necessary packages to compile and run MaNGOS? yes/no"""
+    install_dep=Quest(0)
     if install_dep=='yes':
-       os.system('sudo apt-get install build-essential gcc g++ automake git-core autoconf make patch libmysql++-dev mysql-server libtool libssl-dev grep binutils zlibc libc6 libbz2-dev cmake subversion phpmyadmin screen libace-6.0.1 libace-dev')
+       os.system('sudo apt-get install build-essential gcc g++ automake git-core autoconf make patch libmysql++-dev mysql-server libtool libssl-dev grep binutils zlibc libc6 libbz2-dev cmake subversion phpmyadmin screen')
+    else:
+       pass
+    print "\nInstall Ubuntu Compiled ace (libace-6.0.1 - libace-dev)?"
+    install_ace=Quest(0)
+    if install_ace=='yes':
+       os.system('sudo apt-get install libace-6.0.1 libace-dev')
     else:
        pass
 
@@ -269,50 +269,32 @@ def Fetch_Database(install_dir,link,version):
            if os.path.exists(install_dir+'/database/database'):
               print "\nDone fecthing default database."
 
-def check_Database(host,user,password):
-    print "\nChecking if databases already exists..."
+def check_Database(host,user,password,install_dir,what_db):
     db = MySQLdb.connect(host,user,password)
-    world = db.cursor()
-    world.execute("SHOW DATABASES LIKE 'mangos'")
-    realm = db.cursor()
-    realm.execute("SHOW DATABASES LIKE 'realmd'")
-    char = db.cursor()
-    char.execute("SHOW DATABASES LIKE 'characters'")
-    script = db.cursor()
-    script.execute("SHOW DATABASES LIKE 'scriptdev2'")
-    world_db = world.fetchall()
-    char_db = char.fetchall()
-    realm_db = realm.fetchall()
-    script_db = script.fetchall()
-    if not world_db:
-       print "\nWorld db doesnt exists, Continuing!"
-    if not realm_db:
-       print "\nRealm db doesnt exists, Continuing!"
-    if not char_db:
-       print "\nCharacter db doesnt exists, Continuing!"
-    if not script_db:
-       print "\nScriptDev2 db doesnt exists, Continuing!"
+    cursor = db.cursor()
+    cursor.execute("SHOW DATABASES LIKE '"+str(what_db)+"'")
+    checks = cursor.fetchall()
+    if not checks:
+       print "\nCreating: Database["+str(what_db)+"]"
     else:
-       for record in world_db:
-        print "\nDatabases already exists!"
-        print "\nDelete Current databases?"
-        del_db=Quest(0)
-        if del_db=='yes' or 'Yes':
-            world.execute('DROP database `mangos`')
-            realm.execute('DROP database `realmd`')
-            char.execute('DROP database `characters`')
-            script.execute('DROP database `scriptdev2`')
-            world.execute("DROP USER 'mangos'@'localhost'")
-            #return 'new'
+       for record in checks:
+        print "\nDumping Current Database["+what_db+"]"
+        os.system('cd '+install_dir+'/backup_db;mysqldump -h '+host+' -u '+user+' -p'+password+' '+str(what_db)+' > '+str(what_db)+'_backup.sql')
+        cursor.execute('DROP database `'+str(what_db)+'`')
+        if what_db=='mangos':
+              print "\nDropping User: mangos@localhost"
+              cursor.execute("DROP USER 'mangos'@'localhost'")
         else:
-            print "\nInstaller is shuttingdown! Please Check the log file for more information!"
-            exit()
-            #return 'no'
+              pass
 
 def MaNGOS_Database(host,user,password,work_dir,install_dir,version):  
-       #if check_Database(host,user,password)=='new':  
-        #print "\n ********"+str(check_Database(host,user,password))+"*********"
-        check_Database(host,user,password)
+        date=strftime("%Y_%m_%d ", localtime())
+        os.system('mkdir '+install_dir+'/backup_db')
+        check_Database(host,user,password,install_dir,'mangos')
+        check_Database(host,user,password,install_dir,'realmd')
+        check_Database(host,user,password,install_dir,'characters')
+        check_Database(host,user,password,install_dir,'scriptdev2')
+        os.system('cd '+install_dir+'/; mv backup_db backup_db_'+str(date)+'')
         print "\nPreparing Databases..."
         os.system('mysql -h '+host+' -u '+user+' -p'+password+' < '+work_dir+'/server/sql/create_mysql.sql')
         os.system('mysql -h '+host+' -u '+user+' -p'+password+' characters < '+work_dir+'/server/sql/characters.sql')
@@ -338,8 +320,7 @@ def MaNGOS_Database(host,user,password,work_dir,install_dir,version):
           cursor = db.cursor()
           cursor.execute('ALTER TABLE db_version CHANGE COLUMN required_12195_02_mangos_mangos_string required_s1718_12113_01_mangos_spell_template bit')
         print "\nDatabase setup done."
-       #else:
-        #print "\nUsing Old Databases."
+
 def Quest(question):
     if question==0:
        question='Select: '
@@ -347,6 +328,12 @@ def Quest(question):
        question=question
     answer=raw_input(question)
     return answer
+
+def Edit_Configs(old,new,config):
+    os.system('sed -i ‘s/'+old+'\ '+new+'/’ '+config+'')
+
+def Extract_GameData():
+    pass
 
 def restart_script():
     Menu()
@@ -396,7 +383,6 @@ def Menu():
     elif selection=='tbc' or selection=='TBC':
        Install_dep('tbc')
        MaNGOS_Install('custom','scripts','TBC')
-       
     elif selection=='classic' or selection=='Classic':
        Install_dep('Classic')
        MaNGOS_Install('custom','ScriptDevZero','Classic')
