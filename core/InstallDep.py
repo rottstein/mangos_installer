@@ -29,10 +29,10 @@ def checkPackage(package):
     retval = subprocess.call(["dpkg","-s",""+package+""],stdout=devnull,stderr=subprocess.STDOUT)
     devnull.close()
     if retval != 0:
-       print "Installing Package: "+package
+       print "\nInstalling Package: "+package
        os.system('sudo apt-get install '+package)
     else:
-       print "Package: "+package+" ---- [OK]."
+       print "\nPackage: "+package+" <----> [OK]."
 
 def Install_dep(self):
     for package in packages:
