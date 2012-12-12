@@ -2,5 +2,4 @@
 installer.py
 rewrite_installer.py
 *.sh
-dev_Installer.py
 *.pyc
