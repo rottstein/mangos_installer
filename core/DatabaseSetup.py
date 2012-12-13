@@ -24,7 +24,7 @@ def backupDB(self,what_db,host,user,password):
 
 def MaNGOS_Database(self,host,user,password,install_dir,version,dbs):
     self.msg('\nPreparing MySQL-Server.')
-    db = MySQLdb.connect(q_host,q_user,q_pass)
+    db = MySQLdb.connect(host,user,password)
     cursor = db.cursor()
     cursor.execute("SELECT user FROM mysql.user WHERE user='mangos'")
     result = cursor.fetchall()
@@ -33,13 +33,13 @@ def MaNGOS_Database(self,host,user,password,install_dir,version,dbs):
     else:
        print "MySQL User: mangos@localhost already exists!"
     for database in dbs:
-        self.check_Database(q_host,q_user,q_pass,database)
+        self.check_Database(host,user,password,database)
         cursor.execute('CREATE DATABASE `'+database+'` DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci')
         cursor.execute("GRANT SELECT, INSERT, UPDATE, DELETE, CREATE, DROP, ALTER, LOCK TABLES ON `"+database+"`.* TO 'mangos'@'localhost'")  
     print "\nPreparing Databases..."
-    os.system('mysql -h '+host+' -u '+user+' -p'+password+' characters < '+self.work_dir+'/server/sql/characters.sql')
-    os.system('mysql -h '+host+' -u '+user+' -p'+password+' mangos < '+self.work_dir+'/server/sql/mangos.sql')
-    os.system('mysql -h '+host+' -u '+user+' -p'+password+' realmd < '+self.work_dir+'/server/sql/realmd.sql')
+    os.system('mysql -h '+host+' -u '+user+' -p'+password+' '+dbs[2]+' < '+self.work_dir+'/server/sql/characters.sql')
+    os.system('mysql -h '+host+' -u '+user+' -p'+password+' '+dbs[0]+' < '+self.work_dir+'/server/sql/mangos.sql')
+    os.system('mysql -h '+host+' -u '+user+' -p'+password+' '+dbs[1]+' < '+self.work_dir+'/server/sql/realmd.sql')
     if version=='tbc':
        folder='scripts'
     elif version=='classic':
@@ -48,9 +48,9 @@ def MaNGOS_Database(self,host,user,password,install_dir,version,dbs):
        folder='ScriptDev2'
     elif version=='wotlk':
        folder='ScriptDev2'
-    os.system('mysql -h '+host+' -u '+user+' -p'+password+' scriptdev2 < '+self.work_dir+'/server/src/bindings/'+folder+'/sql/scriptdev2_create_structure_mysql.sql')
-    os.system('mysql -h '+host+' -u '+user+' -p'+password+' scriptdev2 < '+self.work_dir+'/server/src/bindings/'+folder+'/sql/scriptdev2_script_full.sql')
+    os.system('mysql -h '+host+' -u '+user+' -p'+password+' '+dbs[3]+' < '+self.work_dir+'/server/src/bindings/'+folder+'/sql/scriptdev2_create_structure_mysql.sql')
+    os.system('mysql -h '+host+' -u '+user+' -p'+password+' '+dbs[3]+' < '+self.work_dir+'/server/src/bindings/'+folder+'/sql/scriptdev2_script_full.sql')
     print "\nCreateing full database.."
     os.system('cd '+install_dir+'/database/database;sh make_full_db.sh')
-    os.system('mysql -h '+host+' -u '+user+' -p'+password+' mangos < '+install_dir+'/database/database/full_db.sql')
+    os.system('mysql -h '+host+' -u '+user+' -p'+password+' '+dbs[0]+' < '+install_dir+'/database/database/full_db.sql')
     print "\nDatabase setup done."
