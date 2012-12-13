@@ -59,8 +59,8 @@ class installer:
          print "\nThis script is only for Ubuntu users! Quitting!"
          exit()
 
-  def checkVersion():
-      pass
+  def checkVersion(version):
+      return version, scriptdev2
 
   def main(self):
     try:
@@ -70,7 +70,7 @@ class installer:
         print "\nError: Script ended! - Please Check "+self.log_file+".."
         exit()
 
-    print "\nProceed?"
+    print "\nDo you wish to Proceed?"
     q=self.Quest(0)
     if q=='yes':
        self.Install_dep(self)

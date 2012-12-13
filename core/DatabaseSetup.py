@@ -4,6 +4,14 @@
 import os
 import MySQLdb
 
+defaultDBU='mangos'
+defaultDB=[
+           'mangos',
+           'realmd',
+           'characters',
+           'scriptdev2'
+          ]
+
 def check_Database(host,user,password,install_dir,what_db):
     db = MySQLdb.connect(host,user,password)
     cursor = db.cursor()
