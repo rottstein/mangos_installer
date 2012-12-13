@@ -5,15 +5,17 @@ import os
 import platform
 from Collect import fetch_svn, fetch_git, fetch_custom_git, fetch_scriptdev2, fetch_database
 from DatabaseSetup import check_Database, MaNGOS_Database
+from MaNGOS import Cataclysm, Wotlk, TBC, Classic
 from InstallDep import Install_dep
 from Lang import welcome
 
 new_path=''
 
 class installer:
-  def __init__(self,work_dir,log_file):
+  def __init__(self,work_dir,backup_dir,log_file):
 
       self.work_dir=work_dir
+      self.backup_dir=backup_dir
       self.log_file=log_file
       self.welcome=welcome
       self.Install_dep=Install_dep
@@ -29,12 +31,22 @@ class installer:
       self.check_Database=check_Database
       self.MaNGOS_Database=MaNGOS_Database
 
+      # MaNGOS Support
+      self.Cataclysm=Cataclysm
+      self.Wotlk=Wotlk
+      self.TBC=TBC
+      self.Classic=Classic
+
+      # TrinityCore Support // Might not be used!
+
+      # ArcEmu Sopport // -ss-
+
   def mkdir(self,path):
       os.system('mkdir '+path)
       if self.checkFolder(path)==1:
-         print "\nPath: "+path+" Succesfully Created!"
+         self.msg("\nPath: "+path+" Succesfully Created!")
       else:
-         print "\nError: Failed to create path: "+path
+         self.msg("\nError: Failed to create path: "+path)
 
   def checkFolder(self,path):
       if os.path.exists(path):
@@ -53,11 +65,25 @@ class installer:
   def checkOS(self):
       os=platform.dist()
       if os[0]=='Ubuntu':
-         print "\n OS check: "+str(os[0])+", "+str(os[1])+" - "+str(os[2])+" - [ok]"
+         self.msg("\n OS check: "+str(os[0])+", "+str(os[1])+" - "+str(os[2])+" - [ok]")
       else:
-         print "\nOS: "+os[0]
-         print "\nThis script is only for Ubuntu users! Quitting!"
+         self.msg("\nOS: "+os[0])
+         self.msg("\nThis script is only for Ubuntu users! Quitting!")
          exit()
+
+  def del_folder(self,dir):
+      if os.path.exists(dir):
+         self.msg("\nTheres already a folder by that name, you want me to delete it? yes/no ("+dir+")")
+         del_current=Quest('Select: ')
+         if del_current=='yes':
+            os.system('rm -rf '+dir)
+         else:
+            self.msg("\nPlease Delete or move your current files in path: "+dir)
+            print os.system('ls -la '+dir)
+            exit()
+
+  def msg(self,msg):
+      print msg
 
   def checkVersion(version):
       return version, scriptdev2
@@ -67,21 +93,21 @@ class installer:
         print self.welcome()
         self.checkOS()
     except:
-        print "\nError: Script ended! - Please Check "+self.log_file+".."
+        self.msg("\nError: Script ended! - Please Check "+self.log_file+"..")
         exit()
 
-    print "\nDo you wish to Proceed?"
+    self.msg("\nDo you wish to Proceed?")
     q=self.Quest(0)
     if q=='yes':
        self.Install_dep(self)
     else:
        exit()
 
-    print "\nChoose witch version to install?\nSyntax: Cataclysm / Wotlk / TBC / Classic / quit\n"
+    self.msg("\nChoose witch version to install?\nSyntax: Cataclysm / Wotlk / TBC / Classic / quit")
     version=self.Quest('Please enter your choise: ')
 
     if version=='cataclysm':
-        self.Cataclysm()
+        self.Cataclysm(self)
     elif version=='wotlk':
         self.Wotlk()
     elif version=='tbc':

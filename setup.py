@@ -7,7 +7,8 @@ from Main import installer
 progname=sys.argv[0].replace('.py','')   
 
 work_dir='tmp/mangos'
+backup_dir=''
 log_file='install.log'                    
 
-install=installer(work_dir,log_file)
+install=installer(work_dir,backup_dir,log_file)
 install.main()

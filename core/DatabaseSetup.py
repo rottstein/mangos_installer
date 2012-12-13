@@ -4,7 +4,7 @@
 import os
 import MySQLdb
 
-defaultDBU='mangos'
+defaultDBU="'mangos'@'localhost'"
 defaultDB=[
            'mangos',
            'realmd',
@@ -20,24 +20,22 @@ def check_Database(host,user,password,install_dir,what_db):
     if not checks:
        print "\nCreating: Database["+str(what_db)+"]"
     else:
-       for record in checks:
-        print "\nDumping Current Database["+what_db+"]"
-        os.system('cd '+install_dir+'/backup_db;mysqldump -h '+host+' -u '+user+' -p'+password+' '+str(what_db)+' > '+str(what_db)+'_backup.sql')
-        cursor.execute('DROP database `'+str(what_db)+'`')
-        if what_db=='mangos':
-              print "\nDropping User: mangos@localhost"
-              cursor.execute("DROP USER 'mangos'@'localhost'")
-        else:
-              pass
+       backupDB()
+
+
+def backupDB():
+    print "\nDumping Current Database["+what_db+"]"
+    os.system('cd '+install_dir+'/backup_db;mysqldump -h '+host+' -u '+user+' -p'+password+' '+str(what_db)+' > '+str(what_db)+'_backup.sql')
+    cursor.execute('DROP database `'+str(what_db)+'`')
+    if what_db=='mangos':
+       print "\nDropping User: mangos@localhost"
+       cursor.execute("DROP USER 'mangos'@'localhost'")
+    else:
+       pass
 
 def MaNGOS_Database(host,user,password,work_dir,install_dir,version):  
-        date=strftime("%Y_%m_%d ", localtime())
-        os.system('mkdir '+install_dir+'/backup_db')
-        check_Database(host,user,password,install_dir,'mangos')
-        check_Database(host,user,password,install_dir,'realmd')
-        check_Database(host,user,password,install_dir,'characters')
-        check_Database(host,user,password,install_dir,'scriptdev2')
-        os.system('cd '+install_dir+'/; mv backup_db backup_db_'+str(date)+'')
+        for database in defaultDB:
+            check_Database(host,user,password,install_dir,database)
         print "\nPreparing Databases..."
         os.system('mysql -h '+host+' -u '+user+' -p'+password+' < '+work_dir+'/server/sql/create_mysql.sql')
         os.system('mysql -h '+host+' -u '+user+' -p'+password+' characters < '+work_dir+'/server/sql/characters.sql')
