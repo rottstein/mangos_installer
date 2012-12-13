@@ -37,7 +37,7 @@ def fetch_scriptdev2(self,link,version):
     for line in os.popen('cd '+self.work_dir+ '/server;git clone '+link+' src/bindings/'+folder).readlines():
            print line
 
-def fetch_database(install_dir,link,version):
+def fetch_database(self,install_dir,link,version):
        print "\nFetching MaNGOS "+version+" Default database... ("+link+")"
        os.system('mkdir '+install_dir+'/database;cd '+install_dir+'/database')
        for line in os.popen('cd '+install_dir+'/database/;git clone '+link):

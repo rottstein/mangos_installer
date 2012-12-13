@@ -53,6 +53,31 @@ def Cataclysm(self):
          q_script
         ]
     os.system('clear')
+    self.msg("""Collected Information.
+    ----------------------
+    Database:
+       Host: """+q_host+"""
+       User: """+q_user+"""
+       Pass: """+q_pass+"""
+
+    Realm:
+       Name: """+q_realmname+"""
+       Port: """+q_realmport+"""
+       IP: """+q_realmip+"""
+
+    Config:
+       Path: """+install_dir+"""
+       ScriptDev2: """+q_sd2+"""
+       MangChat: """+q_mc+"""
+       AuctionHouseBot: """+q_ahbot+"""
+       ACID: """+q_acid+"""             
+             """)
+    self.msg('\nIs this correct?')
+    con=self.Quest(0)
+    if con=='yes':
+       os.system('clear')
+    else:
+       exit()
     self.msg('\nWe are now done collecting information and ready todo our magic work, kick back and enjoy')
     self.msg('Go grap a beer or something this might take awhile depending on your system!')
     self.mkdir(self.work_dir)
@@ -91,20 +116,10 @@ def Cataclysm(self):
     else:
        self.msg('\nError: MaNGOS Failed to compile, Please check '+self.log_file)
        exit()
-    self.msg('\nPreparing MySQL-Server.')
-    db = MySQLdb.connect(q_host,q_user,q_pass)
-    cursor = db.cursor("SELECT user FROM mysql.user WHERE user='mangos'")
-    result = cursor.fetchall()
-    if not result:
-       cursor.execute("CREATE USER 'mangos'@'localhost' IDENTIFIED BY 'mangos'")
-    else:
-       print "MySQL User: mangos@localhost already exists!"
-    for database in dbs:
-        self.check_Database(self,q_host,q_user,q_pass,database)
-        cursor.execute('CREATE DATABASE `'+database+'` DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci')
-        cursor.execute("GRANT SELECT, INSERT, UPDATE, DELETE, CREATE, DROP, ALTER, LOCK TABLES ON `"+database+"`.* TO 'mangos'@'localhost'")
-    #self.msg('\nDownloading Databases.')
-    #self.MaNGOS_Database(q_host,q_user,q_pass,self.work_dir,install_dir,'cata')   
+    self.msg('\nDownloading Databases.')
+    self.fetch_database(self,install_dir,cataclysm[3],'cata')
+    self.msg('\nSetting up Databases.')
+    self.MaNGOS_Database(self,q_host,q_user,q_pass,install_dir,'cata',dbs)   
 
 def Wotlk(self):
     pass
