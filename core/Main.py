@@ -73,9 +73,12 @@ class installer:
 
   def del_folder(self,dir):
       if os.path.exists(dir):
-         self.msg("\nTheres already a folder by that name, you want me to delete it? yes/no ("+dir+")")
-         del_current=Quest('Select: ')
-         if del_current=='yes':
+         self.msg("\nTheres already a folder by that name, you want to rename or delete it? ("+dir+")")
+         self.msg('Syntax: rename/del')
+         del_current=self.Quest('Select: ')
+         if del_current=='rename':
+            os.system('mv '+dir+' '+dir+'_backup')
+         elif del_current=='del':
             os.system('rm -rf '+dir)
          else:
             self.msg("\nPlease Delete or move your current files in path: "+dir)

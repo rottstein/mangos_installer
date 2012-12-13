@@ -24,8 +24,15 @@ def Cataclysm(self):
     q_char=self.Quest('Name: ')
     self.msg('\nSelect name of your scriptdev2 database?')
     q_script=self.Quest('Name: ')
+    self.msg('\nSetup ACID?')
+    q_acid=self.Quest(0)
+    self.msg('\nRealm Information.')
+    q_realmname=self.Quest('Name: ')
+    q_realmip=self.Quest('IP: ')
+    q_realmport=self.Quest('Port: ')
     self.msg('\nSelect number of cores? (CPU)')
     q_cores=self.Quest('Cores: ')
+    self.msg('\nWe are now done collecting information and ready todo our magic work, kick back and enjoy\nGo grap a beer or something this might take awhile depending on your system!\n')
     
       
 
