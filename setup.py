@@ -6,7 +6,7 @@ sys.path.append('core/')
 from Main import installer                                    
 progname=sys.argv[0].replace('.py','')   
 
-work_dir='tmp/mangos'
+work_dir='/tmp/mangos'
 backup_dir=''
 log_file='install.log'                    
 

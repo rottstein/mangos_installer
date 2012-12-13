@@ -3,7 +3,7 @@
 
 import os
 import platform
-from Collect import fetch_svn, fetch_git, fetch_custom_git, fetch_scriptdev2, fetch_database
+from Collect import fetch_svn, fetch_git, fetch_mangchat, fetch_custom_git, fetch_scriptdev2, fetch_database
 from DatabaseSetup import check_Database, MaNGOS_Database
 from MaNGOS import Cataclysm, Wotlk, TBC, Classic
 from InstallDep import Install_dep
@@ -23,6 +23,7 @@ class installer:
       # Collect SVN / GIT 
       self.fetch_svn=fetch_svn
       self.fetch_git=fetch_git
+      self.fetch_mangchat=fetch_mangchat
       self.fetch_custom_git=fetch_custom_git
       self.fetch_scriptdev2=fetch_scriptdev2
       self.fetch_database=fetch_database
@@ -38,6 +39,8 @@ class installer:
       self.Classic=Classic
 
       # TrinityCore Support // Might not be used!
+
+      # Skyfire Emu Support // -ss-
 
       # ArcEmu Sopport // -ss-
 
@@ -102,7 +105,7 @@ class installer:
     self.msg("\nDo you wish to Proceed?")
     q=self.Quest(0)
     if q=='yes':
-       self.Install_dep(self)
+       pass
     else:
        exit()
 
@@ -110,12 +113,16 @@ class installer:
     version=self.Quest('Please enter your choise: ')
 
     if version=='cataclysm':
+        self.Install_dep(self)
         self.Cataclysm(self)
     elif version=='wotlk':
+        self.Install_dep(self)
         self.Wotlk()
     elif version=='tbc':
+        self.Install_dep(self)
         self.TBC()
     elif version=='classic':
+        self.Install_dep(self)
         self.Classic()
     elif version=='quit':
        exit()

@@ -2,10 +2,15 @@
 # -*- coding: cp1252 -*- 
 
 import time
+import os
 
-def fetch_git(self,work_dir,link):
-    for line in os.popen('cd '+work_dir+ ';git clone '+link+'').readlines():
+def fetch_git(self,link):
+    for line in os.popen('cd '+self.work_dir+ ';git clone '+link+'').readlines():
            print line
+
+def fetch_mangchat(self,link):
+    print os.system("cd "+self.work_dir+"/server;git add .;git commit -a -m 'Commiting current work before fetching.'")
+    print os.system('cd '+self.work_dir+'/server;git pull '+str(link))
 
 def fetch_svn(self,install_dir,link,version):
     os.system('cd '+install_dir+'/database/;svn co '+link+'')
@@ -20,7 +25,7 @@ def fetch_svn(self,install_dir,link,version):
 def fetch_custom_git(self):
      pass
 
-def fetch_scriptdev2(self,work_dir,link,version):
+def fetch_scriptdev2(self,link,version):
     if version=='tbc':
        folder='scripts'
     elif version=='classic':
@@ -29,7 +34,7 @@ def fetch_scriptdev2(self,work_dir,link,version):
        folder='ScriptDev2'
     elif version=='wotlk':
        folder='ScriptDev2'
-    for line in os.popen('cd '+work_dir+ '/server;git clone '+link+' src/bindings/'+folder).readlines():
+    for line in os.popen('cd '+self.work_dir+ '/server;git clone '+link+' src/bindings/'+folder).readlines():
            print line
 
 def fetch_database(install_dir,link,version):

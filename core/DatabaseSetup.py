@@ -4,15 +4,7 @@
 import os
 import MySQLdb
 
-defaultDBU="'mangos'@'localhost'"
-defaultDB=[
-           'mangos',
-           'realmd',
-           'characters',
-           'scriptdev2'
-          ]
-
-def check_Database(host,user,password,install_dir,what_db):
+def check_Database(host,user,password,what_db):
     db = MySQLdb.connect(host,user,password)
     cursor = db.cursor()
     cursor.execute("SHOW DATABASES LIKE '"+str(what_db)+"'")
@@ -20,20 +12,17 @@ def check_Database(host,user,password,install_dir,what_db):
     if not checks:
        print "\nCreating: Database["+str(what_db)+"]"
     else:
-       backupDB()
+       backupDB(self.backup_dir,what_db,host,user,password)
 
 
-def backupDB():
+def backupDB(self.backup_dir,what_db,host,user,password):
     print "\nDumping Current Database["+what_db+"]"
-    os.system('cd '+install_dir+'/backup_db;mysqldump -h '+host+' -u '+user+' -p'+password+' '+str(what_db)+' > '+str(what_db)+'_backup.sql')
-    cursor.execute('DROP database `'+str(what_db)+'`')
-    if what_db=='mangos':
-       print "\nDropping User: mangos@localhost"
-       cursor.execute("DROP USER 'mangos'@'localhost'")
-    else:
-       pass
+    os.system('cd '+self.backup_dir+';mysqldump -h '+host+' -u '+user+' -p'+password+' '+str(what_db)+' > '+str(what_db)+'_backup.sql')
+    db = MySQLdb.connect(host,user,password)
+    cursor = db.cursor()
+    cursor.execute('DROP database `'+str(what_db)+'`')   
 
-def MaNGOS_Database(host,user,password,work_dir,install_dir,version):  
+def MaNGOS_Database(self,host,user,password,install_dir,version):  
         for database in defaultDB:
             check_Database(host,user,password,install_dir,database)
         print "\nPreparing Databases..."
