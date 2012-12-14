@@ -81,7 +81,10 @@ def Cataclysm(self):
     self.msg('\nWe are now done collecting information and ready todo our magic work, kick back and enjoy')
     self.msg('Go grap a beer or something, this might take awhile depending on your system!')
     self.mkdir(self.work_dir)
-    self.mkdir(self.backup_dir)
+    if self.checkFolder(self.backup_dir)==1:
+       self.msg('\nBackup folder already exists!')
+    else:
+       self.mkdir(self.backup_dir)
     self.msg('\nDownloading MaNGOS!')
     self.fetch_git(self,cataclysm[0])
     if self.checkFolder(self.work_dir+'/server')==1:

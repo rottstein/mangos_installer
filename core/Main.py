@@ -4,7 +4,7 @@
 import os
 import platform
 from Collect import fetch_svn, fetch_git, fetch_mangchat, fetch_custom_git, fetch_scriptdev2, fetch_database
-from DatabaseSetup import check_Database, MaNGOS_Database
+from DatabaseSetup import check_Database, backupDB, MaNGOS_Database
 from MaNGOS import Cataclysm, Wotlk, TBC, Classic
 from InstallDep import Install_dep
 from Lang import welcome
@@ -30,6 +30,7 @@ class installer:
 
       # Database
       self.check_Database=check_Database
+      self.backupDB=backupDB
       self.MaNGOS_Database=MaNGOS_Database
 
       # MaNGOS Support

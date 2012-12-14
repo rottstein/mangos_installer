@@ -4,7 +4,7 @@
 import os
 import MySQLdb
 
-def check_Database(host,user,password,what_db):
+def check_Database(self,host,user,password,what_db):
     db = MySQLdb.connect(host,user,password)
     cursor = db.cursor()
     cursor.execute("SHOW DATABASES LIKE '"+str(what_db)+"'")
@@ -12,8 +12,7 @@ def check_Database(host,user,password,what_db):
     if not checks:
        print "\nCreating: Database["+str(what_db)+"]"
     else:
-       backupDB(self,what_db,host,user,password)
-
+       self.backupDB(self,what_db,host,user,password)
 
 def backupDB(self,what_db,host,user,password):
     print "\nDumping Current Database["+what_db+"]"
@@ -33,7 +32,7 @@ def MaNGOS_Database(self,host,user,password,install_dir,version,dbs):
     else:
        print "MySQL User: mangos@localhost already exists!"
     for database in dbs:
-        self.check_Database(host,user,password,database)
+        self.check_Database(self,host,user,password,database)
         cursor.execute('CREATE DATABASE `'+database+'` DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci')
         cursor.execute("GRANT SELECT, INSERT, UPDATE, DELETE, CREATE, DROP, ALTER, LOCK TABLES ON `"+database+"`.* TO 'mangos'@'localhost'")  
     print "\nPreparing Databases..."
