@@ -3,3 +3,4 @@ installer.py
 rewrite_installer.py
 *.sh
 *.pyc
+*.sql
