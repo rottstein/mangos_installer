@@ -11,7 +11,7 @@ from Collect import fetch_svn, fetch_git, fetch_mangchat, fetch_custom_git, fetc
 from DatabaseSetup import check_Database, backupDB, MaNGOS_Database
 from MaNGOS import Cataclysm, Wotlk, TBC, Classic
 from InstallDep import Install_dep
-from Lang import welcome
+from Lang import welcome, Complete
 
 new_path=''
 
@@ -22,6 +22,7 @@ class installer:
       self.backup_dir=backup_dir
       self.log_file=log_file
       self.welcome=welcome
+      self.Complete=Complete
       self.Install_dep=Install_dep
       self.cmd_install=cmd_install
       self.colored=colored
