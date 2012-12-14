@@ -3,6 +3,8 @@
 
 import os
 import platform
+import fileinput
+import sys
 from Collect import fetch_svn, fetch_git, fetch_mangchat, fetch_custom_git, fetch_scriptdev2, fetch_database
 from DatabaseSetup import check_Database, backupDB, MaNGOS_Database
 from MaNGOS import Cataclysm, Wotlk, TBC, Classic
@@ -88,6 +90,12 @@ class installer:
             self.msg("\nPlease Delete or move your current files in path: "+dir)
             print os.system('ls -la '+dir)
             exit()
+
+  def replaceAll(install_dir,config,old_line,new_line):
+    for line in fileinput.input(file, inplace=1):
+        if searchExp in line:
+            line = line.replace(searchExp,replaceExp)
+        sys.stdout.write(line)
 
   def msg(self,msg):
       print msg

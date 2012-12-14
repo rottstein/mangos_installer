@@ -19,6 +19,8 @@ def Cataclysm(self):
     install_dir=self.Quest('Path: ')
     self.del_folder(install_dir)
     self.del_folder(self.work_dir)
+    self.msg('\nPath to Data folder? (This is the path to your DBC, Maps & Vmaps.)')
+    q_data_dir=self.Quest('Path: ')
     self.msg('\nInstalling into: '+install_dir)
     self.msg('\nCompile whit ScriptDev2?')
     q_sd2=self.Quest(0)
@@ -124,7 +126,16 @@ def Cataclysm(self):
     self.msg('\nDownloading Databases.')
     self.fetch_database(self,install_dir,cataclysm[3],'cata')
     self.msg('\nSetting up Databases.')
-    self.MaNGOS_Database(self,q_host,q_user,q_pass,install_dir,'cata',dbs)   
+    self.MaNGOS_Database(self,q_host,q_user,q_pass,install_dir,'cata',dbs) 
+    self.msg('\nSetting Config files.')
+    self.replaceAll(install_dir+'/etc/mangosd.conf','"."',''+q_data_dir+'')
+    self.replaceAll(install_dir+'/etc/mangosd.conf','8085',''+q_realmport+'')
+    self.replaceAll(install_dir+'/etc/realmd.conf','127.0.0.1;3306;mangos;mangos;realmd','127.0.0.1;3306;mangos;mangos;'+dbs[1]+'') 
+    self.replaceAll(install_dir+'/etc/mangosd.conf','127.0.0.1;3306;mangos;mangos;realmd','127.0.0.1;3306;mangos;mangos;'+dbs[1]+'')  
+    self.replaceAll(install_dir+'/etc/mangosd.conf','127.0.0.1;3306;mangos;mangos;mangos','127.0.0.1;3306;mangos;mangos;'+dbs[0]+'') 
+    self.replaceAll(install_dir+'/etc/mangosd.conf','127.0.0.1;3306;mangos;mangos;characters','127.0.0.1;3306;mangos;mangos;'+dbs[2]+'') 
+    self.replaceAll(install_dir+'/etc/scriptdev2.conf','127.0.0.1;3306;mangos;mangos;scriptdev2','127.0.0.1;3306;mangos;mangos;'+dbs[3]+'') 
+    print "Done."
 
 def Wotlk(self):
     pass
