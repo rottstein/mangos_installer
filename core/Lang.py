@@ -11,7 +11,7 @@ def Complete(version,install_dir,realmname,realmport,realmdip):
               password: administrator
 
         Database:
-              location: http://"""+realmip+"""/phpmyadmin
+              location: http://"""+realmdip+"""/phpmyadmin
               username: mangos
               password: mangos
         
