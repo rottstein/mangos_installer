@@ -110,6 +110,9 @@ class installer:
   def checkVersion(version):
       return version, scriptdev2
 
+  def createAccount():
+      pass
+
   def main(self):
     try:
         print self.colored(self.welcome(),'green')

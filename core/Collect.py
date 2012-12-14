@@ -22,8 +22,9 @@ def fetch_svn(self,install_dir,link,version):
        print self.colored("\nScript will continue!",'red')
        time.sleep(5)
 
-def fetch_custom_git(self):
-     pass
+def fetch_custom_git(self,path,link):
+    for line in os.popen('cd '+path+';git clone '+link+'').readlines():
+           print line
 
 def fetch_scriptdev2(self,link,version):
     if version=='tbc':

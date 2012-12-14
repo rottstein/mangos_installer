@@ -131,7 +131,11 @@ def Cataclysm(self):
     self.msg('\nDownloading Databases.','green')
     self.fetch_database(self,install_dir,cataclysm[3],'cata')
     self.msg('\nSetting up Databases.','green')
-    self.MaNGOS_Database(self,q_host,q_user,q_pass,install_dir,'cata',dbs) 
+    self.MaNGOS_Database(self,q_host,q_user,q_pass,install_dir,'cata',dbs,q_realmname,q_realmport,q_realmip) 
+    self.msg('\nSetting up ACID.','green')
+    self.fetch_custom_git(self,install_dir+'/Database/',cataclysm[2])
+    os.system('cd '+install_dir+'/Database/acid/;mysql -h '+q_host+' -u '+q_user+' -p'+q_pass+' '+dbs[0]+' < acid_wotlk.sql')
+    os.system('mysql -h '+q_host+' -u '+q_user+' -p'+q_pass+' mangos < '+self.work_dir+'/server/src/bindings/scripts/sql/mangos_scriptname_full.sql')
     self.msg('\nSetting Config files.','green')
     self.msg('\nSetting DataDir = "." to DataDir = '+q_data_dir,'green')
     self.replaceAll(install_dir+'/etc/mangosd.conf','"."','"'+str(q_data_dir)+'"')
@@ -147,7 +151,9 @@ def Cataclysm(self):
     self.replaceAll(install_dir+'/etc/mangosd.conf','127.0.0.1;3306;mangos;mangos;characters','127.0.0.1;3306;mangos;mangos;'+dbs[2]+'')
     self.msg('\nSetting LoginDatabaseInfo = scriptdev2 to LoginDatabaseInfo = '+dbs[3]+' (scriptdev2.conf)','green') 
     self.replaceAll(install_dir+'/etc/scriptdev2.conf','127.0.0.1;3306;mangos;mangos;scriptdev2','127.0.0.1;3306;mangos;mangos;'+dbs[3]+'')
-    print "Done."
+    # RESERVE for auto start script.
+    print self.Complete('Cataclysm',install_dir,realname,realmport,realmip)
+    exit()
     #os.system('clear')
 
 def Wotlk(self):

@@ -21,7 +21,7 @@ def backupDB(self,what_db,host,user,password):
     cursor = db.cursor()
     cursor.execute('DROP database `'+str(what_db)+'`')   
 
-def MaNGOS_Database(self,host,user,password,install_dir,version,dbs):
+def MaNGOS_Database(self,host,user,password,install_dir,version,dbs,realmname,realmport,realmip):
     self.msg('\nPreparing MySQL-Server.','green')
     db = MySQLdb.connect(host,user,password)
     cursor = db.cursor()
@@ -52,4 +52,9 @@ def MaNGOS_Database(self,host,user,password,install_dir,version,dbs):
     print self.colored("\nCreateing full database..",'green')
     os.system('cd '+install_dir+'/database/database;sh make_full_db.sh')
     os.system('mysql -h '+host+' -u '+user+' -p'+password+' '+dbs[0]+' < '+install_dir+'/database/database/full_db.sql')
+    db = MySQLdb.connect(host,user,password,'realmd')
+    cursor = db.cursor()
+    cursor.execute("UPDATE realmlist SET name = '"+str(realmname)+"' WHERE id = 1")
+    cursor.execute("UPDATE realmlist SET port = '"+str(realmport)+"' WHERE id = 1")
+    cursor.execute("UPDATE realmlist SET address = '"+str(realmip)+"' WHERE id = 1")
     print self.colored("\nDatabase setup done.",'green')
