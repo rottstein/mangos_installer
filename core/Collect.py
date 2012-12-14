@@ -15,11 +15,11 @@ def fetch_mangchat(self,link):
 def fetch_svn(self,install_dir,link,version):
     os.system('cd '+install_dir+'/database/;svn co '+link+'')
     if self.checkFolder(install_dir+'/database/'+version)==1:
-       print "\nSVN: "+link
-       print "\nSuccesfully downloaded!"
+       print self.colored("\nSVN: "+link,'green')
+       print self.colored("\nSuccesfully downloaded!",'green')
     else:
-       print "\nError: Failed to download from: "+link
-       print "\nScript will continue!"
+       print self.colored("\nError: Failed to download from: "+link,'red')
+       print self.colored("\nScript will continue!",'red')
        time.sleep(5)
 
 def fetch_custom_git(self):
@@ -38,7 +38,7 @@ def fetch_scriptdev2(self,link,version):
            print line
 
 def fetch_database(self,install_dir,link,version):
-       print "\nFetching MaNGOS "+version+" Default database... ("+link+")"
+       print self.colored("\nFetching MaNGOS "+version+" Default database... ("+link+")",'green')
        os.system('mkdir '+install_dir+'/database;cd '+install_dir+'/database')
        for line in os.popen('cd '+install_dir+'/database/;git clone '+link):
            if os.path.exists(install_dir+'/database/database'):

@@ -1,8 +1,9 @@
 #!/usr/bin/env python                                        
 # -*- coding: cp1252 -*- 
-import os, subprocess
+import os, subprocess, time, sys
 
-packages=['build-essential',
+packages=[
+          'build-essential',
           'gcc',
           'g++',
           'automake',
@@ -22,18 +23,21 @@ packages=['build-essential',
           'cmake',
           'subversion',
           'phpmyadmin',
-          'screen']
+          'screen'
+         ]
 
-def checkPackage(package):
+def checkPackage(self,package):
     devnull = open(os.devnull,"w")
     retval = subprocess.call(["dpkg","-s",""+package+""],stdout=devnull,stderr=subprocess.STDOUT)
     devnull.close()
     if retval != 0:
-       print "\nInstalling Package: "+package
-       os.system('sudo apt-get install '+package)
+       self.msg("\nInstalling Package: "+package,'red')
+       os.system(self.cmd_install+' '+package)
     else:
-       print "\nPackage: "+package+" <----> [OK]."
+       self.msg('Package: '+self.colored(package,'yellow')+' '+self.colored('[OK]','green')+'', 'green')
+       time.sleep(1)
 
 def Install_dep(self):
+    self.msg('\nChecking needed files.','green')
     for package in packages:
-        checkPackage(package)
+        checkPackage(self,package)

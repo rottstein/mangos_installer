@@ -8,7 +8,9 @@ progname=sys.argv[0].replace('.py','')
 
 work_dir='/tmp/mangos'
 backup_dir='backup/'
-log_file='install.log'                    
+log_file='install.log'
 
-install=installer(work_dir,backup_dir,log_file)
+cmd_install='sudo apt-get install'                    
+
+install=installer(work_dir,backup_dir,log_file,cmd_install)
 install.main()
