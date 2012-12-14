@@ -152,7 +152,7 @@ def Cataclysm(self):
     self.msg('\nSetting LoginDatabaseInfo = scriptdev2 to LoginDatabaseInfo = '+dbs[3]+' (scriptdev2.conf)','green') 
     self.replaceAll(install_dir+'/etc/scriptdev2.conf','127.0.0.1;3306;mangos;mangos;scriptdev2','127.0.0.1;3306;mangos;mangos;'+dbs[3]+'')
     # RESERVE for auto start script.
-    print self.Complete('Cataclysm',install_dir,realname,realmport,realmip)
+    print self.Complete('Cataclysm',install_dir,q_realmname,q_realmport,q_realmip)
     exit()
     #os.system('clear')
 
