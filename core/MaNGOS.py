@@ -120,8 +120,10 @@ def Cataclysm(self):
     os.system('cd '+self.work_dir+'/server;mkdir '+self.work_dir+'/server/objdir;cd '+self.work_dir+'/server/objdir;cmake .. -DPREFIX='+str(install_dir)+';make -j'+str(q_cores)+';make install')
     if self.checkFolder(install_dir+'/bin')==1:
        self.msg('\n'+self.colored('MaNGOS Succesfully installed into','green')+' '+install_dir,'yellow')
-       if q_ahbot=='yes' or q_ahbot=='Yes':
+       if q_ahbot=='yes':
           os.system('cd '+self.work_dir+'/server/src/game/AuctionHouseBot/; cp ahbot.conf.dist.in '+install_dir+'/etc/ahbot.conf')
+       if q_mc='yes':
+          os.system('cd '+str(install_dir)+'/etc/;cp mangchat.conf.dist mangchat.conf')
        os.system('cd '+str(install_dir)+'/etc/;cp mangosd.conf.dist mangosd.conf;cp realmd.conf.dist realmd.conf;cp scriptdev2.conf.dist scriptdev2.conf;rm -rf *.dist')
        print os.system('ls -la '+str(install_dir)+'/etc/')
     else:
