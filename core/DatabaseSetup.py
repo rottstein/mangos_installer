@@ -19,7 +19,7 @@ def backupDB(self,what_db):
     date=strftime("%Y_%m_%d ", localtime())
     print self.colored("\nDumping Current Database["+what_db+"]",'green')
     os.system('cd '+self.backup_dir+';mysqldump -h '+self.q_host+' -u '+self.q_user+' -p'+self.q_pass+' '+str(what_db)+' > '+str(what_db)+'_backup.sql')
-    os.system('cd '+self.backup_dir+';mv '+what_db+'_backup.sql '+what_db+'_'+date+'.sql')
+    #os.system('cd '+self.backup_dir+';mv '+what_db+'_backup.sql '+what_db+'.sql')
     db = MySQLdb.connect(self.q_host,self.q_user,self.q_pass)
     cursor = db.cursor()
     cursor.execute('DROP database `'+str(what_db)+'`') 
