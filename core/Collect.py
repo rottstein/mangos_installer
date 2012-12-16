@@ -13,8 +13,8 @@ def fetch_mangchat(self,link):
     print os.system('cd '+self.work_dir+'/server;git pull '+str(link))
 
 def fetch_svn(self,install_dir,link,version):
-    os.system('cd '+install_dir+'/database/;svn co '+link+'')
-    if self.checkFolder(install_dir+'/database/'+version)==1:
+    os.system('cd '+self.install_dir+'/database/;svn co '+link+'')
+    if self.checkFolder(self.install_dir+'/database/'+version)==1:
        print self.colored("\nSVN: "+link,'green')
        print self.colored("\nSuccesfully downloaded!",'green')
     else:
@@ -38,9 +38,9 @@ def fetch_scriptdev2(self,link,version):
     for line in os.popen('cd '+self.work_dir+ '/server;git clone '+link+' src/bindings/'+folder).readlines():
            print line
 
-def fetch_database(self,install_dir,link,version):
+def fetch_database(self,link,version):
        print self.colored("\nFetching MaNGOS "+version+" Default database... ("+link+")",'green')
-       os.system('mkdir '+install_dir+'/database;cd '+install_dir+'/database')
-       for line in os.popen('cd '+install_dir+'/database/;git clone '+link):
-           if os.path.exists(install_dir+'/database/database'):
+       os.system('mkdir '+self.install_dir+'/database;cd '+self.install_dir+'/database')
+       for line in os.popen('cd '+self.install_dir+'/database/;git clone '+link):
+           if os.path.exists(self.install_dir+'/database/database'):
               print "\nDone fecthing default database."

@@ -3,42 +3,59 @@
 
 import os
 import MySQLdb
+from time import localtime, strftime
 
-def check_Database(self,host,user,password,what_db):
-    db = MySQLdb.connect(host,user,password)
+def check_Database(self,what_db):
+    db = MySQLdb.connect(self.q_host,self.q_user,self.q_pass)
     cursor = db.cursor()
     cursor.execute("SHOW DATABASES LIKE '"+str(what_db)+"'")
     checks = cursor.fetchall()
     if not checks:
        print self.colored("\nCreating: Database["+str(what_db)+"]",'green')
     else:
-       self.backupDB(self,what_db,host,user,password)
+       self.backupDB(self,what_db)
 
-def backupDB(self,what_db,host,user,password):
+def backupDB(self,what_db):
+    date=strftime("%Y_%m_%d ", localtime())
     print self.colored("\nDumping Current Database["+what_db+"]",'green')
-    os.system('cd '+self.backup_dir+';mysqldump -h '+host+' -u '+user+' -p'+password+' '+str(what_db)+' > '+str(what_db)+'_backup.sql')
-    db = MySQLdb.connect(host,user,password)
+    os.system('cd '+self.backup_dir+';mysqldump -h '+self.q_host+' -u '+self.q_user+' -p'+self.q_pass+' '+str(what_db)+' > '+str(what_db)+'_backup.sql')
+    os.system('cd '+self.backup_dir+';mv '+what_db+'_backup.sql '+what_db+'_'+date+'.sql')
+    db = MySQLdb.connect(self.q_host,self.q_user,self.q_pass)
     cursor = db.cursor()
-    cursor.execute('DROP database `'+str(what_db)+'`')   
+    cursor.execute('DROP database `'+str(what_db)+'`') 
 
-def MaNGOS_Database(self,host,user,password,install_dir,version,dbs,realmname,realmport,realmip):
-    self.msg('\nPreparing MySQL-Server.','green')
-    db = MySQLdb.connect(host,user,password)
+def updateRealm(self):
+    self.msg('\nUpdating Current Realm Database','green')
+    db = MySQLdb.connect(self.q_host,self.q_user,self.q_pass,self.q_realm)
     cursor = db.cursor()
-    cursor.execute("SELECT user FROM mysql.user WHERE user='mangos'")
-    result = cursor.fetchall()
-    if not result:
-       cursor.execute("CREATE USER 'mangos'@'localhost' IDENTIFIED BY 'mangos'")
-    else:
-       print self.colored("MySQL User: mangos@localhost already exists!",'red')
-    for database in dbs:
-        self.check_Database(self,host,user,password,database)
-        cursor.execute('CREATE DATABASE `'+database+'` DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci')
-        cursor.execute("GRANT SELECT, INSERT, UPDATE, DELETE, CREATE, DROP, ALTER, LOCK TABLES ON `"+database+"`.* TO 'mangos'@'localhost'")  
-    print self.colored("\nPreparing Databases...",'green')
-    os.system('mysql -h '+host+' -u '+user+' -p'+password+' '+dbs[2]+' < '+self.work_dir+'/server/sql/characters.sql')
-    os.system('mysql -h '+host+' -u '+user+' -p'+password+' '+dbs[0]+' < '+self.work_dir+'/server/sql/mangos.sql')
-    os.system('mysql -h '+host+' -u '+user+' -p'+password+' '+dbs[1]+' < '+self.work_dir+'/server/sql/realmd.sql')
+    cursor.execute("INSERT INTO `realmlist` VALUES ("+self.q_realmid+",'"+self.q_realmname+"','"+self.q_realmip+"',"+self.q_realmport+",1,0,1,0,0,'')")
+    self.msg('\nRealm Database setup done.','green')
+
+def setupRealm(self):
+    self.msg('\nCreating New Realmd Database..','green')
+    self.check_Database(self,self.q_realm)
+    db = MySQLdb.connect(self.q_host,self.q_user,self.q_pass)
+    cursor = db.cursor()
+    cursor.execute('CREATE DATABASE `'+self.q_realm+'` DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci')
+    cursor.execute("GRANT SELECT, INSERT, UPDATE, DELETE, CREATE, DROP, ALTER, LOCK TABLES ON `"+self.q_realm+"`.* TO 'mangos'@'localhost'")
+    os.system('mysql -h '+self.q_host+' -u '+self.q_user+' -p'+self.q_pass+' '+self.q_realm+' < '+self.work_dir+'/server/sql/realmd.sql')
+    cursor.execute("UPDATE "+self.q_realm+".realmlist SET name = '"+str(self.realmname)+"' WHERE id = 1")
+    cursor.execute("UPDATE "+self.q_realm+".realmlist SET port = '"+str(self.realmport)+"' WHERE id = 1")
+    cursor.execute("UPDATE "+self.q_realm+".realmlist SET address = '"+str(self.realmip)+"' WHERE id = 1")
+    self.msg('\nRealm Database setup done.','green')
+
+def setupChar(self):
+    self.msg('\nCreating New Characters Database..','green')
+    self.check_Database(self,self.q_char)
+    db = MySQLdb.connect(self.q_host,self.q_user,self.q_pass)
+    cursor = db.cursor()
+    cursor.execute('CREATE DATABASE `'+self.q_char+'` DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci')
+    cursor.execute("GRANT SELECT, INSERT, UPDATE, DELETE, CREATE, DROP, ALTER, LOCK TABLES ON `"+self.q_char+"`.* TO 'mangos'@'localhost'")
+    os.system('mysql -h '+self.q_host+' -u '+self.q_user+' -p'+self.q_pass+' '+self.q_char+' < '+self.work_dir+'/server/sql/characters.sql')
+    self.msg('\nCharacters Database setup done.','green')
+
+def setupScriptDev2(self,version):
+    self.msg('\nCreating New ScriptDev2 Database..','green')
     if version=='tbc':
        folder='scripts'
     elif version=='classic':
@@ -47,14 +64,31 @@ def MaNGOS_Database(self,host,user,password,install_dir,version,dbs,realmname,re
        folder='ScriptDev2'
     elif version=='wotlk':
        folder='ScriptDev2'
-    os.system('mysql -h '+host+' -u '+user+' -p'+password+' '+dbs[3]+' < '+self.work_dir+'/server/src/bindings/'+folder+'/sql/scriptdev2_create_structure_mysql.sql')
-    os.system('mysql -h '+host+' -u '+user+' -p'+password+' '+dbs[3]+' < '+self.work_dir+'/server/src/bindings/'+folder+'/sql/scriptdev2_script_full.sql')
-    print self.colored("\nCreateing full database..",'green')
-    os.system('cd '+install_dir+'/database/database;sh make_full_db.sh')
-    os.system('mysql -h '+host+' -u '+user+' -p'+password+' '+dbs[0]+' < '+install_dir+'/database/database/full_db.sql')
-    db = MySQLdb.connect(host,user,password,'realmd')
+    self.check_Database(self,self.q_script)
+    db = MySQLdb.connect(self.q_host,self.q_user,self.q_pass)
     cursor = db.cursor()
-    cursor.execute("UPDATE realmlist SET name = '"+str(realmname)+"' WHERE id = 1")
-    cursor.execute("UPDATE realmlist SET port = '"+str(realmport)+"' WHERE id = 1")
-    cursor.execute("UPDATE realmlist SET address = '"+str(realmip)+"' WHERE id = 1")
-    print self.colored("\nDatabase setup done.",'green')
+    cursor.execute('CREATE DATABASE `'+self.q_script+'` DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci')
+    cursor.execute("GRANT SELECT, INSERT, UPDATE, DELETE, CREATE, DROP, ALTER, LOCK TABLES ON `"+self.q_script+"`.* TO 'mangos'@'localhost'")
+    os.system('mysql -h '+self.q_host+' -u '+self.q_user+' -p'+self.q_pass+' '+self.q_script+' < '+self.work_dir+'/server/src/bindings/'+folder+'/sql/scriptdev2_create_structure_mysql.sql')
+    os.system('mysql -h '+self.q_host+' -u '+self.q_user+' -p'+self.q_pass+' '+self.q_script+' < '+self.work_dir+'/server/src/bindings/'+folder+'/sql/scriptdev2_script_full.sql')
+    self.msg('\nScriptDev2 Database setup done.','green')
+ 
+def MaNGOS_Database(self):
+    self.msg('\nPreparing MySQL-Server.','green')
+    db = MySQLdb.connect(self.q_host,self.q_user,self.q_pass)
+    cursor = db.cursor()
+    cursor.execute("SELECT user FROM mysql.user WHERE user='mangos'")
+    result = cursor.fetchall()
+    if not result:
+       cursor.execute("CREATE USER 'mangos'@'localhost' IDENTIFIED BY 'mangos'")
+    else:
+       print self.colored("MySQL User: mangos@localhost already exists!",'red')
+    self.check_Database(self,self.q_world)
+    cursor.execute('CREATE DATABASE `'+self.q_world+'` DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci')
+    cursor.execute("GRANT SELECT, INSERT, UPDATE, DELETE, CREATE, DROP, ALTER, LOCK TABLES ON `"+self.q_world+"`.* TO 'mangos'@'localhost'")  
+    print self.colored("\nPreparing Databases...",'green')
+    os.system('mysql -h '+self.q_host+' -u '+self.q_user+' -p'+self.q_pass+' '+self.q_world+' < '+self.work_dir+'/server/sql/mangos.sql')
+    print self.colored("\nCreateing full database..",'green')
+    os.system('cd '+self.install_dir+'/database/database;sh make_full_db.sh')
+    os.system('mysql -h '+self.q_host+' -u '+self.q_user+' -p'+self.q_pass+' '+self.q_world+' < '+self.install_dir+'/database/database/full_db.sql')
+    print self.colored("\nWorld Database setup done.",'green')

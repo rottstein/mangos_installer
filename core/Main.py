@@ -6,18 +6,22 @@ import platform
 import fileinput
 import sys
 import time
+import ctypes
+from time import localtime, strftime
 from termcolor import colored
+from Menu import info
 from Collect import fetch_svn, fetch_git, fetch_mangchat, fetch_custom_git, fetch_scriptdev2, fetch_database
-from DatabaseSetup import check_Database, backupDB, MaNGOS_Database
+from DatabaseSetup import check_Database, backupDB, MaNGOS_Database, updateRealm, setupRealm, setupChar, setupScriptDev2
 from MaNGOS import Cataclysm, Wotlk, TBC, Classic
 from InstallDep import Install_dep
-from Lang import welcome, Complete
+from Lang import welcome, Complete, Correct
 
 new_path=''
 
 class installer:
   def __init__(self,work_dir,backup_dir,log_file,cmd_install):
 
+      # Div.
       self.work_dir=work_dir
       self.backup_dir=backup_dir
       self.log_file=log_file
@@ -26,6 +30,8 @@ class installer:
       self.Install_dep=Install_dep
       self.cmd_install=cmd_install
       self.colored=colored
+      self.info=info
+      self.Correct=Correct
 
       # Collect SVN / GIT 
       self.fetch_svn=fetch_svn
@@ -39,6 +45,10 @@ class installer:
       self.check_Database=check_Database
       self.backupDB=backupDB
       self.MaNGOS_Database=MaNGOS_Database
+      self.updateRealm=updateRealm
+      self.setupRealm=setupRealm
+      self.setupChar=setupChar
+      self.setupScriptDev2=setupScriptDev2
 
       # MaNGOS Support
       self.Cataclysm=Cataclysm
@@ -74,11 +84,19 @@ class installer:
       return answer
 
   def checkOS(self):
+      bit=ctypes.sizeof(ctypes.c_voidp)
+      if bit==8:
+         bit='64bit'
+      else:
+         bit='32bit'
       os=platform.dist()
       self.msg('\nChecking OS Platform.','yellow')
       if os[0]=='Ubuntu':
          time.sleep(3)
-         self.msg("\nFound OS: "+str(os[0])+", "+str(os[1])+" - "+str(os[2])+" - [ok]",'green')
+         self.msg("\nFound OS: "+str(os[0])+", "+str(os[1]),'green') 
+         self.msg("Version: "+str(os[2]),'green')
+         self.msg('Bit: '+str(bit),'green')
+         self.msg('\nSystem check [OK], you can proceed.','yellow')
          time.sleep(1)
       else:
          self.msg("\nOS: "+os[0]+" is currently not supported!",'red')
@@ -87,11 +105,12 @@ class installer:
 
   def del_folder(self,dir):
       if os.path.exists(dir):
+         date=strftime("%Y_%m_%d ", localtime())
          self.msg("\nTheres already a folder by that name, you want to rename or delete it? ("+dir+")",'red')
          self.msg('Syntax: rename/del','red')
          del_current=self.Quest(self.colored('Select: ','yellow'))
          if del_current=='rename':
-            os.system('mv '+dir+' '+dir+'_backup')
+            os.system('mv '+dir+' '+dir+'_backup_'+date)
          elif del_current=='del':
             os.system('rm -rf '+dir)
          else:
@@ -108,6 +127,9 @@ class installer:
   def msg(self,msg,color):
       print self.colored(msg,color)
 
+  def loadServer(self):
+      self.shit='test'
+
   def checkVersion(version):
       return version, scriptdev2
 
@@ -118,6 +140,7 @@ class installer:
     try:
         print self.colored(self.welcome(),'green')
         self.checkOS()
+        #self.loadServer()
     except:
         self.msg("\nError: Script ended! - Please Check "+self.log_file+"..",'red')
         exit()
@@ -148,14 +171,4 @@ class installer:
        exit()
     else:
       print "\nError: Syntax error!"
-      exit()
-
-    
-      #print "Work Path: "+self.work_dir
-      #print "Log File: "+self.log_file
-      #if self.checkFolder(self.work_dir)==1:
-      #   print "\nError: Please Delete "+self.work_dir+" or rename it!\n"
-      #   exit()
-      #else:
-      #   self.mkdir(self.work_dir)
-      
+      exit()      
