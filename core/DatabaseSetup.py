@@ -89,8 +89,8 @@ def setupScriptDev2(self):
     cursor = db.cursor()
     cursor.execute('CREATE DATABASE `'+self.q_script+'` DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci')
     cursor.execute("GRANT SELECT, INSERT, UPDATE, DELETE, CREATE, DROP, ALTER, LOCK TABLES ON `"+self.q_script+"`.* TO 'mangos'@'localhost'")
-    os.system('mysql -h '+self.q_host+' -u '+self.q_user+' -p'+self.q_pass+' '+self.q_script+' < '+self.work_dir+'/'+vers+'/src/bindings/'+folder+'/sql/scriptdev2_create_structure_mysql.sql')
-    os.system('mysql -h '+self.q_host+' -u '+self.q_user+' -p'+self.q_pass+' '+self.q_script+' < '+self.work_dir+'/'+vers+'/src/bindings/'+folder+'/sql/scriptdev2_script_full.sql')
+    os.system('mysql -h '+self.q_host+' -u '+self.q_user+' -p'+self.q_pass+' '+self.q_script+' < '+self.work_dir+'/'+vers+'/src/bindings/ScriptDev2/sql/scriptdev2_create_structure_mysql.sql')
+    os.system('mysql -h '+self.q_host+' -u '+self.q_user+' -p'+self.q_pass+' '+self.q_script+' < '+self.work_dir+'/'+vers+'/src/bindings/ScriptDev2/sql/scriptdev2_script_full.sql')
     self.msg('\nScriptDev2 Database setup done.','green')
 
 def setupYTDB(self):

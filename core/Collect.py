@@ -39,7 +39,7 @@ def fetch_scriptdev2(self,link,version):
     elif version=='wotlk':
        vers='mangos-wotlk'
        folder='ScriptDev2'
-    for line in os.popen('cd '+self.work_dir+ '/'+vers+';git clone '+link+' src/bindings/'+folder).readlines():
+    for line in os.popen('cd '+self.work_dir+ '/'+vers+';git clone '+link+' src/bindings/ScriptDev2').readlines():
            print line
 
 def fetch_database(self,link,version):

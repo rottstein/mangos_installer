@@ -146,7 +146,7 @@ class installer:
 
   def main(self):
     try:
-        print self.colored(self.welcome(),'green')
+        self.msg(self.welcome(),'green')
         self.checkOS()
     except:
         self.msg("\nError: Script ended! - Please Check "+self.log_file+"..",'red')
@@ -162,20 +162,22 @@ class installer:
     self.msg('\nChoose witch version to install?\nSyntax: Cataclysm / Wotlk / TBC / Classic / quit','green')
     version=self.Quest(self.colored('Please enter your choise: ','yellow'))
 
-    if version=='cataclysm':
+    if version=='cataclysm' or version=='cata' or version=='cataclysm':
         self.version='cataclysm'
         self.Install_dep(self)
         self.Cataclysm(self)
-    elif version=='wotlk':
+    elif version=='wotlk' or version=='Wotlk':
         self.version='wotlk'
         self.Install_dep(self)
         self.Wotlk(self)
-    elif version=='tbc':
+    elif version=='tbc' or version=='TBC':
+        self.version='tbc'
         self.Install_dep(self)
-        self.TBC()
-    elif version=='classic':
+        self.TBC(self)
+    elif version=='classic' or version=='Classic':
+        self.version='classic'
         self.Install_dep(self)
-        self.Classic()
+        self.Classic(self)
     elif version=='quit':
        exit()
     else:
