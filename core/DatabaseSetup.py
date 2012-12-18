@@ -28,7 +28,7 @@ def updateRealm(self):
     self.msg('\nUpdating Current Realm Database','green')
     db = MySQLdb.connect(self.q_host,self.q_user,self.q_pass,self.q_realm)
     cursor = db.cursor()
-    cursor.execute("INSERT INTO `realmlist` VALUES ("+self.q_realmid+",'"+self.q_realmname+"','"+self.q_realmip+"',"+self.q_realmport+",1,0,1,0,0,'')")
+    cursor.execute("INSERT INTO `realmlist` VALUES ("+str(self.q_realmid)+",'"+str(self.q_realmname)+"','"+str(self.q_realmip)+"',"+str(self.q_realmport)+",1,0,1,0,0,'')")
     self.msg('\nRealm Database setup done.','green')
 
 def setupRealm(self):
@@ -53,13 +53,13 @@ def setupRealm(self):
     self.msg('\nRealm Database setup done.','green')
 
 def setupChar(self):
-    if version=='tbc':
+    if self.version=='tbc':
        vers='mangos-tbc'
-    elif version=='classic':
+    elif self.version=='classic':
        vers='mangos-classic'
-    elif version=='cata':
+    elif self.version=='cata':
        vers='server'
-    elif version=='wotlk':
+    elif self.version=='wotlk':
        vers='mangos-wotlk'
     self.msg('\nCreating New Characters Database..','green')
     self.check_Database(self,self.q_char)

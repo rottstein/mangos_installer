@@ -92,7 +92,7 @@ def Cataclysm(self):
     if self.checkFolder(self.install_dir+'/bin')==1:
        self.msg('\n'+self.colored('MaNGOS Succesfully installed into','green')+' '+self.install_dir,'yellow')
        if self.q_ahbot=='yes':
-          os.system('cd '+self.work_dir+'/server/src/game/AuctionHouseBot/; cp ahbot.conf.dist.in '+self.install_dir+'/etc/ahbot.conf')
+          os.system('cd '+self.work_dir+'/server/src/game/AuctionHouseBot/;cp ahbot.conf.dist.in '+self.install_dir+'/etc/ahbot.conf')
        if self.q_mc=='yes':
           os.system('cd '+str(self.install_dir)+'/etc/;cp mangchat.conf.dist mangchat.conf')
        os.system('cd '+str(self.install_dir)+'/etc/;cp mangosd.conf.dist mangosd.conf;cp realmd.conf.dist realmd.conf;cp scriptdev2.conf.dist scriptdev2.conf;rm -rf *.dist')
@@ -105,7 +105,7 @@ def Cataclysm(self):
     self.fetch_database(self,cataclysm[3],'cata')
     self.MaNGOS_Database(self)
     self.setupChar(self)
-    self.setupScriptDev2(self,'cata')
+    self.setupScriptDev2(self)
     if self.q_currentrealm=='yes':
        self.updateRealm(self)
     else:
@@ -113,7 +113,7 @@ def Cataclysm(self):
        self.setupRealm(self)
     self.msg('\nSetting up ACID.','green')
     self.fetch_custom_git(self,self.install_dir+'/database/',cataclysm[2])
-    os.system('cd '+self.install_dir+'/database/acid/;mysql -h '+self.q_host+' -u '+self.q_user+' -p'+self.q_pass+' '+self.q_world+' < acid_wotlk.sql')
+    os.system('cd '+self.install_dir+'/database/acid/;git branch cata;mysql -h '+self.q_host+' -u '+self.q_user+' -p'+self.q_pass+' '+self.q_world+' < acid_cata.sql')
     os.system('mysql -h '+self.q_host+' -u '+self.q_user+' -p'+self.q_pass+' '+self.q_world+' < '+self.work_dir+'/server/src/bindings/ScriptDev2/sql/mangos_scriptname_full.sql')
     self.msg('\nSetting Config files.','green')
     self.msg('\nSetting DataDir = "." to DataDir = '+self.q_data_dir,'green')
@@ -130,8 +130,8 @@ def Cataclysm(self):
     self.replaceAll(self.install_dir+'/etc/mangosd.conf','127.0.0.1;3306;mangos;mangos;characters','127.0.0.1;3306;mangos;mangos;'+self.q_char+'')
     self.msg('\nSetting LoginDatabaseInfo = scriptdev2 to LoginDatabaseInfo = '+self.q_script+' (scriptdev2.conf)','green') 
     self.replaceAll(self.install_dir+'/etc/scriptdev2.conf','127.0.0.1;3306;mangos;mangos;scriptdev2','127.0.0.1;3306;mangos;mangos;'+self.q_script+'')
-    # RESERVE for auto start script.
-    print self.colored(self.Complete('Cataclysm'),'green')
+    self.loadServer(self)
+    self.msg(self.Complete('Cataclysm'),'green')
     exit()
 
 def Wotlk(self):
@@ -180,7 +180,7 @@ def Wotlk(self):
     if self.checkFolder(self.install_dir+'/bin')==1:
        self.msg('\n'+self.colored('MaNGOS Succesfully installed into','green')+' '+self.install_dir,'yellow')
        if self.q_ahbot=='yes':
-          os.system('cd '+self.work_dir+'/mangos-wotlk/src/game/AuctionHouseBot/; cp ahbot.conf.dist.in '+self.install_dir+'/etc/ahbot.conf')
+          os.system('cd '+self.work_dir+'/mangos-wotlk/src/game/AuctionHouseBot/;cp ahbot.conf.dist.in '+self.install_dir+'/etc/ahbot.conf')
        os.system('cd '+str(self.install_dir)+'/etc/;cp mangosd.conf.dist mangosd.conf;cp realmd.conf.dist realmd.conf;cp scriptdev2.conf.dist scriptdev2.conf;rm -rf *.dist')
        print os.system('ls -la '+str(self.install_dir)+'/etc/')
     else:
@@ -191,7 +191,7 @@ def Wotlk(self):
     self.fetch_svn(self,wotlk[3],'ytdb')
     self.setupYTDB(self)
     self.setupChar(self)
-    self.setupScriptDev2(self,'wotlk')
+    self.setupScriptDev2(self)
     if self.q_currentrealm=='yes':
        self.updateRealm(self)
     else:
@@ -217,12 +217,12 @@ def Wotlk(self):
     self.msg('\nSetting LoginDatabaseInfo = scriptdev2 to LoginDatabaseInfo = '+self.q_script+' (scriptdev2.conf)','green') 
     self.replaceAll(self.install_dir+'/etc/scriptdev2.conf','127.0.0.1;3306;mangos;mangos;scriptdev2','127.0.0.1;3306;mangos;mangos;'+self.q_script+'')
     self.loadServer(self)
-    print self.colored(self.Complete('Wotlk'),'green')
+    self.msg(self.Complete('Wotlk'),'green')
     exit()
 
 def TBC(self):
     os.system('clear')
-    self.msg('\nLoad predefines? This should make the script abit faster since you only have to edit core/predefines.py\nonce on every install instead of typing the info each time.','green')
+    self.msg('\nLoad predefine values? This should make the script abit faster since you only have to edit core/predefines.py\nonce on every install instead of typing the info each time.','green')
     pre=self.Quest(0)
     if pre=='yes':
          self.loadPreDefines(self)
@@ -266,7 +266,7 @@ def TBC(self):
     if self.checkFolder(self.install_dir+'/bin')==1:
        self.msg('\n'+self.colored('MaNGOS Succesfully installed into','green')+' '+self.install_dir,'yellow')
        if self.q_ahbot=='yes':
-          os.system('cd '+self.work_dir+'/mangos-tbc/src/game/AuctionHouseBot/; cp ahbot.conf.dist.in '+self.install_dir+'/etc/ahbot.conf')
+          os.system('cd '+self.work_dir+'/mangos-tbc/src/game/AuctionHouseBot/;cp ahbot.conf.dist.in '+self.install_dir+'/etc/ahbot.conf')
        os.system('cd '+str(self.install_dir)+'/etc/;cp mangosd.conf.dist mangosd.conf;cp realmd.conf.dist realmd.conf;cp scriptdev2.conf.dist scriptdev2.conf;rm -rf *.dist')
        print os.system('ls -la '+str(self.install_dir)+'/etc/')
     else:
@@ -277,7 +277,7 @@ def TBC(self):
     self.fetch_database(self,tbc[3],'tbc')
     self.MaNGOS_Database(self)
     self.setupChar(self)
-    self.setupScriptDev2(self,'tbc')
+    self.setupScriptDev2(self)
     if self.q_currentrealm=='yes':
        self.updateRealm(self)
     else:
@@ -285,7 +285,7 @@ def TBC(self):
        self.setupRealm(self)
     self.msg('\nSetting up ACID.','green')
     self.fetch_custom_git(self,self.install_dir+'/database/',tbc[2])
-    os.system('cd '+self.install_dir+'/database/acid/;mysql -h '+self.q_host+' -u '+self.q_user+' -p'+self.q_pass+' '+self.q_world+' < acid_wotlk.sql')
+    os.system('cd '+self.install_dir+'/database/acid/;git branch tbc;mysql -h '+self.q_host+' -u '+self.q_user+' -p'+self.q_pass+' '+self.q_world+' < acid_tbc.sql')
     os.system('mysql -h '+self.q_host+' -u '+self.q_user+' -p'+self.q_pass+' '+self.q_world+' < '+self.work_dir+'/mangos-tbc/src/bindings/ScriptDev2/sql/mangos_scriptname_full.sql')
     self.msg('\nSetting Config files.','green')
     self.msg('\nSetting DataDir = "." to DataDir = '+self.q_data_dir,'green')
@@ -302,8 +302,8 @@ def TBC(self):
     self.replaceAll(self.install_dir+'/etc/mangosd.conf','127.0.0.1;3306;mangos;mangos;characters','127.0.0.1;3306;mangos;mangos;'+self.q_char+'')
     self.msg('\nSetting LoginDatabaseInfo = scriptdev2 to LoginDatabaseInfo = '+self.q_script+' (scriptdev2.conf)','green') 
     self.replaceAll(self.install_dir+'/etc/scriptdev2.conf','127.0.0.1;3306;mangos;mangos;scriptdev2','127.0.0.1;3306;mangos;mangos;'+self.q_script+'')
-    # RESERVE for auto start script.
-    print self.colored(self.Complete('The Burning Crusader'),'green')
+    self.loadServer(self)
+    self.msg(self.Complete('The Burning Crusader'),'green')
     exit()
 
 def Classic(self):
