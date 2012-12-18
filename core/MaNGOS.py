@@ -216,7 +216,7 @@ def Wotlk(self):
     self.replaceAll(self.install_dir+'/etc/mangosd.conf','127.0.0.1;3306;mangos;mangos;characters','127.0.0.1;3306;mangos;mangos;'+self.q_char+'')
     self.msg('\nSetting LoginDatabaseInfo = scriptdev2 to LoginDatabaseInfo = '+self.q_script+' (scriptdev2.conf)','green') 
     self.replaceAll(self.install_dir+'/etc/scriptdev2.conf','127.0.0.1;3306;mangos;mangos;scriptdev2','127.0.0.1;3306;mangos;mangos;'+self.q_script+'')
-    # RESERVE for auto start script.
+    self.loadServer(self)
     print self.colored(self.Complete('Wotlk'),'green')
     exit()
 

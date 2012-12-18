@@ -20,8 +20,6 @@ def fetch_svn(self,link,version):
        print self.colored("\nSuccesfully downloaded!",'green')
     else:
        print self.colored("\nError: Failed to download from: "+link,'red')
-       #print self.colored("\nScript will continue!",'red')
-       #time.sleep(5)
        exit()
 
 def fetch_custom_git(self,path,link):

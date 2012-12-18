@@ -34,16 +34,12 @@ def updateRealm(self):
 def setupRealm(self):
     if version=='tbc':
        vers='mangos-tbc'
-       folder='scripts'
     elif version=='classic':
        vers='mangos-classic'
-       folder='ScriptDevZero'
     elif version=='cata':
        vers='server'
-       folder='ScriptDev2'
     elif version=='wotlk':
        vers='mangos-wotlk'
-       folder='ScriptDev2'
     self.msg('\nCreating New Realmd Database..','green')
     self.check_Database(self,self.q_realm)
     db = MySQLdb.connect(self.q_host,self.q_user,self.q_pass)
@@ -59,16 +55,12 @@ def setupRealm(self):
 def setupChar(self):
     if version=='tbc':
        vers='mangos-tbc'
-       folder='scripts'
     elif version=='classic':
        vers='mangos-classic'
-       folder='ScriptDevZero'
     elif version=='cata':
        vers='server'
-       folder='ScriptDev2'
     elif version=='wotlk':
        vers='mangos-wotlk'
-       folder='ScriptDev2'
     self.msg('\nCreating New Characters Database..','green')
     self.check_Database(self,self.q_char)
     db = MySQLdb.connect(self.q_host,self.q_user,self.q_pass)

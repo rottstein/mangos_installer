@@ -7,6 +7,7 @@ import fileinput
 import sys
 import time
 import ctypes
+import MySQLdb
 from time import localtime, strftime
 from termcolor import colored
 from Menu import info
@@ -96,9 +97,7 @@ class installer:
       self.msg('\nChecking OS Platform.','yellow')
       if os[0]=='Ubuntu':
          time.sleep(3)
-         self.msg("\nFound OS: "+str(os[0])+", "+str(os[1]),'green') 
-         self.msg("Version: "+str(os[2]),'green')
-         self.msg('32/64Bit: '+str(bit),'green')
+         self.msg("\nFound OS: "+str(os[0])+", "+str(os[1])+" "+str(os[2])+" "+str(bit),'green') 
          self.msg('\nSystem check '+self.colored('[OK]','green'),'yellow')
          time.sleep(1)
       else:
@@ -131,13 +130,19 @@ class installer:
       print self.colored(msg,color)
 
   def loadServer(self):
-      self.shit='test'
+      os.system('cd '+self.install_dir+'/bin;screen -A -m -d -S World_server ./mangosd')
+      os.system('cd '+self.install_dir+'/bin;screen -A -m -d -S Auth_server ./realmd')
 
-  def checkVersion(version):
-      return version, scriptdev2
-
-  def createAccount():
-      pass
+  def createAccount(self):
+    db = MySQLdb.connect(self.q_host,self.q_user,self.q_pass)
+    cursor = db.cursor()
+    cursor.execute("SELECT * FROM "+self.q_realm+".account WHERE `username` = '"+self.q_account+"' AND SHA1(CONCAT(UPPER('"+self.q_account+"'), ':', UPPER('"+self.q_ac_pass+"'))) = `sha_pass_hash`")
+    cursor.execute("SELECT user FROM "+self.q_realm+".account WHERE `username` = '"+self.q_account+"'")
+    result = cursor.fetchall()
+    if not result:
+       self.msg('\nFailed to create account: '+self.q_account,'red')
+    else:
+       self.msg('\nAccount succesfully created!','green')
 
   def main(self):
     try:

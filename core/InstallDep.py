@@ -23,6 +23,11 @@ packages=[
           'cmake',
           'subversion',
           'phpmyadmin',
+          'rar',
+          'unrar',
+          'p7zip-full',
+          'zip',
+          'unzip',
           'screen'
          ]
 
