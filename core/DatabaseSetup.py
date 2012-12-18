@@ -28,7 +28,18 @@ def updateRealm(self):
     self.msg('\nUpdating Current Realm Database','green')
     db = MySQLdb.connect(self.q_host,self.q_user,self.q_pass,self.q_realm)
     cursor = db.cursor()
-    cursor.execute("INSERT INTO `realmlist` VALUES ("+str(self.q_realmid)+",'"+str(self.q_realmname)+"','"+str(self.q_realmip)+"',"+str(self.q_realmport)+",1,0,1,0,0,'')")
+    cursor.execute('SELECT * FROM `realmlist` WHERE `id` = '+str(self.q_realmid)+'')
+    result = cursor.fetchall()
+    if not result:
+       cursor.execute("INSERT INTO `realmlist` VALUES ("+str(self.q_realmid)+",'"+str(self.q_realmname)+"','"+str(self.q_realmip)+"',"+str(self.q_realmport)+",1,0,1,0,0,'')")
+    else:
+       self.msg('\nRealm: '+self.q_realmid+' - Name: '+self.q_realname+' - IP: '+self.q_realmip+' - Port: '+self.q_realmport+'','green')
+       self.msg('\nPlease enter a new realm ID since '+self.q_realmid+' is already used!','red')
+       q_newID=self.Quest('ID: ')
+       q_newName=self.Quest('Name: ')
+       q_newPort=self.Quest('Port: ')
+       q_newIP=self.Quest('IP: ')
+       cursor.execute("INSERT INTO `realmlist` VALUES ("+str(q_newID)+",'"+str(q_newName)+"','"+str(q_newIP)+"',"+str(q_newPort)+",1,0,1,0,0,'')")
     self.msg('\nRealm Database setup done.','green')
 
 def setupRealm(self):

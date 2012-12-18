@@ -16,9 +16,9 @@ def loadPreDefines(self):
     self.q_realm='mangos_realmd'
     self.q_char='mangos_t_characters'
     self.q_script='mangos_t_scriptdev2'
-    self.q_realmid=3
-    self.q_realmname='tbc'
-    self.q_realmport=8087
+    self.q_realmid=4
+    self.q_realmname='tbc-clean'
+    self.q_realmport=8099
     self.q_realmip='192.168.1.12'
     self.q_cores=4
     self.del_folder(self.install_dir)

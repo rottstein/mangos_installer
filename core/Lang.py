@@ -5,24 +5,24 @@ def welcome():
 def Complete(version):
     end="""
         Script is now done installing. you are now ready to run your server! ("""+version+""")
-        Set your client realmlist to: """+self.realmip+"""
+        Set your client realmlist to: """+self.colored(self.realmip,'yellow')+"""
         Login:
               username: administrator
               password: administrator
 
         Database:
-              location: http://"""+self.realmip+"""/phpmyadmin
+              location: http://"""+self.colored(self.realmip,'yellow')+"""/phpmyadmin
               username: mangos
               password: mangos
         
         Server:
-              location: """+self.install_dir+"""
+              location: """+self.colored(self.install_dir,'yellow')+"""
               conf_dir: """+self.install_dir+"""/etc
 
         RealmInfo:
-              name: """+self.realmname+"""
-              port: """+self.realmport+"""
-              ip: """+self.realmip+"""
+              name: """+self.colored(self.realmname,'yellow')+"""
+              port: """+self.colored(self.realmport,'yellow')+"""
+              ip: """+self.colored(self.realmip,'yellow')+"""
         """
     return end
 
