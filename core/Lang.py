@@ -49,3 +49,26 @@ def Correct(self):
        """+self.colored('ACID: '+self.colored(self.q_acid,'yellow')+'','green')+"""             
              """
  return info
+
+def Correct_w(self):
+ info="""
+    Collected Information.
+    ----------------------
+    Database:
+       """+self.colored('Host: '+self.colored(self.q_host,'yellow')+'','green')+"""
+       """+self.colored('User: '+self.colored(self.q_user,'yellow')+'','green')+"""
+       """+self.colored('Pass: '+self.colored(self.q_pass,'red')+'','green')+"""
+
+    """+self.colored('Realm:','green')+"""
+       """+self.colored('Name: '+self.colored(self.q_realmname,'yellow')+'','green')+"""
+       """+self.colored('Port: '+self.colored(self.q_realmport,'yellow')+'','green')+"""
+       """+self.colored('IP: '+self.colored(self.q_realmip,'yellow')+'','green')+"""
+
+    """+self.colored('Config:','green')+"""
+       """+self.colored('Path: '+self.colored(self.install_dir,'yellow')+'','green')+"""
+       """+self.colored('Data: '+self.colored(self.q_data_dir,'yellow')+'','green')+"""
+       """+self.colored('ScriptDev2: '+self.colored(self.q_sd2,'yellow')+'','green')+"""
+       """+self.colored('AuctionHouseBot: '+self.colored(self.q_ahbot,'yellow')+'','green')+"""
+       """+self.colored('ACID: '+self.colored(self.q_acid,'yellow')+'','green')+"""             
+             """
+ return info

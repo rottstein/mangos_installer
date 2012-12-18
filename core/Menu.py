@@ -1,7 +1,7 @@
 #!/usr/env python
 
 def info(self):
-    self.msg('\nPreparing Cataclysm..','green')
+    self.msg('\nPreparing '+self.version+'..','green')
     self.msg('Choose where to install server?','green')
     self.install_dir=self.Quest(self.colored('Path: ','yellow'))
     self.del_folder(self.install_dir)
@@ -11,8 +11,9 @@ def info(self):
     self.msg('\nInstalling into: '+self.install_dir,'green')
     self.msg('\nCompile whit ScriptDev2?','green')
     self.q_sd2=self.Quest(0)
-    self.msg('\nCompile whit MangChat 1.7.9?','green')
-    self.q_mc=self.Quest(0)
+    if self.version=='cataclysm':
+       self.msg('\nCompile whit MangChat 1.7.9?','green')
+       self.q_mc=self.Quest(0)
     self.msg('\nActivate AuctionHouseBot?','green')
     self.q_ahbot=self.Quest(0)
     self.msg('\nActivate ACID?','green')

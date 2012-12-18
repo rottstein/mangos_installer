@@ -10,11 +10,12 @@ import ctypes
 from time import localtime, strftime
 from termcolor import colored
 from Menu import info
+from predefines import loadPreDefines
 from Collect import fetch_svn, fetch_git, fetch_mangchat, fetch_custom_git, fetch_scriptdev2, fetch_database
 from DatabaseSetup import check_Database, backupDB, MaNGOS_Database, updateRealm, setupRealm, setupChar, setupScriptDev2
 from MaNGOS import Cataclysm, Wotlk, TBC, Classic
 from InstallDep import Install_dep
-from Lang import welcome, Complete, Correct
+from Lang import welcome, Complete, Correct, Correct_w
 
 new_path=''
 
@@ -32,6 +33,8 @@ class installer:
       self.colored=colored
       self.info=info
       self.Correct=Correct
+      self.Correct_w=Correct_w
+      self.loadPreDefines=loadPreDefines
 
       # Collect SVN / GIT 
       self.fetch_svn=fetch_svn
@@ -95,8 +98,8 @@ class installer:
          time.sleep(3)
          self.msg("\nFound OS: "+str(os[0])+", "+str(os[1]),'green') 
          self.msg("Version: "+str(os[2]),'green')
-         self.msg('Bit: '+str(bit),'green')
-         self.msg('\nSystem check [OK], you can proceed.','yellow')
+         self.msg('32/64Bit: '+str(bit),'green')
+         self.msg('\nSystem check '+self.colored('[OK]','green'),'yellow')
          time.sleep(1)
       else:
          self.msg("\nOS: "+os[0]+" is currently not supported!",'red')
@@ -156,11 +159,13 @@ class installer:
     version=self.Quest(self.colored('Please enter your choise: ','yellow'))
 
     if version=='cataclysm':
+        self.version='cataclysm'
         self.Install_dep(self)
         self.Cataclysm(self)
     elif version=='wotlk':
+        self.version='wotlk'
         self.Install_dep(self)
-        self.Wotlk()
+        self.Wotlk(self)
     elif version=='tbc':
         self.Install_dep(self)
         self.TBC()

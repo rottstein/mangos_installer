@@ -35,7 +35,7 @@ def checkPackage(self,package):
        os.system(self.cmd_install+' '+package)
     else:
        self.msg('Package: '+self.colored(package,'yellow')+' '+self.colored('[OK]','green')+'', 'green')
-       time.sleep(1)
+       #time.sleep(1)
 
 def Install_dep(self):
     self.msg('\nChecking needed files.','green')

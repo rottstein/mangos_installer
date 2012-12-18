@@ -12,15 +12,17 @@ def fetch_mangchat(self,link):
     print os.system("cd "+self.work_dir+"/server;git add .;git commit -a -m 'Commiting current work before fetching.'")
     print os.system('cd '+self.work_dir+'/server;git pull '+str(link))
 
-def fetch_svn(self,install_dir,link,version):
+def fetch_svn(self,link,version):
+    os.system('mkdir '+self.install_dir+'/database;cd '+self.install_dir+'/database')
     os.system('cd '+self.install_dir+'/database/;svn co '+link+'')
     if self.checkFolder(self.install_dir+'/database/'+version)==1:
        print self.colored("\nSVN: "+link,'green')
        print self.colored("\nSuccesfully downloaded!",'green')
     else:
        print self.colored("\nError: Failed to download from: "+link,'red')
-       print self.colored("\nScript will continue!",'red')
-       time.sleep(5)
+       #print self.colored("\nScript will continue!",'red')
+       #time.sleep(5)
+       exit()
 
 def fetch_custom_git(self,path,link):
     for line in os.popen('cd '+path+';git clone '+link+'').readlines():
@@ -28,14 +30,18 @@ def fetch_custom_git(self,path,link):
 
 def fetch_scriptdev2(self,link,version):
     if version=='tbc':
+       vers='mangos-tbc'
        folder='scripts'
     elif version=='classic':
+       vers='mangos-classic'
        folder='ScriptDevZero'
     elif version=='cata':
+       vers='server'
        folder='ScriptDev2'
     elif version=='wotlk':
+       vers='mangos-wotlk'
        folder='ScriptDev2'
-    for line in os.popen('cd '+self.work_dir+ '/server;git clone '+link+' src/bindings/'+folder).readlines():
+    for line in os.popen('cd '+self.work_dir+ '/'+vers+';git clone '+link+' src/bindings/'+folder).readlines():
            print line
 
 def fetch_database(self,link,version):
