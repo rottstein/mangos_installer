@@ -143,7 +143,6 @@ class installer:
     try:
         print self.colored(self.welcome(),'green')
         self.checkOS()
-        #self.loadServer()
     except:
         self.msg("\nError: Script ended! - Please Check "+self.log_file+"..",'red')
         exit()
