@@ -33,7 +33,7 @@ def updateRealm(self):
     if not result:
        cursor.execute("INSERT INTO `realmlist` VALUES ("+str(self.q_realmid)+",'"+str(self.q_realmname)+"','"+str(self.q_realmip)+"',"+str(self.q_realmport)+",1,0,1,0,0,'')")
     else:
-       self.msg('\nRealm: '+str(self.q_realmid)+' - Name: '+str(self.q_realname)+' - IP: '+str(self.q_realmip)+' - Port: '+str(self.q_realmport)+'','green')
+       self.msg('\nRealm: '+str(self.q_realmid)+' - Name: '+str(self.q_realmname)+' - IP: '+str(self.q_realmip)+' - Port: '+str(self.q_realmport)+'','green')
        self.msg('\nPlease enter a new realm ID since '+str(self.q_realmid)+' is already used!','red')
        q_newID=self.Quest('ID: ')
        q_newName=self.Quest('Name: ')
