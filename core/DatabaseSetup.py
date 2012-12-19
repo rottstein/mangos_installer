@@ -109,6 +109,7 @@ def setupYTDB(self,version):
        vers='server'
     elif self.version=='wotlk':
        vers='Wotlk'
+       folder='mangos-wotlk'
     elif self.version=='tbc':
        vers='mangos-tbc'
     elif self.version=='classic':
@@ -126,10 +127,10 @@ def setupYTDB(self,version):
     cursor.execute('CREATE DATABASE `'+self.q_world+'` DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci')
     cursor.execute("GRANT SELECT, INSERT, UPDATE, DELETE, CREATE, DROP, ALTER, LOCK TABLES ON `"+self.q_world+"`.* TO 'mangos'@'localhost'")  
     print self.colored("\nPreparing Databases...",'green')
-    os.system('mysql -h '+self.q_host+' -u '+self.q_user+' -p'+self.q_pass+' '+self.q_world+' < '+self.work_dir+'/'+vers+'/sql/mangos.sql')
+    os.system('mysql -h '+self.q_host+' -u '+self.q_user+' -p'+self.q_pass+' '+self.q_world+' < '+self.work_dir+'/'+folder+'/sql/mangos.sql')
     print self.colored("\nCreateing full database..",'green')
     os.system('cd '+self.install_dir+'/database/'+vers+'/R63;7za e *.7z')
-    os.system('cd '+self.install_dir+'/database/'+vers+'/R63;mysql -h '+self.q_host+' -u '+self.q_user+' -p'+self.q_pass+' '+self.q_world+' < *.sql') 
+    os.system('cd '+self.install_dir+'/database/'+vers+'/R63;mysql -h '+self.q_host+' -u '+self.q_user+' -p'+self.q_pass+' '+self.q_world+' < YTDB_0.14.6_R630_MaNGOS_R12214_SD2_R2737_ACID_R310_RuDB_R56.sql') 
     print self.colored("\nWorld Database setup done.",'green')
     
  
