@@ -104,8 +104,34 @@ def setupScriptDev2(self):
     os.system('mysql -h '+self.q_host+' -u '+self.q_user+' -p'+self.q_pass+' '+self.q_script+' < '+self.work_dir+'/'+vers+'/src/bindings/ScriptDev2/sql/scriptdev2_script_full.sql')
     self.msg('\nScriptDev2 Database setup done.','green')
 
-def setupYTDB(self):
-    os.system('unzip -e '+package)
+def setupYTDB(self,version):
+    if self.version=='cataclysm':
+       vers='server'
+    elif self.version=='wotlk':
+       vers='Wotlk'
+    elif self.version=='tbc':
+       vers='mangos-tbc'
+    elif self.version=='classic':
+       vers='mangos-classic'
+    self.msg('\nPreparing MySQL-Server.','green')
+    db = MySQLdb.connect(self.q_host,self.q_user,self.q_pass)
+    cursor = db.cursor()
+    cursor.execute("SELECT user FROM mysql.user WHERE user='mangos'")
+    result = cursor.fetchall()
+    if not result:
+       cursor.execute("CREATE USER 'mangos'@'localhost' IDENTIFIED BY 'mangos'")
+    else:
+       print self.colored("MySQL User: mangos@localhost already exists!",'red')
+    self.check_Database(self,self.q_world)
+    cursor.execute('CREATE DATABASE `'+self.q_world+'` DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci')
+    cursor.execute("GRANT SELECT, INSERT, UPDATE, DELETE, CREATE, DROP, ALTER, LOCK TABLES ON `"+self.q_world+"`.* TO 'mangos'@'localhost'")  
+    print self.colored("\nPreparing Databases...",'green')
+    os.system('mysql -h '+self.q_host+' -u '+self.q_user+' -p'+self.q_pass+' '+self.q_world+' < '+self.work_dir+'/'+vers+'/sql/mangos.sql')
+    print self.colored("\nCreateing full database..",'green')
+    os.system('cd '+self.install_dir+'/database/'+vers+'/R63;7za e *.7z')
+    os.system('cd '+self.install_dir+'/database/'+vers+'/R63;mysql -h '+self.q_host+' -u '+self.q_user+' -p'+self.q_pass+' '+self.q_world+' < *.sql') 
+    print self.colored("\nWorld Database setup done.",'green')
+    
  
 def MaNGOS_Database(self):
     if self.version=='cataclysm':

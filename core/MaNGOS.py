@@ -189,8 +189,8 @@ def Wotlk(self):
        exit()
     os.system('clear')
     self.msg('\nDownloading Databases.','green')
-    self.fetch_svn(self,wotlk[3],'ytdb')
-    self.setupYTDB(self)
+    self.fetch_svn(self,wotlk[3],'Wotlk')
+    self.setupYTDB(self,'wotlk')
     self.setupChar(self)
     self.setupScriptDev2(self)
     if self.q_currentrealm=='yes':

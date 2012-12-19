@@ -14,7 +14,7 @@ from termcolor import colored
 from Menu import info
 from predefines import loadPreDefines
 from Collect import fetch_svn, fetch_git, fetch_mangchat, fetch_custom_git, fetch_scriptdev2, fetch_database
-from DatabaseSetup import check_Database, backupDB, MaNGOS_Database, updateRealm, setupRealm, setupChar, setupScriptDev2
+from DatabaseSetup import check_Database, backupDB, MaNGOS_Database, updateRealm, setupRealm, setupChar, setupScriptDev2, setupYTDB
 from MaNGOS import Cataclysm, Wotlk, TBC, Classic
 from InstallDep import Install_dep
 from Lang import welcome, Complete, Correct, Correct_w
@@ -54,6 +54,7 @@ class installer:
       self.setupRealm=setupRealm
       self.setupChar=setupChar
       self.setupScriptDev2=setupScriptDev2
+      self.setupYTDB=setupYTDB
 
       # MaNGOS Support
       self.Cataclysm=Cataclysm
@@ -96,7 +97,7 @@ class installer:
   # before we continue.. also check access to github.com
   def check_connectivity(self,fwcURL):
       import urllib
-      #fwcURL = "http://google.com/"
+      #fwcURL = "http://google.com/" 
       try:
           fwcall = urllib.urlopen(fwcURL).read()
           if fwcURL == 'http://google.com/':

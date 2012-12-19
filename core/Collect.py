@@ -16,6 +16,7 @@ def fetch_mangchat(self,link):
 
 def fetch_svn(self,link,version):
     os.system('mkdir '+self.install_dir+'/database;cd '+self.install_dir+'/database')
+    self.check_connectivity('http://subversion.assembla.com/')
     os.system('cd '+self.install_dir+'/database/;svn co '+link+'')
     if self.checkFolder(self.install_dir+'/database/'+version)==1:
        print self.colored("\nSVN: "+link,'green')
@@ -41,10 +42,14 @@ def fetch_scriptdev2(self,link,version):
     elif version=='wotlk':
        vers='mangos-wotlk'
        folder='ScriptDev2'
+    self.check_connectivity('https://github.com/')
+    self.msg('\nFetching '+str(link)+'\n','green')
     for line in os.popen('cd '+self.work_dir+ '/'+vers+';git clone '+link+' src/bindings/ScriptDev2').readlines():
            print line
 
 def fetch_database(self,link,version):
+       self.check_connectivity('https://github.com/')
+       self.msg('\nFetching '+str(link)+'\n','green')
        print self.colored("\nFetching MaNGOS "+version+" Default database... ("+link+")",'green')
        os.system('mkdir '+self.install_dir+'/database;cd '+self.install_dir+'/database')
        for line in os.popen('cd '+self.install_dir+'/database/;git clone '+link):
