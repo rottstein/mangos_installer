@@ -5,6 +5,8 @@ import time
 import os
 
 def fetch_git(self,link):
+    self.check_connectivity('https://github.com/')
+    self.msg('\nFetching '+str(link)+'\n','green')
     for line in os.popen('cd '+self.work_dir+ ';git clone '+link+'').readlines():
            print line
 

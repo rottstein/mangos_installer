@@ -5,19 +5,19 @@ import os
 import MySQLdb
 
 cataclysm=[
-            'git://github.com/mangos/server.git',
-            'git://github.com/scriptdev2/scriptdev2-cata.git',
-            'git://github.com/scriptdev2/acid.git',
-            'git://github.com/mangos/database.git',
-            'git://github.com/gimli/server.git mangchat'
+      'git://github.com/mangos/server.git',
+      'git://github.com/scriptdev2/scriptdev2-cata.git',
+      'git://github.com/scriptdev2/acid.git',
+      'git://github.com/mangos/database.git',
+      'git://github.com/gimli/server.git mangchat'
           ]
 
 wotlk=[
-        'git://github.com/cmangos/mangos-wotlk.git',
-        'git://github.com/scriptdev2/scriptdev2.git',
-        'git://github.com/scriptdev2/acid.git',
-        'http://subversion.assembla.com/svn/ytdbase/',
-        '',
+      'git://github.com/cmangos/mangos-wotlk.git',
+      'git://github.com/scriptdev2/scriptdev2.git',
+      'git://github.com/scriptdev2/acid.git',
+      'http://subversion.assembla.com/svn/ytdbase/Wotlk',
+      '',
       ]
 
 tbc=[
@@ -29,11 +29,11 @@ tbc=[
     ]
 
 classic=[
-         'git://github.com/cmangos/mangos-classic.git',
-         'git://github.com/scriptdev2/scriptdev2-classic.git',
-         'git://github.com/scriptdev2/acid.git',
-         '',
-         '',
+      'git://github.com/cmangos/mangos-classic.git',
+      'git://github.com/scriptdev2/scriptdev2-classic.git',
+      'git://github.com/scriptdev2/acid.git',
+      'git://github.com/mangos-zero/database.git',
+      '',
         ]
 
 def Cataclysm(self):

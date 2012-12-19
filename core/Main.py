@@ -7,6 +7,7 @@ import fileinput
 import sys
 import time
 import ctypes
+import urllib2
 import MySQLdb
 from time import localtime, strftime
 from termcolor import colored
@@ -66,6 +67,7 @@ class installer:
 
       # ArcEmu Sopport // -ss-
 
+  # make path and make sure it all went well
   def mkdir(self,path):
       os.system('mkdir '+path)
       if self.checkFolder(path)==1:
@@ -73,12 +75,15 @@ class installer:
       else:
          self.msg("\nError: Failed to create path: "+path,'red')
 
+  # Needed for mkdir() function
   def checkFolder(self,path):
       if os.path.exists(path):
          return 1
       else:
          return 0
 
+  # Simply a raw_input() function
+  # for making the script abit less messed up.
   def Quest(self,question):
       if question==0:
          question=self.colored('Select: ','yellow')
@@ -87,6 +92,25 @@ class installer:
       answer=raw_input(question)
       return answer
 
+  # Make Sure we are connected to the internet
+  # before we continue.. also check access to github.com
+  def check_connectivity(self,fwcURL):
+      import urllib
+      #fwcURL = "http://google.com/"
+      try:
+          fwcall = urllib.urlopen(fwcURL).read()
+          if fwcURL == 'http://google.com/':
+             self.msg(''+self.colored('Network: ','yellow')+''+self.colored('Connected!','green'),'green')
+          else:
+             self.msg('\nConnecting to '+str(fwcURL)+'...','green') 
+             time.sleep(1) # really dont needed. show off. ;)
+             self.msg('\nConnected Succesfully to '+str(fwcURL),'green')
+      except:
+          self.msg(''+self.colored('Network: ','yellow')+'Not Connected!\nPlease Connect to the internet and run script again!','red')
+          exit()
+
+  # Simple OS Check
+  # Really not needed, just show off..
   def checkOS(self):
       bit=ctypes.sizeof(ctypes.c_voidp)
       if bit==8:
@@ -97,7 +121,8 @@ class installer:
       self.msg('\nChecking OS Platform.','yellow')
       if os[0]=='Ubuntu':
          time.sleep(3)
-         self.msg("\nFound OS: "+str(os[0])+", "+str(os[1])+" "+str(os[2])+" "+str(bit),'green') 
+         self.msg('\nFound OS: '+self.colored(str(os[0]),'green')+' '+self.colored(str(os[1]),'green')+' '+self.colored(str(os[2]),'green')+' '+self.colored(str(bit),'green'),'yellow') 
+         self.check_connectivity('http://google.com/') 
          self.msg('\nSystem check '+self.colored('[OK]','green'),'yellow')
          time.sleep(1)
       else:
@@ -105,6 +130,8 @@ class installer:
          self.msg("\nThis script is only for Ubuntu users! Quitting!",'red')
          exit()
 
+  # Delete or rename existing folders
+  # makes sure we dont loose our work
   def del_folder(self,dir):
       if os.path.exists(dir):
          date=strftime("%Y_%m_%d ", localtime())
@@ -120,19 +147,25 @@ class installer:
             print os.system('ls -la '+dir)
             exit()
 
+  # Edit MaNGOS Config files -> self.install_dir/etc - 
+  # see MaNGOS.py for more info.
   def replaceAll(self,file,searchExp,replaceExp):
       for line in fileinput.input(file, inplace=1):
           if searchExp in line:
              line = line.replace(searchExp,replaceExp)
           sys.stdout.write(line)
 
+  # print msg (self.msg(message,color) instead of print self.colored(message,colore))
   def msg(self,msg,color):
       print self.colored(msg,color)
 
+  # Needs Work! Load servers when done compiling and make sure they are up
   def loadServer(self):
       os.system('cd '+self.install_dir+'/bin;screen -A -m -d -S World_server ./mangosd')
       os.system('cd '+self.install_dir+'/bin;screen -A -m -d -S Auth_server ./realmd')
 
+  # Create a new admin account during setup 
+  # instead of the defult admin: administrator/administrator
   def createAccount(self):
     db = MySQLdb.connect(self.q_host,self.q_user,self.q_pass)
     cursor = db.cursor()
@@ -144,6 +177,7 @@ class installer:
     else:
        self.msg('\nAccount succesfully created!','green')
 
+  # Main Engine. Its here it all begins..
   def main(self):
     try:
         self.msg(self.welcome(),'green')
