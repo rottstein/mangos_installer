@@ -50,7 +50,6 @@ def fetch_scriptdev2(self,link,version):
 def fetch_database(self,link,version):
        self.check_connectivity('https://github.com/')
        self.msg('\nFetching '+str(link)+'\n','green')
-       print self.colored("\nFetching MaNGOS "+version+" Default database... ("+link+")",'green')
        os.system('mkdir '+self.install_dir+'/database;cd '+self.install_dir+'/database')
        for line in os.popen('cd '+self.install_dir+'/database/;git clone '+link):
            if os.path.exists(self.install_dir+'/database/database'):

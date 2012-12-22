@@ -43,13 +43,13 @@ def updateRealm(self):
     self.msg('\nRealm Database setup done.','green')
 
 def setupRealm(self):
-    if version=='tbc':
+    if self.version=='tbc':
        vers='mangos-tbc'
-    elif version=='classic':
+    elif self.version=='classic':
        vers='mangos-classic'
-    elif version=='cataclysm':
+    elif self.version=='cataclysm':
        vers='server'
-    elif version=='wotlk':
+    elif self.version=='wotlk':
        vers='mangos-wotlk'
     self.msg('\nCreating New Realmd Database..','green')
     self.check_Database(self,self.q_realm)

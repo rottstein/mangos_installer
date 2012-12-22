@@ -16,9 +16,9 @@ def loadPreDefines(self):
     self.q_realm='mangos_realmd'
     self.q_char='mangos_c_characters'
     self.q_script='mangos_c_scriptdev2'
-    self.q_realmid=6
+    self.q_realmid=2
     self.q_realmname='cata-clean'
-    self.q_realmport=6666
+    self.q_realmport=8086
     self.q_realmip='192.168.1.12'
     self.q_cores=4
     self.del_folder(self.install_dir)
