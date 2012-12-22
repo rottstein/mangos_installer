@@ -36,7 +36,7 @@ def fetch_scriptdev2(self,link,version):
     elif version=='classic':
        vers='mangos-classic'
        folder='ScriptDevZero'
-    elif version=='cata':
+    elif version=='cataclysm':
        vers='server'
        folder='ScriptDev2'
     elif version=='wotlk':

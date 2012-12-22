@@ -47,7 +47,7 @@ def setupRealm(self):
        vers='mangos-tbc'
     elif version=='classic':
        vers='mangos-classic'
-    elif version=='cata':
+    elif version=='cataclysm':
        vers='server'
     elif version=='wotlk':
        vers='mangos-wotlk'
@@ -68,7 +68,7 @@ def setupChar(self):
        vers='mangos-tbc'
     elif self.version=='classic':
        vers='mangos-classic'
-    elif self.version=='cata':
+    elif self.version=='cataclysm':
        vers='server'
     elif self.version=='wotlk':
        vers='mangos-wotlk'
