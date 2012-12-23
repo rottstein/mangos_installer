@@ -11,7 +11,7 @@ def loadPreDefines(self):
     self.q_host='localhost'
     self.q_user='root'
     self.q_pass='bjo10ern21'
-    self.q_currentrealm='yes'
+    self.q_currentrealm='no'
     self.q_world='mangos_c_world'
     self.q_realm='mangos_realmd'
     self.q_char='mangos_c_characters'

@@ -58,9 +58,9 @@ def setupRealm(self):
     cursor.execute('CREATE DATABASE `'+self.q_realm+'` DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci')
     cursor.execute("GRANT SELECT, INSERT, UPDATE, DELETE, CREATE, DROP, ALTER, LOCK TABLES ON `"+self.q_realm+"`.* TO 'mangos'@'localhost'")
     os.system('mysql -h '+self.q_host+' -u '+self.q_user+' -p'+self.q_pass+' '+self.q_realm+' < '+self.work_dir+'/'+vers+'/sql/realmd.sql')
-    cursor.execute("UPDATE "+self.q_realm+".realmlist SET name = '"+str(self.realmname)+"' WHERE id = 1")
-    cursor.execute("UPDATE "+self.q_realm+".realmlist SET port = '"+str(self.realmport)+"' WHERE id = 1")
-    cursor.execute("UPDATE "+self.q_realm+".realmlist SET address = '"+str(self.realmip)+"' WHERE id = 1")
+    cursor.execute("UPDATE "+self.q_realm+".realmlist SET name = '"+str(self.q_realmname)+"' WHERE id = 1")
+    cursor.execute("UPDATE "+self.q_realm+".realmlist SET port = '"+str(self.q_realmport)+"' WHERE id = 1")
+    cursor.execute("UPDATE "+self.q_realm+".realmlist SET address = '"+str(self.q_realmip)+"' WHERE id = 1")
     self.msg('\nRealm Database setup done.','green')
 
 def setupChar(self):
