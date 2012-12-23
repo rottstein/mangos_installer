@@ -38,12 +38,12 @@ i will implemte a function to choose between cmangos and mangos on a later time.
 
 How to:
 ##########################################
-          *open terminal
-          *cd ~/
-          *git clone git://github.com/gimli/mangos_installer.git
-          *cd mangos_installer
-          *sudo apt-get install python-mysqldb (Debian: apt-get install python-mysqldb)
-          *python setup.py
+          open terminal
+          cd ~/
+          git clone git://github.com/gimli/mangos_installer.git
+          cd mangos_installer
+          sudo apt-get install python-mysqldb (Debian: apt-get install python-mysqldb)
+          python setup.py
 ##########################################
 This script will install the following packages 
 
