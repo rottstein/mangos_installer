@@ -1,18 +1,41 @@
 mangos_installer
 ================
 
-Just another lazy mand script, for a automated install. ;)
+MaNGOS Installer all written in python.
+Tested on Ubuntu 12.04.
+should work for debian users to, it will NOT work for windows user yet. (in development)
 
-needed files: python-MySQLdb
-syntax: sudo apt-get install python-MySQLdb
+This script will download and compile MaNGOS including setting up database.
+i basicly did because i grow tired of repeating my self. a lazy mands work ;)
+the script collect all the needed info to setup core and edit conf files and databases.
+it also comes whit a predefines allowing you to skip the Quest part and make it abit faster.
 
-then just run script syntax: python setup.py
+Current DB setup leaves you whit.
+Cataclysm:
+  *DB Version: UDB 0.12.2 (405) for MaNGOS 12111 with SD2 SQL for rev. 2712
+  *Acid Version: ACID 4.0.0 ALPHA DEVELOPMENT - Full Release for MaNGOS (4.3.4 Client) 
+  *ScriptDev2 Version: ScriptDev2 (for MaNGOS 12026+)
 
-Features:
-Download and compile MaNGOS and Scriptdev2
+Wrath of the lich king:
+  *DB Version: YTDB_0.14.6_R630_MaNGOS_R12214_SD2_R2737_ACID_R310_RuDB_R56
+  *Acid Version: ACID 3.1.0 'Another Wild Adventure' - Full Release for CMaNGOS (3.3.5a Client)
+  *ScriptDev2 Version: ScriptDev2 (for C-MaNGOS 12316+)
 
-           Cataclysm:
-           Core: MangChat 1.7.8
+The Burning Crusaders:
+  *DB Version: TBC-DB 1.0.0 for MaNGOSOne s1725 and ScriptDevOne s2628
+  *Acid Version: ACID 2.0.7 'Another Wild Adventure' - Full Release for MaNGOS (2.4.3 Client)
+  *ScriptDev2 Version: ScriptDev2 (for C-MaNGOS s1846+)
+
+Cataclysm uses mangos/server as its main repo, and Wotlk and TBC is running of cmangos. if you rather use mangos repo simply open core/MaNGOS.py and edit the links in the top. :)
+i will implemte a function to choose between cmangos and mangos on a later time.. but first of all i need to put the the last part of the mangos part (Classic - Mangos-zero)
+
+How to:
+  *open terminal
+  *cd ~/
+  *git clone git://github.com/gimli/mangos_installer.git
+  *cd mangos_installer
+  *sudo apt-get install python-mysqldb (Debian: apt-get install python-mysqldb)
+  *python setup.py
 
 This script will install the following packages 
 
@@ -44,6 +67,17 @@ This script will install the following packages
 Current ChangeLog
 
             Changelog:
+            
+            version 2.0
+            written in class functions using self. to keep info stored in all functions
+            new options.
+            edit mangos configurations files (*.conf)
+            colored output
+            alot of fixes
+            Cataclysm, Wrath Of The Lich King & The Burning Crusaders (Working.)
+            system/network check
+            multiple realm (Edit current realm Database instead of setting up a new one)
+            etc..
 
             version 1.5
             complete rewrite
@@ -65,12 +99,13 @@ Current ChangeLog
             show all needed info at the end of the install
             new function Quest(0) helps make the script abit more clean
 
-            TODO:
-            Fixing Mangos-zero scriptdevzero patch (note. it will download and compile mangos-zero just whitout the sdz part..)
-            Finde correct version sd2 for wotlk
-            Update MaNGOS_Database() to setup udb and ytdb for wotlk 
-
 ##########################################################
 
-
-
+TODO
+            TODO:
+            *FIX Database backup
+            *Add afew check along the realm database update function
+            *Add log function
+            *Add Classic support (mangos-zero)
+            *Add Custom Patch function for all clients (in the feature, needs alot of work.)
+            *ect..  
