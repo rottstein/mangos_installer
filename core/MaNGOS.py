@@ -113,7 +113,7 @@ def Cataclysm(self):
        self.setupRealm(self)
     self.msg('\nSetting up ACID.','green')
     self.fetch_custom_git(self,self.install_dir+'/database/',cataclysm[2])
-    os.system('cd '+self.install_dir+'/database/acid/;mysql -h '+self.q_host+' -u '+self.q_user+' -p'+self.q_pass+' '+self.q_world+' < acid_cata.sql')
+    os.system('cd '+self.install_dir+'/database/acid/;mysql -h '+self.q_host+' -u '+self.q_user+' -p'+self.q_pass+' '+self.q_world+' < acid_wotlk.sql')
     os.system('mysql -h '+self.q_host+' -u '+self.q_user+' -p'+self.q_pass+' '+self.q_world+' < '+self.work_dir+'/server/src/bindings/ScriptDev2/sql/mangos_scriptname_full.sql')
     self.msg('\nSetting Config files.','green')
     self.msg('\nSetting DataDir = "." to DataDir = '+str(self.q_data_dir),'green')
