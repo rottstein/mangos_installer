@@ -37,7 +37,7 @@ def checkPackage(self,package):
     devnull.close()
     if retval != 0:
        self.msg("\nInstalling Package: "+package,'red')
-       os.system(self.cmd_install+' '+package)
+       os.system(self.cmd_install+' -y -f '+package)
     else:
        self.msg('Package: '+self.colored(package,'yellow')+' '+self.colored('[OK]','green')+'', 'green')
 
