@@ -11,32 +11,34 @@ the script collect all the needed info to setup core and edit conf files and dat
 it also comes whit a predefines allowing you to skip the Quest part and make it abit faster.
 
 Current DB setup leaves you whit.
+##########################################
 Cataclysm:
           *DB Version: UDB 0.12.2 (405) for MaNGOS 12111 with SD2 SQL for rev. 2712
           *Acid Version: ACID 4.0.0 ALPHA DEVELOPMENT - Full Release for MaNGOS (4.3.4 Client) 
           *ScriptDev2 Version: ScriptDev2 (for MaNGOS 12026+)
-
+##########################################
 Wrath of the lich king:
           *DB Version: YTDB_0.14.6_R630_MaNGOS_R12214_SD2_R2737_ACID_R310_RuDB_R56
           *Acid Version: ACID 3.1.0 'Another Wild Adventure' - Full Release for CMaNGOS (3.3.5a Client)
           *ScriptDev2 Version: ScriptDev2 (for C-MaNGOS 12316+)
-
+##########################################
 The Burning Crusaders:
           *DB Version: TBC-DB 1.0.0 for MaNGOSOne s1725 and ScriptDevOne s2628
           *Acid Version: ACID 2.0.7 'Another Wild Adventure' - Full Release for MaNGOS (2.4.3 Client)
           *ScriptDev2 Version: ScriptDev2 (for C-MaNGOS s1846+)
-
+##########################################
 Cataclysm uses mangos/server as its main repo, and Wotlk and TBC is running of cmangos. if you rather use mangos repo simply open core/MaNGOS.py and edit the links in the top. :)
 i will implemte a function to choose between cmangos and mangos on a later time.. but first of all i need to put the the last part of the mangos part (Classic - Mangos-zero)
 
 How to:
-  *open terminal
+##########################################
+          *open terminal
           *cd ~/
           *git clone git://github.com/gimli/mangos_installer.git
           *cd mangos_installer
           *sudo apt-get install python-mysqldb (Debian: apt-get install python-mysqldb)
           *python setup.py
-
+##########################################
 This script will install the following packages 
 
 ##################################################
