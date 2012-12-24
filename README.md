@@ -17,7 +17,6 @@ Script Features:
 * Include AuctionHouseBot
 * Include MangChat (Cataclysm Only)
 * Start up servers (mangosd & realmd)
-##########################################
 
 This script will download and compile MaNGOS including setting up database.
 i basicly did because i grow tired of repeating my self. a lazy mands work ;)
