@@ -104,7 +104,7 @@ def setupScriptDev2(self):
     os.system('mysql -h '+self.q_host+' -u '+self.q_user+' -p'+self.q_pass+' '+self.q_script+' < '+self.work_dir+'/'+vers+'/src/bindings/ScriptDev2/sql/scriptdev2_script_full.sql')
     self.msg('\nScriptDev2 Database setup done.','green')
 
-def setupClassicScriptdev2(self):
+def setupClassicScriptDev2(self):
     self.msg('\nCreating New ScriptDev2 Database..','green')
     self.check_Database(self,self.q_script)
     db = MySQLdb.connect(self.q_host,self.q_user,self.q_pass)

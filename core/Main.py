@@ -14,7 +14,7 @@ from termcolor import colored
 from Menu import info
 from predefines import loadPreDefines
 from Collect import fetch_svn, fetch_git, fetch_mangchat, fetch_custom_git, fetch_scriptdev2, fetch_database
-from DatabaseSetup import check_Database, backupDB, MaNGOS_Database, updateRealm, setupRealm, setupChar, setupScriptDev2, setupYTDB, setupClassic, setupClassicScriptdev2
+from DatabaseSetup import check_Database, backupDB, MaNGOS_Database, updateRealm, setupRealm, setupChar, setupScriptDev2, setupYTDB, setupClassic, setupClassicScriptDev2
 from MaNGOS import Cataclysm, Wotlk, TBC, Classic
 from InstallDep import Install_dep
 from Lang import welcome, Complete, Correct, Correct_w
@@ -56,7 +56,7 @@ class installer:
       self.setupScriptDev2=setupScriptDev2
       self.setupYTDB=setupYTDB
       self.setupClassic=setupClassic
-      self.setupClassicScriptdev2=setupClassicScriptdev2
+      self.setupClassicScriptDev2=setupClassicScriptDev2
 
       # MaNGOS Support
       self.Cataclysm=Cataclysm
