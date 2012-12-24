@@ -6,6 +6,7 @@ def Complete(self,version):
     end="""
     MaNGOS install Done!
     The script is now done working, here all the needed information to connect to your server.
+    All this info will be stored in """+self.install_dir+"""/login.info
     Enjoy! :)
 
     Login:
@@ -28,8 +29,8 @@ def Complete(self,version):
           """+self.colored('Host: ','yellow')+""""""+self.colored(self.q_realmip,'green')+"""
           """+self.colored('Port: ','yellow')+""""""+self.colored(self.q_realmport,'green')+"""
           """+self.colored('set realmlist: ','yellow')+""""""+self.colored(self.q_host,'green')+"""
-
         """
+    os.system('echo '+end+' >> '+self.install_dir+'/login.info')
     return end
 
 def Correct(self):
