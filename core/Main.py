@@ -14,7 +14,7 @@ from termcolor import colored
 from Menu import info
 from predefines import loadPreDefines
 from Collect import fetch_svn, fetch_git, fetch_mangchat, fetch_custom_git, fetch_scriptdev2, fetch_database
-from DatabaseSetup import check_Database, backupDB, MaNGOS_Database, updateRealm, setupRealm, setupChar, setupScriptDev2, setupYTDB
+from DatabaseSetup import check_Database, backupDB, MaNGOS_Database, updateRealm, setupRealm, setupChar, setupScriptDev2, setupYTDB, setupClassic, setupClassicScriptdev2
 from MaNGOS import Cataclysm, Wotlk, TBC, Classic
 from InstallDep import Install_dep
 from Lang import welcome, Complete, Correct, Correct_w
@@ -55,6 +55,8 @@ class installer:
       self.setupChar=setupChar
       self.setupScriptDev2=setupScriptDev2
       self.setupYTDB=setupYTDB
+      self.setupClassic=setupClassic
+      self.setupClassicScriptdev2=setupClassicScriptdev2
 
       # MaNGOS Support
       self.Cataclysm=Cataclysm
@@ -161,7 +163,7 @@ class installer:
       print self.colored(msg,color)
 
   # Needs Work! Load servers when done compiling and make sure they are up
-  def loadServer(self):
+  def loadServers(self):
       os.system('cd '+self.install_dir+'/bin;screen -A -m -d -S World_server ./mangosd')
       os.system('cd '+self.install_dir+'/bin;screen -A -m -d -S Auth_server ./realmd')
 
@@ -170,15 +172,16 @@ class installer:
   def createAccount(self):
     db = MySQLdb.connect(self.q_host,self.q_user,self.q_pass)
     cursor = db.cursor()
-    cursor.execute("SELECT * FROM "+str(self.q_realm)+".account WHERE `username` = '"+str(self.q_newAcc)+"' AND SHA1(CONCAT(UPPER('"+str(self.q_newAcc)+"'), ':', UPPER('"+str(self.q_newAccPass)+"'))) = `sha_pass_hash`")
+    cursor.execute("INSERT INTO "+self.q_realm+".account (`username`,`sha_pass_hash`) VALUES ('"+self.q_newAcc+"', SHA1(CONCAT(UPPER('"+self.q_newAcc+"'),':',UPPER('"+self.q_newAccPass+"'))))")
     cursor.execute("SELECT id FROM "+str(self.q_realm)+".account WHERE `username` = '"+str(self.q_newAcc)+"'")
     result = cursor.fetchall()
     if not result:
        self.msg('\nFailed to create account: '+str(self.q_newAcc),'red')
     else:
+       id=result
        self.msg('\nAccount succesfully created!','green')
-       self.msg('\nUpdating GMLevel for Account: '+str(self.q_newAcc)+' GMLevel: '+str(self.q_newAccGM),'green')
-       cursor.execute("INSERT INTO "+str(self.q_realm)+".account_access (`id`, `gmlevel`, `RealmID`) VALUES ("+str(result[0])+",3,-1)")
+       self.msg('\nUpdating GMLevel for Account: '+str(self.q_newAcc)+' - ID: '+str(id[0])+' - GMLevel: '+str(self.q_newAccGM),'green')
+       cursor.execute("INSERT INTO "+str(self.q_realm)+".account_access (`id`, `gmlevel`, `RealmID`) VALUES ('"+str(id[0])+"',3,-1)")
 
   # Main Engine. Its here it all begins..
   def main(self):

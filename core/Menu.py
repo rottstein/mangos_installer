@@ -41,13 +41,13 @@ def info(self):
     self.q_char=self.Quest(self.colored('Name: ','yellow'))
     self.msg('\nSelect name of your scriptdev2 database?','green')
     self.q_script=self.Quest(self.colored('Name: ','yellow'))
-    self.msg('Create a new account?','green')
+    self.msg('\nCreate a new account?','green')
     self.q_acc=self.Quest(0)
     if self.q_acc=='yes':
        self.msg('\nType New Account info.','green')
-       self.q_newAcc=self.Quest('Username: ')
-       self.q_newAccPass=self.Quest('Password: ')
-       self.q_newAccGM=self.Quest('GMLevel: ')
+       self.q_newAcc=self.Quest(self.colored('Username: ','yellow'))
+       self.q_newAccPass=self.Quest(self.colored('Password: ','yellow'))
+       self.q_newAccGM=self.Quest(self.colored('GMLevel: ','yellow'))
     else:
        self.q_newAcc='admin'
        self.q_newAccPass='admin'
@@ -55,4 +55,4 @@ def info(self):
     self.msg('\nSelect number of cores? (CPU) - Currently not working, the command make -j4 doesnt seems to change anything.','red')
     self.q_cores=self.Quest(self.colored('Cores: ','yellow'))
     self.msg('\nStart MaNGOS when install is done?','green')
-    self.q_loadServer=self.Quest(0)
+    self.q_loadServers=self.Quest(0)
