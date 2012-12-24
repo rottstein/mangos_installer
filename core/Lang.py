@@ -1,3 +1,6 @@
+#!/usr/bin/env python
+import os
+
 def welcome():
     greet="\n Welcome to my install script, yet another lazy mans work ;)\n This has been tested and works whit the latest rev of MaNGOS and Ubuntu 12.04\n Please dont blame me if anything goes wrong its just a help i will try to keep it updated but i still lifes irl to ;) \n anyways sit back grab a beer and relaxe and let it work!\n Enjoy! ;)"
     return greet
@@ -6,7 +9,7 @@ def Complete(self,version):
     end="""
     MaNGOS install Done!
     The script is now done working, here all the needed information to connect to your server.
-    All this info will be stored in """+self.install_dir+"""/login.info
+    All this info will be stored in """+str(self.install_dir)+"""/login.info
     Enjoy! :)
 
     Login:
@@ -30,7 +33,7 @@ def Complete(self,version):
           """+self.colored('Port: ','yellow')+""""""+self.colored(self.q_realmport,'green')+"""
           """+self.colored('set realmlist: ','yellow')+""""""+self.colored(self.q_host,'green')+"""
         """
-    os.system('echo '+end+' >> '+self.install_dir+'/login.info')
+    os.system('echo """'+end+'""" >> '+self.install_dir+'/login.info')
     return end
 
 def Correct(self):

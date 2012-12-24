@@ -173,20 +173,18 @@ class installer:
     db = MySQLdb.connect(self.q_host,self.q_user,self.q_pass)
     cursor = db.cursor()
     cursor.execute("INSERT INTO "+self.q_realm+".account (`username`,`sha_pass_hash`) VALUES ('"+self.q_newAcc+"', SHA1(CONCAT(UPPER('"+self.q_newAcc+"'),':',UPPER('"+self.q_newAccPass+"'))))")
-    cursor.execute("SELECT id FROM "+str(self.q_realm)+".account WHERE `username` = '"+str(self.q_newAcc)+"'")
+    cursor.execute("SELECT * FROM "+str(self.q_realm)+".account WHERE `username` = '"+str(self.q_newAcc)+"'")
     result = cursor.fetchall()
     if not result:
        self.msg('\nFailed to create account: '+str(self.q_newAcc),'red')
     else:
-       id=result
-       id.strip('L,)')
-       id.strip('(')
+       id=result[0]
        self.msg('\nAccount succesfully created!','green')
-       self.msg('\nUpdating GMLevel for Account: '+str(self.q_newAcc)+' - ID: '+str(id)+' - GMLevel: '+str(self.q_newAccGM),'green')
+       self.msg('\nUpdating GMLevel for Account: '+str(self.q_newAcc)+' - ID: '+str(id[0])+' - GMLevel: '+str(self.q_newAccGM),'green')
        if self.version=='cataclysm' or self.version=='wotlk':
-          cursor.execute("INSERT INTO "+str(self.q_realm)+".account_access (`id`, `gmlevel`, `RealmID`) VALUES ('"+str(id)+",3,-1)")
+          cursor.execute("INSERT INTO "+str(self.q_realm)+".account_access (`id`, `gmlevel`, `RealmID`) VALUES ('"+str(id[0])+",3,-1)")
        else:
-          cursor.execute("UPDATE SET `gmlevel` = "+self.newAccGM+" WHERE `username` = '"+self.newAcc+"'")
+          cursor.execute("UPDATE "+self.q_realm+".account SET `gmlevel` = "+str(self.q_newAccGM)+" WHERE `username` = '"+str(self.q_newAcc)+"'")
 
   # Main Engine. Its here it all begins..
   def main(self):
