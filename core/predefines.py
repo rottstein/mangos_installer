@@ -24,6 +24,10 @@ def loadPreDefines(self):
     self.q_realmname='MaNGOS'                      # Realm Name
     self.q_realmport=8085                          # Realm Port
     self.q_realmip='127.0.0.1'                     # Realm Ip
+    self.q_newAcc='nickless'                       # New Account
+    self.q_newAccPass='xxxxxx'                     # New Account Password
+    self.q_newAccGM=3                              # New Account GMLevel
     self.q_cores=4                                 # CPU cores
+    self.q_loadServer='yes'                        # Load Servers
     self.del_folder(self.install_dir)
     self.del_folder(self.work_dir)

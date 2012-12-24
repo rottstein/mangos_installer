@@ -130,7 +130,16 @@ def Cataclysm(self):
     self.replaceAll(self.install_dir+'/etc/mangosd.conf','127.0.0.1;3306;mangos;mangos;characters','127.0.0.1;3306;mangos;mangos;'+str(self.q_char)+'')
     self.msg('\nSetting LoginDatabaseInfo = scriptdev2 to LoginDatabaseInfo = '+str(self.q_script)+' (scriptdev2.conf)','green') 
     self.replaceAll(self.install_dir+'/etc/scriptdev2.conf','127.0.0.1;3306;mangos;mangos;scriptdev2','127.0.0.1;3306;mangos;mangos;'+str(self.q_script)+'')
-    #self.loadServer(self)
+    if self.q_acc='yes':
+       self.msg('\nCreating new Account..','green')
+       self.createAccount(self)
+    else:
+       pass
+    if self.q_loadServers=='yes':
+       self.msg('\nLoading Servers..','green')
+       self.loadServer(self)
+    else:
+       pass
     os.system('mv '+self.work_dir+'/server/sql '+self.install_dir)
     self.msg(self.Complete(self,'Cataclysm'),'green')
     exit()
@@ -217,7 +226,16 @@ def Wotlk(self):
     self.replaceAll(self.install_dir+'/etc/mangosd.conf','127.0.0.1;3306;mangos;mangos;characters','127.0.0.1;3306;mangos;mangos;'+str(self.q_char)+'')
     self.msg('\nSetting LoginDatabaseInfo = scriptdev2 to LoginDatabaseInfo = '+str(self.q_script)+' (scriptdev2.conf)','green') 
     self.replaceAll(self.install_dir+'/etc/scriptdev2.conf','127.0.0.1;3306;mangos;mangos;scriptdev2','127.0.0.1;3306;mangos;mangos;'+str(self.q_script)+'')
-    #self.loadServer(self)
+    if self.q_acc='yes':
+       self.msg('\nCreating new Account..','green')
+       self.createAccount(self)
+    else:
+       pass
+    if self.q_loadServers=='yes':
+       self.msg('\nLoading Servers..','green')
+       self.loadServer(self)
+    else:
+       pass
     os.system('mv '+self.work_dir+'/mangos-wotlk/sql '+self.install_dir)
     self.msg(self.Complete(self,'Wotlk'),'green')
     exit()
@@ -305,7 +323,16 @@ def TBC(self):
     self.msg('\nSetting LoginDatabaseInfo = scriptdev2 to LoginDatabaseInfo = '+str(self.q_script)+' (scriptdev2.conf)','green') 
     self.replaceAll(self.install_dir+'/etc/scriptdev2.conf','127.0.0.1;3306;mangos;mangos;scriptdev2','127.0.0.1;3306;mangos;mangos;'+str(self.q_script)+'')
     os.system('mv '+self.work_dir+'/mangos-tbc/sql '+self.install_dir)
-    #self.loadServer()
+    if self.q_acc='yes':
+       self.msg('\nCreating new Account..','green')
+       self.createAccount(self)
+    else:
+       pass
+    if self.q_loadServers=='yes':
+       self.msg('\nLoading Servers..','green')
+       self.loadServer(self)
+    else:
+       pass
     self.msg(self.Complete(self,'The Burning Crusader'),'green')
     exit()
 
