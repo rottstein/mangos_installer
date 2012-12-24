@@ -5,6 +5,20 @@ MaNGOS Installer all written in python.
 Tested on Ubuntu 12.04.
 should work for debian users to, it will NOT work for windows user yet. (in development)
 
+Script Features:
+##########################################
+* Download MaNGOS & ScriptDev2 & ACID
+* Compile MaNGOS & ScriptDev2
+* Setup Databases
+* Edit Config files
+* Create new Account & set gmlevel
+* Update Current realm if needed
+* Install all needed files
+* Include AuctionHouseBot
+* Include MangChat (Cataclysm Only)
+* Start up servers (mangosd & realmd)
+##########################################
+
 This script will download and compile MaNGOS including setting up database.
 i basicly did because i grow tired of repeating my self. a lazy mands work ;)
 the script collect all the needed info to setup core and edit conf files and databases.
@@ -85,6 +99,9 @@ Current ChangeLog
             Cataclysm, Wrath Of The Lich King & The Burning Crusaders (Working.)
             system/network check
             multiple realm (Edit current realm Database instead of setting up a new one)
+            create new account
+            set gmlevel
+            load servers
             etc..
 
             version 1.5
