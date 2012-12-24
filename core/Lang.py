@@ -27,6 +27,7 @@ def Complete(self,version):
           """+self.colored('Name: ','yellow')+""""""+self.colored(self.q_realmname,'green')+"""
           """+self.colored('Host: ','yellow')+""""""+self.colored(self.q_realmip,'green')+"""
           """+self.colored('Port: ','yellow')+""""""+self.colored(self.q_realmport,'green')+"""
+          """+self.colored('set realmlist: ','yellow')+""""""+self.colored(self.q_host,'green')+"""
 
         """
     return end
