@@ -4,25 +4,30 @@ def welcome():
 
 def Complete(self,version):
     end="""
-        Script is now done installing. you are now ready to run your server! ("""+version+""")
-        Set your client realmlist to: """+self.colored(self.q_realmip,'yellow')+"""
-        Login:
-              username: administrator
-              password: administrator
+    MaNGOS install Done!
+    The script is now done working, here all the needed information to connect to your server.
+    Enjoy! :)
 
-        Database:
-              location: http://"""+self.colored(self.q_realmip,'yellow')+"""/phpmyadmin
-              username: mangos
-              password: mangos
-        
-        Server:
-              location: """+self.colored(self.install_dir,'yellow')+"""
-              conf_dir: """+self.install_dir+"""/etc
+    Login:
+          """+self.colored('Username: ','yellow')+""""""+self.colored(str(self.q_newAcc),'green')+"""
+          """+self.colored('Password: ','yellow')+""""""+self.colored(str(self.q_newAccPass),'green')+"""
+          """+self.colored('GMLevel: ','yellow')+""""""+self.colored(str(self.q_newAccGM),'green')+"""
 
-        RealmInfo:
-              name: """+self.colored(self.q_realmname,'yellow')+"""
-              port: """+self.colored(self.q_realmport,'yellow')+"""
-              ip: """+self.colored(self.q_realmip,'yellow')+"""
+    Database:
+          """+self.colored('Host: ','yellow')+""""""+self.colored('http://'+str(self.q_host)+'/phpmyadmin','green')+"""
+          """+self.colored('User: ','yellow')+""""""+self.colored(str(self.q_user),'green')+"""
+          """+self.colored('Pass: ','yellow')+""""""+self.colored(str(self.q_pass),'green')+"""
+
+    Folders:
+          """+self.colored('Install dir: ','yellow')+""""""+self.colored(str(self.install_dir),'green')+"""
+          """+self.colored('Config dir: ','yellow')+""""""+self.colored(str(self.install_dir)+'/etc/','green')+"""
+
+    Realm:
+          """+self.colored('ID: ','yellow')+""""""+self.colored(str(self.q_realmid),'green')+"""
+          """+self.colored('Name: ','yellow')+""""""+self.colored(self.q_realmname,'green')+"""
+          """+self.colored('Host: ','yellow')+""""""+self.colored(self.q_realmip,'green')+"""
+          """+self.colored('Port: ','yellow')+""""""+self.colored(self.q_realmport,'green')+"""
+
         """
     return end
 
