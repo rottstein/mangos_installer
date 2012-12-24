@@ -427,5 +427,5 @@ def Classic(self):
        self.loadServers()
     else:
        pass
-    self.msg(self.Complete(self,'World Of Warcraft Classic'),'green')
+    self.msg(self.Complete(self,'Drums of War'),'green')
     exit()
