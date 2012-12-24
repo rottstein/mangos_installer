@@ -130,7 +130,7 @@ def Cataclysm(self):
     self.replaceAll(self.install_dir+'/etc/mangosd.conf','127.0.0.1;3306;mangos;mangos;characters','127.0.0.1;3306;mangos;mangos;'+str(self.q_char)+'')
     self.msg('\nSetting LoginDatabaseInfo = scriptdev2 to LoginDatabaseInfo = '+str(self.q_script)+' (scriptdev2.conf)','green') 
     self.replaceAll(self.install_dir+'/etc/scriptdev2.conf','127.0.0.1;3306;mangos;mangos;scriptdev2','127.0.0.1;3306;mangos;mangos;'+str(self.q_script)+'')
-    if self.q_acc='yes':
+    if self.q_acc=='yes':
        self.msg('\nCreating new Account..','green')
        self.createAccount(self)
     else:
@@ -226,7 +226,7 @@ def Wotlk(self):
     self.replaceAll(self.install_dir+'/etc/mangosd.conf','127.0.0.1;3306;mangos;mangos;characters','127.0.0.1;3306;mangos;mangos;'+str(self.q_char)+'')
     self.msg('\nSetting LoginDatabaseInfo = scriptdev2 to LoginDatabaseInfo = '+str(self.q_script)+' (scriptdev2.conf)','green') 
     self.replaceAll(self.install_dir+'/etc/scriptdev2.conf','127.0.0.1;3306;mangos;mangos;scriptdev2','127.0.0.1;3306;mangos;mangos;'+str(self.q_script)+'')
-    if self.q_acc='yes':
+    if self.q_acc=='yes':
        self.msg('\nCreating new Account..','green')
        self.createAccount(self)
     else:
@@ -323,7 +323,7 @@ def TBC(self):
     self.msg('\nSetting LoginDatabaseInfo = scriptdev2 to LoginDatabaseInfo = '+str(self.q_script)+' (scriptdev2.conf)','green') 
     self.replaceAll(self.install_dir+'/etc/scriptdev2.conf','127.0.0.1;3306;mangos;mangos;scriptdev2','127.0.0.1;3306;mangos;mangos;'+str(self.q_script)+'')
     os.system('mv '+self.work_dir+'/mangos-tbc/sql '+self.install_dir)
-    if self.q_acc='yes':
+    if self.q_acc=='yes':
        self.msg('\nCreating new Account..','green')
        self.createAccount(self)
     else:
