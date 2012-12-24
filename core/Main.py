@@ -179,9 +179,14 @@ class installer:
        self.msg('\nFailed to create account: '+str(self.q_newAcc),'red')
     else:
        id=result
+       id.strip('L,)')
+       id.strip('(')
        self.msg('\nAccount succesfully created!','green')
-       self.msg('\nUpdating GMLevel for Account: '+str(self.q_newAcc)+' - ID: '+str(id[0])+' - GMLevel: '+str(self.q_newAccGM),'green')
-       cursor.execute("INSERT INTO "+str(self.q_realm)+".account_access (`id`, `gmlevel`, `RealmID`) VALUES ('"+str(id[0])+"',3,-1)")
+       self.msg('\nUpdating GMLevel for Account: '+str(self.q_newAcc)+' - ID: '+str(id)+' - GMLevel: '+str(self.q_newAccGM),'green')
+       if self.version=='cataclysm' or self.version=='wotlk':
+          cursor.execute("INSERT INTO "+str(self.q_realm)+".account_access (`id`, `gmlevel`, `RealmID`) VALUES ('"+str(id)+",3,-1)")
+       else:
+          cursor.execute("UPDATE SET `gmlevel` = "+self.newAccGM+" WHERE `username` = '"+self.newAcc+"'")
 
   # Main Engine. Its here it all begins..
   def main(self):
