@@ -282,7 +282,7 @@ def TBC(self):
          pass
     self.msg('\nPatching SD2.','yellow')
     os.system('cd '+self.work_dir+'/mangos-tbc;git apply src/bindings/ScriptDev2/patches/MaNGOS-*-ScriptDev2.patch')
-    os.system('cd '+self.work_dir+'/mangos-tbc;mkdir '+self.work_dir+'/mangos-tbc/objdir;cd '+self.work_dir+'/mangos-tbc/objdir;cmake .. -DCMAKE_INSTALL_PREFIX'+str(self.install_dir)+';make -j'+str(self.q_cores)+';make install')
+    os.system('cd '+self.work_dir+'/mangos-tbc;mkdir '+self.work_dir+'/mangos-tbc/objdir;cd '+self.work_dir+'/mangos-tbc/objdir;cmake .. -DCMAKE_INSTALL_PREFIX='+str(self.install_dir)+';make -j'+str(self.q_cores)+';make install')
     if self.checkFolder(self.install_dir+'/bin')==1:
        self.msg('\n'+self.colored('MaNGOS Succesfully installed into','green')+' '+self.install_dir,'yellow')
        if self.q_ahbot=='yes':
