@@ -88,7 +88,7 @@ def Cataclysm(self):
             exit()
     else:
          pass
-    os.system('cd '+self.work_dir+'/server;mkdir '+self.work_dir+'/server/objdir;cd '+self.work_dir+'/server/objdir;cmake .. -DPREFIX='+str(self.install_dir)+';make -j'+str(self.q_cores)+';make install')
+    os.system('cd '+self.work_dir+'/server;mkdir '+self.work_dir+'/server/objdir;cd '+self.work_dir+'/server/objdir;cmake .. -DCMAKE_INSTALL_PREFIX='+str(self.install_dir)+';make -j'+str(self.q_cores)+';make install')
     if self.checkFolder(self.install_dir+'/bin')==1:
        self.msg('\n'+self.colored('MaNGOS Succesfully installed into','green')+' '+self.install_dir,'yellow')
        if self.q_ahbot=='yes':
@@ -186,7 +186,7 @@ def Wotlk(self):
          pass
     self.msg('\nPatching SD2.','yellow')
     os.system('cd '+self.work_dir+'/mangos-wotlk;git apply src/bindings/ScriptDev2/patches/MaNGOS-*-ScriptDev2.patch')
-    os.system('cd '+self.work_dir+'/mangos-wotlk;mkdir '+self.work_dir+'/mangos-wotlk/objdir;cd '+self.work_dir+'/mangos-wotlk/objdir;cmake .. -DPREFIX='+str(self.install_dir)+';make -j'+str(self.q_cores)+';make install')
+    os.system('cd '+self.work_dir+'/mangos-wotlk;mkdir '+self.work_dir+'/mangos-wotlk/objdir;cd '+self.work_dir+'/mangos-wotlk/objdir;cmake .. -DCMAKE_INSTALL_PREFIX='+str(self.install_dir)+';make -j'+str(self.q_cores)+';make install')
     if self.checkFolder(self.install_dir+'/bin')==1:
        self.msg('\n'+self.colored('MaNGOS Succesfully installed into','green')+' '+self.install_dir,'yellow')
        if self.q_ahbot=='yes':
@@ -282,7 +282,7 @@ def TBC(self):
          pass
     self.msg('\nPatching SD2.','yellow')
     os.system('cd '+self.work_dir+'/mangos-tbc;git apply src/bindings/ScriptDev2/patches/MaNGOS-*-ScriptDev2.patch')
-    os.system('cd '+self.work_dir+'/mangos-tbc;mkdir '+self.work_dir+'/mangos-tbc/objdir;cd '+self.work_dir+'/mangos-tbc/objdir;cmake .. -DPREFIX='+str(self.install_dir)+';make -j'+str(self.q_cores)+';make install')
+    os.system('cd '+self.work_dir+'/mangos-tbc;mkdir '+self.work_dir+'/mangos-tbc/objdir;cd '+self.work_dir+'/mangos-tbc/objdir;cmake .. -DCMAKE_INSTALL_PREFIX'+str(self.install_dir)+';make -j'+str(self.q_cores)+';make install')
     if self.checkFolder(self.install_dir+'/bin')==1:
        self.msg('\n'+self.colored('MaNGOS Succesfully installed into','green')+' '+self.install_dir,'yellow')
        if self.q_ahbot=='yes':
@@ -378,7 +378,7 @@ def Classic(self):
          pass
     self.msg('\nPatching SD2.','yellow')
     os.system('cd '+self.work_dir+'/mangos-classic;echo "add_subdirectory(ScriptDev2)" >> src/bindings/CMakeLists.txt')
-    os.system('cd '+self.work_dir+'/mangos-classic;mkdir '+self.work_dir+'/mangos-classic/objdir;cd '+self.work_dir+'/mangos-classic/objdir;cmake .. -DPREFIX='+str(self.install_dir)+';make -j'+str(self.q_cores)+';make install')
+    os.system('cd '+self.work_dir+'/mangos-classic;mkdir '+self.work_dir+'/mangos-classic/objdir;cd '+self.work_dir+'/mangos-classic/objdir;cmake .. -DCMAKE_INSTALL_PREFIX='+str(self.install_dir)+';make -j'+str(self.q_cores)+';make install')
     if self.checkFolder(self.install_dir+'/bin')==1:
        self.msg('\n'+self.colored('MaNGOS Succesfully installed into','green')+' '+self.install_dir,'yellow')
        os.system('cd '+str(self.install_dir)+'/etc/;cp mangosd.conf.dist mangosd.conf;cp realmd.conf.dist realmd.conf;cp scriptdevzero.conf.dist scriptdevzero.conf;rm -rf *.dist')
